@@ -77,10 +77,8 @@ public class NodeController {
      * 根据 id 获取
      */
     @GetMapping("/get")
-    public AjaxResult getNodeById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getNodeById(Long id) {
         Node node = nodeService.getById(id);
         ThrowUtils.throwIf(node == null, ErrorCode.NOT_FOUND_ERROR);
         return AjaxResult.success(node);
@@ -90,10 +88,8 @@ public class NodeController {
      * 根据 id 获取包装类
      */
     @GetMapping("/get/vo")
-    public AjaxResult getNodeVOById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getNodeVOById(Long id) {
         AjaxResult response = getNodeById(id);
         Node node = (Node) response.get(AjaxResult.DATA_TAG);
         return AjaxResult.success(nodeService.getNodeVO(node));

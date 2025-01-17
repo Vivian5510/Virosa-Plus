@@ -78,10 +78,8 @@ public class ArticleController {
      * 根据 id 获取
      */
     @GetMapping("/get")
-    public AjaxResult getArticleById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getArticleById(Long id) {
         Article article = articleService.getById(id);
         ThrowUtils.throwIf(article == null, ErrorCode.NOT_FOUND_ERROR);
         return AjaxResult.success(article);
@@ -91,10 +89,8 @@ public class ArticleController {
      * 根据 id 获取包装类
      */
     @GetMapping("/get/vo")
-    public AjaxResult getArticleVOById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getArticleVOById(Long id) {
         AjaxResult response = getArticleById(id);
         Article article = (Article) response.get(AjaxResult.DATA_TAG);
         return AjaxResult.success(articleService.getArticleVO(article));

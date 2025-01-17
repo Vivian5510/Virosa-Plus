@@ -77,10 +77,8 @@ public class BookController {
      * 根据 id 获取
      */
     @GetMapping("/get")
-    public AjaxResult getBookById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getBookById(Long id) {
         Book book = bookService.getById(id);
         ThrowUtils.throwIf(book == null, ErrorCode.NOT_FOUND_ERROR);
         return AjaxResult.success(book);
@@ -90,10 +88,8 @@ public class BookController {
      * 根据 id 获取包装类
      */
     @GetMapping("/get/vo")
-    public AjaxResult getBookVOById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getBookVOById(Long id) {
         AjaxResult response = getBookById(id);
         Book book = (Book) response.get(AjaxResult.DATA_TAG);
         return AjaxResult.success(bookService.getBookVO(book));

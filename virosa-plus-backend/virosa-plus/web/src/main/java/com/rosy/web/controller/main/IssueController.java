@@ -77,10 +77,8 @@ public class IssueController {
      * 根据 id 获取
      */
     @GetMapping("/get")
-    public AjaxResult getIssueById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getIssueById(Long id) {
         Issue issue = issueService.getById(id);
         ThrowUtils.throwIf(issue == null, ErrorCode.NOT_FOUND_ERROR);
         return AjaxResult.success(issue);
@@ -90,10 +88,8 @@ public class IssueController {
      * 根据 id 获取包装类
      */
     @GetMapping("/get/vo")
-    public AjaxResult getIssueVOById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getIssueVOById(Long id) {
         AjaxResult response = getIssueById(id);
         Issue issue = (Issue) response.get(AjaxResult.DATA_TAG);
         return AjaxResult.success(issueService.getIssueVO(issue));

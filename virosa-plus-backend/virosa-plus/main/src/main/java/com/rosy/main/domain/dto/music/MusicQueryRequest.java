@@ -3,6 +3,7 @@ package com.rosy.main.domain.dto.music;
 import com.baomidou.mybatisplus.annotation.*;
 import com.rosy.common.domain.entity.PageRequest;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
  * @author Rosy
  * @since 2025-01-17
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class MusicQueryRequest extends PageRequest implements Serializable {
 

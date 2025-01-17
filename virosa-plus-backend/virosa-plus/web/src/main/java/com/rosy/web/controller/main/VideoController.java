@@ -77,10 +77,8 @@ public class VideoController {
      * 根据 id 获取
      */
     @GetMapping("/get")
-    public AjaxResult getVideoById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getVideoById(Long id) {
         Video video = videoService.getById(id);
         ThrowUtils.throwIf(video == null, ErrorCode.NOT_FOUND_ERROR);
         return AjaxResult.success(video);
@@ -90,10 +88,8 @@ public class VideoController {
      * 根据 id 获取包装类
      */
     @GetMapping("/get/vo")
-    public AjaxResult getVideoVOById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getVideoVOById(Long id) {
         AjaxResult response = getVideoById(id);
         Video video = (Video) response.get(AjaxResult.DATA_TAG);
         return AjaxResult.success(videoService.getVideoVO(video));

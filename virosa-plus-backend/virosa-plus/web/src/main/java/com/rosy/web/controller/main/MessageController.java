@@ -77,10 +77,8 @@ public class MessageController {
      * 根据 id 获取
      */
     @GetMapping("/get")
-    public AjaxResult getMessageById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getMessageById(Long id) {
         Message message = messageService.getById(id);
         ThrowUtils.throwIf(message == null, ErrorCode.NOT_FOUND_ERROR);
         return AjaxResult.success(message);
@@ -90,10 +88,8 @@ public class MessageController {
      * 根据 id 获取包装类
      */
     @GetMapping("/get/vo")
-    public AjaxResult getMessageVOById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getMessageVOById(Long id) {
         AjaxResult response = getMessageById(id);
         Message message = (Message) response.get(AjaxResult.DATA_TAG);
         return AjaxResult.success(messageService.getMessageVO(message));

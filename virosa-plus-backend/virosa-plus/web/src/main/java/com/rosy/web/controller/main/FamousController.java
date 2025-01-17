@@ -77,10 +77,8 @@ public class FamousController {
      * 根据 id 获取
      */
     @GetMapping("/get")
-    public AjaxResult getFamousById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getFamousById(Long id) {
         Famous famous = famousService.getById(id);
         ThrowUtils.throwIf(famous == null, ErrorCode.NOT_FOUND_ERROR);
         return AjaxResult.success(famous);
@@ -90,10 +88,8 @@ public class FamousController {
      * 根据 id 获取包装类
      */
     @GetMapping("/get/vo")
-    public AjaxResult getFamousVOById(long id) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
+    @ValidateRequest
+    public AjaxResult getFamousVOById(Long id) {
         AjaxResult response = getFamousById(id);
         Famous famous = (Famous) response.get(AjaxResult.DATA_TAG);
         return AjaxResult.success(famousService.getFamousVO(famous));
