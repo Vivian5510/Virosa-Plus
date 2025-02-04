@@ -1,41 +1,52 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 defineProps<{ msg: string }>()
 
-const count = ref(0)
+const visits = useVisits()
+
+const { t } = useI18n()
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+	<div class="mt-10 flex flex-col items-center space-y-7">
+		<h1 class="text-4xl">{{ msg }}</h1>
 
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
+		<Counter />
+		<p>
+			{{ t('edit') }}
+			<code>components/HelloWorld.vue</code> {{ t('to test HMR') }}
+		</p>
 
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+		<p>
+			{{ t('test.module') }}
+		</p>
+		<p>
+			{{ t('check out') }}
+			<a href="https://github.com/dishait/tov-template" target="_blank">
+				tov-template </a
+			>, {{ t('the official Tov + Vue + Vite template') }}
+		</p>
+		<p class="read-the-docs">
+			{{ t('The total number of views is') }}
+			<span class="text-gray-800" dark="text-gray-300">{{ visits ?? 0 }}</span>
+		</p>
+	</div>
 </template>
 
 <style scoped>
 .read-the-docs {
-  color: #888;
+	color: #888;
+	font-size: 1.2rem;
+	animation: slide-up 0.5s ease-out;
+}
+
+@keyframes slide-up {
+	from {
+		transform: translateY(20px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
 }
 </style>
