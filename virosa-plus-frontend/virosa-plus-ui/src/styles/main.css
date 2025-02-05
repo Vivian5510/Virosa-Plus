@@ -1,4 +1,5 @@
 @import './md.css';
+@import './tailwind.css';
 
 
 html.dark {

@@ -25,7 +25,7 @@ import lombok.Setter;
  * @since 2025-01-17
  */
 @Data
-@TableName("virosa-plus-music")
+@TableName("`virosa-plus-music`")
 public class Music implements Serializable {
 
     @Serial

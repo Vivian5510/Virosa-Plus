@@ -25,7 +25,7 @@ import lombok.Setter;
  * @since 2025-01-17
  */
 @Data
-@TableName("virosa-plus-article")
+@TableName("`virosa-plus-article`")
 public class Article implements Serializable {
 
     @Serial

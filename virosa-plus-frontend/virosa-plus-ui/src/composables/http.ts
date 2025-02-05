@@ -4,6 +4,24 @@ export const http = axios.create({
 	baseURL: import.meta.env.VITE_API_BASE_URL,
 })
 
+export const articleApi = ArticleControllerApiFactory(
+	undefined,
+	undefined,
+	http,
+)
+export const bookApi = BookControllerApiFactory(undefined, undefined, http)
+
+export const famousApi = FamousControllerApiFactory(undefined, undefined, http)
+export const issueApi = IssueControllerApiFactory(undefined, undefined, http)
+export const messageApi = MessageControllerApiFactory(
+	undefined,
+	undefined,
+	http,
+)
+export const musicApi = MusicControllerApiFactory(undefined, undefined, http)
+export const videoApi = VideoControllerApiFactory(undefined, undefined, http)
+export const nodeApi = NodeControllerApiFactory(undefined, undefined, http)
+
 // 添加请求拦截器
 http.interceptors.request.use(
 	function (config) {

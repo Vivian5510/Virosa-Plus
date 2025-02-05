@@ -1,32 +1,30 @@
 <template>
 	<div>
-		<div class="grid grid-cols-3">
-			<a href="https://github.com/dishait/tov-template" target="_blank">
-				<img :src="safeResolve('/logo.png')" class="logo" alt="Vite logo" />
-			</a>
-			<a href="https://vitejs.dev" target="_blank">
-				<img :src="safeResolve('/vite.svg')" class="logo" alt="Vite logo" />
-			</a>
-			<a href="https://vuejs.org/" target="_blank">
-				<img :src="safeResolve('/vue.svg')" class="logo vue" alt="Vue logo" />
-			</a>
-		</div>
-		<HelloWorld msg="Tov + Vite + Vue" />
+		<ScrollIsland title="Progress Bar 🚀">
+			<div class="my-3 flex flex-col gap-2">
+				<a href="#Welcome"># Welcome</a>
+				<a href="#Leading"># Leading</a>
+				<a href="#Inspiration"># Inspiration</a>
+				<a href="#Article"># Article</a>
+				<a href="#Recreation"># Recreation</a>
+			</div>
+		</ScrollIsland>
+
+		<WelcomeSection />
+		<LeadingSection />
+		<InspirationSection />
+		<ArticleSection />
+		<RecreationSection />
 	</div>
 </template>
 
-<style>
-.logo {
-	width: 10em;
-	height: 10em;
-	padding: 1.5rem;
-	will-change: filter;
-	transition: filter 300ms;
-}
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-	filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<script setup lang="ts">
+import InspirationSection from '~/components/landing-page/InspirationSection.vue'
+import WelcomeSection from '~/components/landing-page/WelcomeSection.vue'
+import LeadingSection from '~/components/landing-page/LeadingSection.vue'
+import ArticleSection from '~/components/landing-page/ArticleSection.vue'
+import RecreationSection from '~/components/landing-page/RecreationSection.vue'
+import ScrollIsland from '~/components/inspira/miscellaneous/ScrollIsland.vue'
+</script>
+
+<style></style>

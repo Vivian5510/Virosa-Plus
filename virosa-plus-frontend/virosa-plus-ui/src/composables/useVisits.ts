@@ -4,9 +4,7 @@ export function useVisits() {
 	// 开发环境下
 	if (import.meta.env.DEV) {
 		const visits = useStorage('visits-kv', 0)
-		if (typeof visits.value === 'number') {
-			visits.value++
-		}
+		visits.value++
 		return visits
 	}
 

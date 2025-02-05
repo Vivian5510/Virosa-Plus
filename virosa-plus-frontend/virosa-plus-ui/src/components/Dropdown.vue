@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
 
-const visiable = ref(false)
+const visible = ref(false)
 function dropdownHandler() {
-	visiable.value = false
+	visible.value = false
 }
 
 const { availableLocales, locale } = useI18n()
@@ -15,8 +15,8 @@ const { availableLocales, locale } = useI18n()
 			<button
 				class="h-full cursor-pointer border-0 bg-white p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-700"
 				dark="bg-transparent hover:bg-gray-500"
-				:class="visiable ? 'bg-gray-200 bg-gray-500 dark:bg-gray-500' : ''"
-				@click.stop="visiable = !visiable"
+				:class="visible ? 'bg-gray-200 bg-gray-500 dark:bg-gray-500' : ''"
+				@click.stop="visible = !visible"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@ const { availableLocales, locale } = useI18n()
 
 		<Transition name="fade" mode="out-in">
 			<div
-				v-if="visiable"
+				v-if="visible"
 				v-on-click-outside.bubble="dropdownHandler"
 				dark="bg-gray-500"
 				class="absolute end-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg divide-y divide-gray-100"

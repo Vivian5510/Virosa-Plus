@@ -25,7 +25,7 @@ import lombok.Setter;
  * @since 2025-01-17
  */
 @Data
-@TableName("virosa-plus-video")
+@TableName("`virosa-plus-video`")
 public class Video implements Serializable {
 
     @Serial

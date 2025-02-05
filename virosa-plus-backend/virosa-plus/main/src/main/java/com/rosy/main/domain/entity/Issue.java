@@ -26,7 +26,7 @@ import lombok.Setter;
  */
 
 @Data
-@TableName("virosa-plus-issue")
+@TableName("`virosa-plus-issue`")
 public class Issue implements Serializable {
 
     @Serial

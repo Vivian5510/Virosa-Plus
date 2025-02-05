@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
  * @since 2025-01-17
  */
 @Data
-@TableName("virosa-plus-famous")
+@TableName("`virosa-plus-famous`")
 public class Famous implements Serializable {
 
     @Serial
