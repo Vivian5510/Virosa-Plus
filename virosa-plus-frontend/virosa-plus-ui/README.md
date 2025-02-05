@@ -307,7 +307,7 @@ eg:
 此时 `src/pages/about.vue`
 
 ```html
-<!-- src/pages/about.vue -->
+<!-- src/pages/aboutme.vue -->
 <template>
 	<div>我是关于页</div>
 </template>

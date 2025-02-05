@@ -315,7 +315,7 @@ default home
 Now, `src/pages/about.vue`:
 
 ```html
-<!-- src/pages/about.vue -->
+<!-- src/pages/aboutme.vue -->
 <template>
     <div>about</div>
 </template>

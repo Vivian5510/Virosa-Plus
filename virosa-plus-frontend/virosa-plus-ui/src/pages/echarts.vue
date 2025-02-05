@@ -1,78 +1,25 @@
-<script setup lang="ts">
-import { use } from 'echarts/core'
-import { isDark } from 'vue-dark-switch'
-import { PieChart } from 'echarts/charts'
-import { CanvasRenderer } from 'echarts/renderers'
-import {
-	TitleComponent,
-	TooltipComponent,
-	LegendComponent,
-} from 'echarts/components'
-import VChart, { THEME_KEY } from 'vue-echarts'
-import type { EChartsOption } from 'echarts'
-
-use([
-	CanvasRenderer,
-	PieChart,
-	TitleComponent,
-	TooltipComponent,
-	LegendComponent,
-])
-
-provide(
-	THEME_KEY,
-	computed(() => (isDark.value ? 'dark' : '')),
-)
-
-const option = ref<EChartsOption>({
-	title: {
-		text: 'Traffic Sources',
-		left: 'center',
-	},
-	tooltip: {
-		trigger: 'item',
-		formatter: '{a} <br/>{b} : {c} ({d}%)',
-	},
-	legend: {
-		orient: 'vertical',
-		left: 'left',
-		data: ['Direct', 'Email', 'Ad Networks', 'Video Ads', 'Search Engines'],
-	},
-	series: [
-		{
-			name: 'Traffic Sources',
-			type: 'pie',
-			radius: '55%',
-			center: ['50%', '60%'],
-			data: [
-				{ value: 335, name: 'Direct' },
-				{ value: 310, name: 'Email' },
-				{ value: 234, name: 'Ad Networks' },
-				{ value: 135, name: 'Video Ads' },
-				{ value: 1548, name: 'Search Engines' },
-			],
-			emphasis: {
-				itemStyle: {
-					shadowBlur: 10,
-					shadowOffsetX: 0,
-					shadowColor: 'rgba(0, 0, 0, 0.5)',
-				},
-			},
-		},
-	],
-})
-</script>
-
 <template>
-	<div>
-		<!-- @vue-ignore -->
-		<v-chart class="chart" :option="option" autoresize />
-	</div>
+	<section>
+		<!-- 侧边栏 -->
+		<div class="flex">
+			<aside class="hidden h-screen w-80 p-4 md:block"></aside>
+			<!-- Closing tag added correctly here -->
+
+			<div>
+				<!-- 主内容区域 -->
+				<main class="p-8">
+					<img v-if="isDark" src="/svg/snake-Dark.svg" />
+					<img v-if="!isDark" src="/svg/snake-Light.svg" />
+					<h1 class="text-2xl font-bold">主要内容</h1>
+					<p class="mt-4">这里是主要内容区域。</p>
+				</main>
+			</div>
+		</div>
+	</section>
 </template>
 
-<style>
-.chart {
-	width: 100vw;
-	height: calc(100vh - 82px);
-}
-</style>
+<script setup lang="ts">
+const colorMode = useColorMode()
+
+const isDark = computed(() => colorMode.value === 'dark')
+</script>

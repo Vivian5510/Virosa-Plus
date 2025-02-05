@@ -4,7 +4,7 @@
   "description": "vite + vue3 + ts 开箱即用现代开发模板 | vite + vue3 + ts out-of-the-box modern development template",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "test": "vitest",
     "build": "vite build",
     "prepare": "husky install",

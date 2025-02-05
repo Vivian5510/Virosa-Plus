@@ -9,8 +9,8 @@ import OpenAIIcon from '~/components/common/icons/OpenAIIcon.vue'
 
 const routes = [
 	{ path: '/', name: 'home' },
-	{ path: '/articles', name: 'echarts' },
-	{ path: '/about', name: 'about' },
+	{ path: '/echarts', name: 'echarts' },
+	{ path: '/aboutme', name: 'about' },
 	// 根据需要添加更多菜单项
 ]
 const activeTab = ref(routes[0].name)

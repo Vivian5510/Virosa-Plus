@@ -18,7 +18,7 @@ const entrys = [
 	'mock',
 	'layouts/default.vue',
 	'src/pages/index.vue',
-	'src/pages/about.md',
+	'src/pages/aboutme.vue',
 	'src/pages/echarts.vue',
 	'src/stores',
 	'locales/简体中文',
