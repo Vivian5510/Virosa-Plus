@@ -19,7 +19,7 @@
 					walked."
 				</div>
 				<div
-					class="dark:bg-background relative h-[430px] w-full overflow-hidden border rounded-xl bg-white shadow-lg"
+					class="dark:bg-background relative h-[430px] w-full overflow-hidden border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 shadow-lg dark:border-white/[0.2] dark:bg-black"
 				>
 					<!-- Logo -->
 					<div
@@ -42,7 +42,10 @@
 						<h3 class="mb-2 text-4xl font-bold sm:text-5xl">
 							START READING AND LEARN MORE ABOUT ME 😄
 						</h3>
-						<InteractiveHoverButton class="w-56" text="Get Started" />
+						<InteractiveHoverButton
+							class="w-56 border-black/[0.1] bg-gray-50 dark:border-white/[0.2] dark:bg-black"
+							text="Get Started"
+						/>
 					</div>
 
 					<!-- Tilted Marquees -->

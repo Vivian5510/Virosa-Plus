@@ -2,11 +2,7 @@
 import PhotoGallery from '~/components/inspira/miscellaneous/PhotoGallery.vue'
 import BlurReveal from '~/components/inspira/special-effects/BlurReveal.vue'
 import IconCloud from '~/components/inspira/miscellaneous/icon-cloud/IconCloud.vue'
-import GitHubIcon from '~/components/common/icons/GitHubIcon.vue'
 import Orbit from '~/components/inspira/miscellaneous/orbit/Orbit.vue'
-import GoogleDriveIcon from '~/components/common/icons/GoogleDriveIcon.vue'
-import NotionIcon from '~/components/common/icons/NotionIcon.vue'
-import WhatsAppIcon from '~/components/common/icons/WhatsAppIcon.vue'
 import { ORBIT_DIRECTION } from '~/components/inspira/miscellaneous/orbit'
 import FallingStarsBg from '~/components/inspira/background/FallingStarsBg.vue'
 import { isDark } from 'vue-dark-switch'
@@ -93,7 +89,7 @@ const imageUrls = slugs.map((slug) => `/svg/${slug}.svg`)
 		</BlurReveal>
 
 		<div
-			class="bg-background relative z-10 mt-36 h-[800px] w-full flex flex-col items-center justify-center overflow-hidden border rounded-lg md:shadow-xl"
+			class="bg-background relative z-10 mt-36 h-[800px] w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black md:shadow-xl"
 		>
 			<FallingStarsBg
 				class="bg-white -z-1 dark:bg-black"

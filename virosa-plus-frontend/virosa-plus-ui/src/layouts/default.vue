@@ -11,11 +11,22 @@
 			</router-view>
 		</div>
 		<ParticlesBg
+			v-if="isHomeRoute || isAboutRoute"
 			class="fixed inset-0 z-[-3]"
-			:quantity="250"
+			:quantity="500"
 			:ease="100"
 			:color="isDark ? '#FFF' : '#000'"
 			:staticity="10"
+			refresh
+		/>
+		<SnowfallBg
+			v-if="isOtherRoute"
+			class="fixed inset-0 z-[-3]"
+			:color="'ADD8E6'"
+			:quantity="500"
+			:min-radius="0.2"
+			:max-radius="5"
+			:speed="0.5"
 			refresh
 		/>
 	</div>
@@ -23,10 +34,23 @@
 
 <script setup lang="ts">
 import ParticlesBg from '~/components/inspira/background/ParticlesBg.vue'
+import SnowfallBg from '~/components/inspira/background/SnowfallBg.vue'
+import { File, Folder, Tree } from '~/components/inspira/miscellaneous/FileTree'
+import CardSpotlight from '~/components/inspira/card/CardSpotlight.vue'
 
 const colorMode = useColorMode()
+const route = useRoute()
 
 const isDark = computed(() => colorMode.value === 'dark')
+
+// 判断是否是首页路由或子路由
+const isHomeRoute = computed(() => route.path === '/')
+
+// 判断是否是关于页路由或子路由
+const isAboutRoute = computed(() => route.path === '/aboutme')
+
+// 判断其他路由
+const isOtherRoute = computed(() => !isHomeRoute.value && !isAboutRoute.value)
 </script>
 
 <style>

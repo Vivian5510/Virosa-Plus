@@ -18,6 +18,8 @@ const entrys = [
 	'mock',
 	'layouts/default.vue',
 	'src/pages/index.vue',
+	'src/pages/index.vue',
+	'src/pages/index.vue',
 	'src/pages/aboutme.vue',
 	'src/pages/echarts.vue',
 	'src/stores',

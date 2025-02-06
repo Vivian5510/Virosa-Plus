@@ -9,27 +9,31 @@ import OpenAIIcon from '~/components/common/icons/OpenAIIcon.vue'
 
 const routes = [
 	{ path: '/', name: 'home' },
-	{ path: '/echarts', name: 'echarts' },
+	{ path: '/article', name: 'article' },
+	{ path: '/inspiration', name: 'inspiration' },
 	{ path: '/aboutme', name: 'about' },
-	// 根据需要添加更多菜单项
 ]
-const activeTab = ref(routes[0].name)
+
+const route = useRoute() // 获取当前路由
+const activeTab = ref(routes.find((r) => r.path === route.path)?.name || 'home') // 匹配当前路由
 </script>
 
 <template>
 	<nav
 		aria-label="Site Nav"
-		class="mx-auto h-80px max-w-3xl flex items-center justify-between p-4"
+		class="mx-auto h-80px max-w-5xl flex items-center justify-between p-4"
 	>
-		<div class="mr-auto flex items-center justify-center space-x-5">
+		<div class="mr-auto items-center justify-center space-x-5">
 			<SwitchIcon unmount-persets />
 		</div>
 
-		<MorphingTabs
-			:tabs="routes"
-			:active-tab="activeTab"
-			@update:active-tab="activeTab = $event"
-		/>
+		<div class="mr-auto items-center justify-center space-x-5">
+			<MorphingTabs
+				:tabs="routes"
+				:active-tab="activeTab"
+				@update:active-tab="activeTab = $event"
+			/>
+		</div>
 
 		<div class="ml-auto flex items-center space-x-6">
 			<Dock class="mb-6" direction="'bottom'">
