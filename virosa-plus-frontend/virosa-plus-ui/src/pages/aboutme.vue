@@ -164,7 +164,7 @@
 			</aside>
 
 			<!-- 主内容区域 -->
-			<main class="p-8">
+			<main class="p-4">
 				<div
 					class="h-56 w-full flex flex-col items-center justify-center gap-2"
 				>

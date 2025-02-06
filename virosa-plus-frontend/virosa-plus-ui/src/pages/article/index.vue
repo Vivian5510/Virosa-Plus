@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { File, Folder, Tree } from '~/components/inspira/miscellaneous/FileTree'
+import Prism from 'markdown-it-prism'
+import MarkdownIt from 'markdown-it'
 
 definePage({
 	alias: ['/article'],
@@ -122,18 +124,17 @@ const features = [
 		class: 'lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4',
 	},
 ]
-
 </script>
 
 <template>
 	<div>
 		<div class="flex">
-			<aside class="hidden h-screen w-80 p-4 md:block">
+			<aside class="hidden h-screen w-70 p-4 md:block">
 				<div
 					class="relative size-fit flex flex-col items-center justify-center rounded-3xl"
 				>
 					<CardSpotlight
-						class="h-fit w-full flex-col cursor-pointer items-center justify-center whitespace-nowrap border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black"
+						class="h-fit w-60 flex-col cursor-pointer whitespace-nowrap border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black"
 						:gradient-color="isDark ? '#363636' : '#C9C9C9'"
 					>
 						<Tree
@@ -195,7 +196,7 @@ const features = [
 					</CardSpotlight>
 				</div>
 			</aside>
-			<main class="h-fit w-300 gap-2 p-8">
+			<main class="h-fit w-250 flex gap-2 p-4">
 				<BentoGrid
 					class="grid auto-rows-[22rem] grid-cols-3 w-full gap-4 lg:grid-rows-3"
 				>

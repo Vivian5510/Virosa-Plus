@@ -23,7 +23,7 @@
 			v-if="isOtherRoute"
 			class="fixed inset-0 z-[-3]"
 			:color="'ADD8E6'"
-			:quantity="500"
+			:quantity="250"
 			:min-radius="0.2"
 			:max-radius="5"
 			:speed="0.5"
@@ -35,8 +35,6 @@
 <script setup lang="ts">
 import ParticlesBg from '~/components/inspira/background/ParticlesBg.vue'
 import SnowfallBg from '~/components/inspira/background/SnowfallBg.vue'
-import { File, Folder, Tree } from '~/components/inspira/miscellaneous/FileTree'
-import CardSpotlight from '~/components/inspira/card/CardSpotlight.vue'
 
 const colorMode = useColorMode()
 const route = useRoute()

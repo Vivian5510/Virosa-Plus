@@ -15,7 +15,9 @@ const routes = [
 ]
 
 const route = useRoute() // 获取当前路由
-const activeTab = ref(routes.find((r) => r.path === route.path)?.name || 'home') // 匹配当前路由
+const activeTab = ref(
+	routes.find((r) => r.path.startsWith(route.path))?.name || 'home',
+) // 匹配当前路由
 </script>
 
 <template>
