@@ -11,11 +11,19 @@ import {
 	faChevronDown,
 	faChevronLeft,
 	faChevronRight,
+	faBookOpen,
 } from '@fortawesome/free-solid-svg-icons'
 
-
-
 // 添加到库中
-library.add(faChevronDown, faChevronRight, faChevronLeft, faFile, faFileArchive, faFolder, faFolderOpen)
+library.add(
+	faBookOpen,
+	faChevronDown,
+	faChevronRight,
+	faChevronLeft,
+	faFile,
+	faFileArchive,
+	faFolder,
+	faFolderOpen,
+)
 
 export { FontAwesomeIcon }

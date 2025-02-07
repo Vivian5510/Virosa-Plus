@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Navigation />
+		<Navigation/>
 		<div
 			class="font-heading flex flex-col items-center justify-center px-4 py-6 md:px-8"
 		>

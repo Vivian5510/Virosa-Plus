@@ -19,11 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import InspirationSection from '~/components/landing-page/InspirationSection.vue'
-import WelcomeSection from '~/components/landing-page/WelcomeSection.vue'
-import LeadingSection from '~/components/landing-page/LeadingSection.vue'
-import ArticleSection from '~/components/landing-page/ArticleSection.vue'
-import RecreationSection from '~/components/landing-page/RecreationSection.vue'
+import InspirationSection from '~/components/landing-page/index/InspirationSection.vue'
+import WelcomeSection from '~/components/landing-page/index/WelcomeSection.vue'
+import LeadingSection from '~/components/landing-page/index/LeadingSection.vue'
+import ArticleSection from '~/components/landing-page/index/ArticleSection.vue'
+import RecreationSection from '~/components/landing-page/index/RecreationSection.vue'
 import ScrollIsland from '~/components/inspira/miscellaneous/ScrollIsland.vue'
 </script>
 

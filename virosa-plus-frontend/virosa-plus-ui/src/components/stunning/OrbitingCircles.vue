@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<OrbitingCirclesProps>(), {
 })
 
 const className = cn(
-	'absolute flex size-full animate-reverse transform-gpu animate-orbit items-center justify-center rounded-full border bg-none [animation-delay:calc(var(--delay)*1000ms)]',
+	'absolute flex size-full animate-reverse transform-gpu animate-Orbit items-center justify-center rounded-full border bg-none [animation-delay:calc(var(--delay)*1000ms)]',
 	props.class,
 	{ '[animate-direction:reverse]': props.reverse },
 )
