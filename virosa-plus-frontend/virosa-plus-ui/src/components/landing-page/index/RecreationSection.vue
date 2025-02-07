@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import PhotoGallery from '~/components/inspira/miscellaneous/PhotoGallery.vue'
 import BlurReveal from '~/components/inspira/special-effects/BlurReveal.vue'
-import { ORBIT_DIRECTION } from '~/components/inspira/miscellaneous/Orbit'
+import { ORBIT_DIRECTION } from '~/components/inspira/miscellaneous/orbit'
 import FallingStarsBg from '~/components/inspira/background/FallingStarsBg.vue'
 import { isDark } from 'vue-dark-switch'
 import BorderBeam from '~/components/inspira/special-effects/BorderBeam.vue'
-import Orbit from '~/components/inspira/miscellaneous/Orbit/Orbit.vue'
 import IconCloud from '~/components/inspira/miscellaneous/IconCloud/IconCloud.vue'
+import Orbit from '~/components/inspira/miscellaneous/orbit/Orbit.vue'
 
 const galleryItems = [
 	{

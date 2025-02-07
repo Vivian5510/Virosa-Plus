@@ -10,7 +10,7 @@
 	</svg>
 	<div
 		:class="
-			cn('absolute flex size-full transform-gpu animate-Orbit', props.class)
+			cn('absolute flex size-full transform-gpu animate-orbit', props.class)
 		"
 	>
 		<slot />

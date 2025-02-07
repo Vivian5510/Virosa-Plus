@@ -14,7 +14,7 @@ export default {
 		},
 		extend: {
 			animation: {
-				orbit: 'Orbit calc(var(--duration)*1s) linear infinite',
+				orbit: 'orbit calc(var(--duration)*1s) linear infinite',
 			},
 			keyframes: {
 				orbit: {
