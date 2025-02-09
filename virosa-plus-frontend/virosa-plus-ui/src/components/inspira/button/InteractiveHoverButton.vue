@@ -17,7 +17,9 @@
 		<div
 			class="text-primary-foreground absolute top-0 z-10 size-full flex translate-x-12 items-center justify-center gap-2 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-x-1"
 		>
-			<span>{{ text }}</span>
+			<span>
+				<a href="/article"> {{ text }} </a>
+			</span>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
