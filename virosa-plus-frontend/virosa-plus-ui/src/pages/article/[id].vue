@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { isDark } from 'vue-dark-switch'
-import { File, Folder, Tree } from '~/components/inspira/miscellaneous/FileTree'
-import CardSpotlight from '~/components/inspira/card/CardSpotlight.vue'
 import MarkdownIt from 'markdown-it'
 import Prism from 'markdown-it-prism'
 import { articleApi } from '~/composables/http'
@@ -90,10 +87,10 @@ onMounted(() => {
 				<TracingBeam class="px-6">
 					<div
 						v-if="articleContentHtml"
-						class="bg-background z-[-2] w-250 border border-black/[0.1] rounded-lg bg-gray-50 p-10 dark:border-white/[0.2] dark:bg-[#242222] md:shadow-xl"
+						class="bg-background z-[-2] w-180 border border-black/[0.1] rounded-lg bg-gray-50 p-10 dark:border-white/[0.2] dark:bg-[#242222] md:shadow-xl"
 					>
 						<!-- 渲染转换后的 HTML -->
-						<div class="prose" v-html="articleContentHtml"></div>
+						<div class="prose font-lxgw" v-html="articleContentHtml"></div>
 					</div>
 				</TracingBeam>
 			</main>

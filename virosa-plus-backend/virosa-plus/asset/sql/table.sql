@@ -46,14 +46,14 @@ CREATE TABLE IF NOT EXISTS `virosa-plus-article`
 CREATE TABLE IF NOT EXISTS `virosa-plus-node`
 (
     `id`          BIGINT AUTO_INCREMENT COMMENT 'id' PRIMARY KEY,
-    `name`        VARCHAR(100) DEFAULT ''                NOT NULL COMMENT '名称（文章或者目录的名字）' UNIQUE,
-    `type`        TINYINT      DEFAULT 0                 NOT NULL COMMENT '是文章还是目录（0: 目录, 1: 文章）',
-    `parent_id`   BIGINT       DEFAULT 0                 NOT NULL COMMENT '父目录',
-    `status`      TINYINT      DEFAULT 0                 NOT NULL COMMENT '是否已发布（0: 关闭, 1: 开启）',
-    `update_time` DATETIME     DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间',
-    `create_time` DATETIME     DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
-    `version`     TINYINT      DEFAULT 0                 NOT NULL COMMENT '版本',
-    `is_deleted`  TINYINT      DEFAULT 0                 NOT NULL COMMENT '是否删除'
+    `name`        VARCHAR(100)                    DEFAULT ''                NOT NULL COMMENT '名称（文章或者目录的名字）' UNIQUE,
+    `type`        ENUM ('root', 'folder', 'file') DEFAULT 'root'            NOT NULL COMMENT '是文章还是目录（root: 根节点, folder: 目录, file: 文件）',
+    `parent_id`   BIGINT                          DEFAULT 0                 NOT NULL COMMENT '父目录',
+    `status`      TINYINT                         DEFAULT 0                 NOT NULL COMMENT '是否已发布（0: 关闭, 1: 开启）',
+    `update_time` DATETIME                        DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间',
+    `create_time` DATETIME                        DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    `version`     TINYINT                         DEFAULT 0                 NOT NULL COMMENT '版本',
+    `is_deleted`  TINYINT                         DEFAULT 0                 NOT NULL COMMENT '是否删除'
 ) COMMENT '节点' COLLATE = utf8mb4_unicode_ci;
 
 -- 影视表

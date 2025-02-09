@@ -15,7 +15,9 @@
 		@click="onClickHandler"
 	>
 		<FontAwesomeIcon :icon="['fas', 'file']" class="h-4 w-4" />
-		<span class="select-none">{{ name }}</span>
+		<span class="select-none">
+			<a :href="articleLink"> {{ name }} </a>
+		</span>
 	</button>
 </template>
 
@@ -33,6 +35,7 @@ const props = withDefaults(defineProps<FileProps>(), {
 })
 
 const { id, name, isSelectable, isSelect } = toRefs(props)
+const articleLink = computed(() => `/article/${id.value}`)
 
 const treeContext = inject<TreeContextProps>(TREE_CONTEXT_SYMBOL)
 if (!treeContext) {

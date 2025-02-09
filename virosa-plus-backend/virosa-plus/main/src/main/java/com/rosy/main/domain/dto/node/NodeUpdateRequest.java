@@ -34,7 +34,7 @@ public class NodeUpdateRequest implements Serializable {
     /**
      * 是文章还是目录（0: 目录, 1: 文章）
      */
-    private Byte type;
+    private String type;
 
     /**
      * 父目录

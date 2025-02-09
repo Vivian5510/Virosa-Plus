@@ -1,11 +1,14 @@
 package com.rosy.main.domain.vo;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -16,7 +19,7 @@ import java.time.LocalDateTime;
  * @since 2025-01-17
  */
 @Data
-@TableName("virosa-plus-node")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NodeVO implements Serializable {
 
     @Serial
@@ -35,7 +38,12 @@ public class NodeVO implements Serializable {
     /**
      * 是文章还是目录（0: 目录, 1: 文章）
      */
-    private Byte type;
+    private String type;
+
+    /**
+     * 子节点
+     */
+    private List<NodeVO> children;
 
     /**
      * 是否已发布（0: 关闭, 1: 开启）

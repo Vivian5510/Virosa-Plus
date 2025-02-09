@@ -4,29 +4,32 @@ import SparklesText from '~/components/inspira/text/SparklesText.vue'
 
 const items = ref([
 	{
-		title: 'Beautiful Landscape',
-		description: "Discover nature's wonders",
-		imageUrl:
-			'https://images.unsplash.com/photo-1728755833852-2c138c84cfb1?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		title: '丘吉尔',
+		description: '“坚定如铁，舌灿如花。”',
+		imageUrl: 'picture/photo-gallery/丘吉尔.png',
+		href: 'article/6',
+		buttonText: 'Learn More',
 	},
 	{
-		title: 'Urban Adventure',
-		description: 'Explore the city lights',
-		imageUrl:
-			'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
+		title: '特斯拉',
+		description: '“真正的天才。”',
+		imageUrl: 'picture/photo-gallery/特斯拉.jpg',
+		href: 'article/7',
+		buttonText: 'Learn More',
 	},
 	{
-		title: 'Culinary Delights',
-		description: 'Savor exquisite flavors',
-		imageUrl:
-			'https://images.unsplash.com/photo-1664710476481-1213c456c56c?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		buttonText: 'View Recipe',
+		title: '尼采',
+		description: '“凝视深渊者。”',
+		imageUrl: 'picture/photo-gallery/尼采.jpg',
+		href: 'article/8',
+		buttonText: 'Learn More',
 	},
 	{
-		title: 'Mountain Escape',
-		description: 'Find peace in the highlands',
-		imageUrl:
-			'https://images.unsplash.com/photo-1518199266791-5375a83190e5?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		title: '苏格拉底',
+		description: '“诘问为剑。”',
+		imageUrl: 'public/picture/photo-gallery/苏格拉底之死.jpg',
+		href: 'article/9',
+		buttonText: 'Learn More',
 	},
 ])
 </script>
@@ -50,16 +53,18 @@ const items = ref([
 					<DirectionAwareHover
 						v-for="(item, index) in items"
 						:key="index"
-						image-url="https://images.unsplash.com/photo-1728755833852-2c138c84cfb1?q=80&w=2672&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+						:image-url="item.imageUrl"
 						class="border-primary border-2 border-gray-800 shadow-lg dark:border-gray-400"
 					>
 						<h2 class="text-xl font-semibold">{{ item.title }}</h2>
 						<p class="mt-2">{{ item.description }}</p>
 						<button
 							v-if="item.buttonText"
-							class="mt-4 rounded bg-white px-4 py-2 text-black"
+							class="pointer-events-auto mt-4 rounded bg-white px-4 py-2 text-black"
 						>
-							{{ item.buttonText }}
+							<a :href="item.href" class="text-[12px]">
+								{{ item.buttonText }} →
+							</a>
 						</button>
 					</DirectionAwareHover>
 				</div>

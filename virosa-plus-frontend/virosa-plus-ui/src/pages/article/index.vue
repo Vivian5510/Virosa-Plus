@@ -5,7 +5,6 @@ definePage({
 	alias: ['/article'],
 })
 
-import type { TreeViewElement } from '~/components/inspira/miscellaneous/FileTree'
 import { isDark } from 'vue-dark-switch'
 import CardSpotlight from '~/components/inspira/card/CardSpotlight.vue'
 import BentoGrid from '~/components/inspira/miscellaneous/BentoGrid/BentoGrid.vue'
@@ -18,123 +17,95 @@ import Globe from '~/components/inspira/miscellaneous/Globe.vue'
 import TextRevealCard from '~/components/inspira/text/TextRevealCard.vue'
 import FlickeringGrid from '~/components/inspira/background/FlickeringGrid.vue'
 
-const ELEMENTS: TreeViewElement[] = [
-	{
-		id: '1',
-		isSelectable: true,
-		name: 'root',
-		children: [
-			{
-				id: '2',
-				isSelectable: true,
-				name: 'components',
-				children: [
-					{
-						id: '3',
-						isSelectable: true,
-						name: 'ui',
-						children: [
-							{ id: '4', isSelectable: true, name: 'Button.vue' },
-							{ id: '5', isSelectable: true, name: 'Card.vue' },
-							{ id: '6', isSelectable: true, name: 'Input.vue' },
-						],
-					},
-					{ id: '7', isSelectable: true, name: 'Header.vue' },
-					{ id: '8', isSelectable: true, name: 'Footer.vue' },
-				],
-			},
-			{
-				id: '9',
-				isSelectable: true,
-				name: 'composables',
-				children: [
-					{ id: '10', isSelectable: false, name: 'useAuth.ts' },
-					{ id: '11', isSelectable: true, name: 'useTheme.ts' },
-				],
-			},
-			{
-				id: '12',
-				isSelectable: true,
-				name: 'layouts',
-				children: [
-					{ id: '13', isSelectable: true, name: 'default.vue' },
-					{ id: '14', isSelectable: false, name: 'auth.vue' },
-				],
-			},
-			{
-				id: '15',
-				isSelectable: true,
-				name: 'pages',
-				children: [
-					{ id: '16', isSelectable: true, name: 'index.vue' },
-					{ id: '17', isSelectable: true, name: 'about.vue' },
-					{
-						id: '18',
-						isSelectable: false,
-						name: 'auth',
-						children: [
-							{ id: '19', isSelectable: true, name: 'login.vue' },
-							{ id: '20', isSelectable: true, name: 'register.vue' },
-						],
-					},
-				],
-			},
-			{ id: '21', isSelectable: true, name: 'app.vue' },
-			{ id: '22', isSelectable: true, name: 'nuxt.config.ts' },
-		],
+// 递归组件实现
+const TreeNode = defineComponent({
+	name: 'TreeNode',
+	props: {
+		node: {
+			type: Object,
+			required: true,
+		},
 	},
-]
+	setup(props) {
+		return () => {
+			const { node } = props
+
+			if (node.type === 'file') {
+				return h(File, {
+					id: node.id,
+					name: node.name,
+				})
+			}
+
+			return h(
+				Folder,
+				{
+					id: node.id,
+					name: node.name,
+				},
+				// 递归渲染子节点
+				() =>
+					node.children?.map((child) =>
+						h(TreeNode, { node: child, key: child.id }),
+					),
+			)
+		}
+	},
+})
 
 const features = [
 	{
-		name: 'Save your files',
-		description: 'We automatically save your files as you type.',
-		href: '/',
-		image: 'picture/photo-gallery/63A25DD2F55569BFE018B7AFC38AB7BE (1).png',
+		name: '为什么创建Virosa',
+		description: '从一个更严肃的角度了解这篇博客的存在',
+		href: '/article/1',
+		image: 'picture/photo-gallery/Article1.png',
 		cta: 'Learn more',
 		class: 'lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3',
 	},
 	{
-		name: 'Full text search',
-		description: 'Search through all your files in one place.',
-		href: '/',
-		image: 'picture/photo-gallery/EE927FD49469C8E88031956DD0AEBA65 (1).png',
+		name: '编程语言中的艺术',
+		description: '在体验过由C/C++转码Java之后，越发想要体验Java转码C/C++的感受',
+		href: '/article/2',
+		image: 'picture/photo-gallery/Article4.png',
 		cta: 'Learn more',
 		class: 'lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3',
 	},
 	{
-		name: 'Multilingual',
-		description: 'Supports 100+ languages and counting.',
-		href: '/',
+		name: '拖延症',
+		description: '拖延症？一个老生常谈的话题，有什么可说的？',
+		href: '/article/3',
 		cta: 'Learn more',
 		class: 'lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4',
 	},
 	{
-		name: 'Calendar',
-		description: 'Use the calendar to filter your files by date.',
-		href: '/',
+		name: '我是I人',
+		description: 'I人进来找共鸣，E人进来认识I人的内心世界',
+		href: '/article/4',
 		cta: 'Learn more',
 		class: 'lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2',
 	},
 	{
-		name: 'Notifications',
-		description:
-			'Get notified when someone shares a file or mentions you in a comment.',
-		href: '/',
-		image: 'picture/photo-gallery/ECC0DD1754CFE43E56CE98263785C00B (1).png',
+		name: '梦与酒',
+		description: '或许我也到了爱做梦的年纪',
+		href: '/article/5',
+		image: 'picture/photo-gallery/Article3.png',
 		cta: 'Learn more',
 		class: 'lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4',
 	},
-	{
-		name: 'Notifications',
-		description:
-			'Get notified when someone shares a file or mentions you in a comment.',
-		href: '/',
-		image: 'picture/photo-gallery/A3B8F0C85D390A8D96BD98AA89E8DD8A (1).png',
-		cta: 'Learn more',
-		class: 'lg:col-start-1 lg:col-end-4 lg:row-start-4 lg:row-end-5',
-	},
 ]
+
+const elements = ref([])
+
+onMounted(async () => {
+	try {
+		const res = await http.post('/node/get/file/tree')
+
+		// 直接赋值，而不是 push，Vue 能正确追踪变化
+		elements.value = res.data
+	} catch (error) {
+		console.error('获取文件树失败:', error)
+	}
+})
 </script>
 
 <template>
@@ -151,65 +122,17 @@ const features = [
 						<Tree
 							class="overflow-hidden rounded-md"
 							:initial-selected-id="'1'"
-							:initial-expanded-items="[
-								'1',
-								'2',
-								'3',
-								'4',
-								'5',
-								'6',
-								'7',
-								'8',
-								'9',
-								'10',
-								'11',
-								'12',
-								'13',
-								'14',
-								'15',
-								'16',
-								'17',
-								'18',
-								'19',
-							]"
-							:elements="ELEMENTS"
+							:initial-expanded-items="[]"
+							:elements="elements"
 						>
-							<Folder id="1" name="root">
-								<Folder id="2" name="components">
-									<Folder id="3" name="ui">
-										<File id="4" name="Button.vue" />
-										<File id="5" name="Card.vue" />
-										<File id="6" name="Input.vue" />
-									</Folder>
-									<File id="7" name="Header.vue" />
-									<File id="8" name="Footer.vue" />
-								</Folder>
-								<Folder id="9" name="composables">
-									<File id="10" name="useAuth.ts" :is-selectable="false" />
-									<File id="11" name="useTheme.ts" />
-								</Folder>
-								<Folder id="12" name="layouts">
-									<File id="13" name="default.vue" />
-									<File id="14" name="auth.vue" :is-selectable="false" />
-								</Folder>
-								<Folder id="15" name="pages">
-									<File id="16" name="index.vue" />
-									<File id="17" name="about.vue" />
-									<Folder id="18" name="auth" :is-selectable="false">
-										<File id="19" name="login.vue" />
-										<File id="20" name="register.vue" />
-									</Folder>
-								</Folder>
-								<File id="21" name="app.vue" />
-								<File id="22" name="nuxt.config.ts" />
-							</Folder>
+							<TreeNode :node="elements" />
 						</Tree>
 					</CardSpotlight>
 				</div>
 			</aside>
 			<main class="h-fit w-250 flex flex-col gap-2 p-4">
 				<BentoGrid
-					class="grid auto-rows-[22rem] grid-cols-3 w-full gap-4 lg:grid-rows-4"
+					class="grid auto-rows-[22rem] grid-cols-3 w-full gap-4 lg:grid-rows-3"
 				>
 					<BentoGridCard
 						v-for="(feature, index) in features"
@@ -332,7 +255,7 @@ const features = [
 						:max-opacity="0.5"
 						:flicker-chance="0.1"
 						:width="1000"
-						:height="1000"
+						:height="800"
 					/>
 				</div>
 			</main>

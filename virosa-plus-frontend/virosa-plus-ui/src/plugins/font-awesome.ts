@@ -1,4 +1,4 @@
-// src/plugins/font-awesome.ts
+// src/plugins/fonts-awesome.ts
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 

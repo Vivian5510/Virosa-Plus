@@ -19,6 +19,12 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  * 节点 前端控制器
@@ -123,4 +129,62 @@ public class NodeController {
     }
 
     // endregion
+
+    // region 业务
+    @PostMapping("/get/file/tree")
+    @ValidateRequest
+    public AjaxResult getFileTree() {
+        // 查询所有节点
+        List<Node> allNodes = nodeService.list();  // 这里假设你有一个方法可以获取所有节点
+
+        // 创建一个 Map 用来存储每个节点的 id 和节点对象
+        Map<Long, Node> nodeMap = allNodes.stream()
+                .collect(Collectors.toMap(Node::getId, node -> node));
+
+        // 获取根节点 (id = 1)
+        Node rootNode = nodeMap.get(1L);
+        if (rootNode == null) {
+            throw new IllegalStateException("根节点（id=1）不存在");
+        }
+
+        // 构建树
+        List<NodeVO> rootNodeChildren = new ArrayList<>();
+        addChildrenToNode(rootNode, nodeMap, rootNodeChildren);
+
+        // 将根节点的子节点放入根节点中
+        NodeVO rootNodeVO = convertToNodeVO(rootNode);
+        rootNodeVO.setChildren(rootNodeChildren);
+
+        return AjaxResult.success(rootNodeVO);
+    }
+
+    /**
+     * 递归为节点添加子节点
+     */
+    private void addChildrenToNode(Node node, Map<Long, Node> nodeMap, List<NodeVO> parentChildren) {
+        // 获取当前节点的所有子节点
+        List<Node> children = nodeMap.values().stream()
+                .filter(n -> Objects.equals(n.getParentId(), node.getId()))
+                .toList();
+
+        if (!children.isEmpty()) {
+            for (Node child : children) {
+                // 递归添加子节点
+                List<NodeVO> childChildren = new ArrayList<>();
+                addChildrenToNode(child, nodeMap, childChildren);
+                NodeVO childNodeVO = convertToNodeVO(child);
+                if (!childChildren.isEmpty()) childNodeVO.setChildren(childChildren);
+                parentChildren.add(childNodeVO);
+            }
+        }
+    }
+
+    /**
+     * 使用 Hutool 的 BeanUtil 将 Node 转换为 NodeVO
+     */
+    private NodeVO convertToNodeVO(Node node) {
+        NodeVO nodeVO = new NodeVO();
+        BeanUtil.copyProperties(node, nodeVO);  // 自动复制属性
+        return nodeVO;
+    }
 }

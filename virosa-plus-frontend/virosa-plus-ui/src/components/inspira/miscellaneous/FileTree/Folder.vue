@@ -18,11 +18,7 @@
 				:icon="['fas', 'folder-open']"
 				class="h-4 w-4"
 			/>
-			<FontAwesomeIcon
-				v-else
-				:icon="['fas', 'folder']"
-				class="h-4 w-4"
-			/>
+			<FontAwesomeIcon v-else :icon="['fas', 'folder']" class="h-4 w-4" />
 
 			<span class="select-none">{{ name }}</span>
 		</div>
@@ -45,6 +41,7 @@ import {
 } from './index'
 import TreeIndicator from '~/components/inspira/miscellaneous/FileTree/TreeIndicator.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import File from '~/components/inspira/miscellaneous/FileTree/File.vue'
 
 const props = withDefaults(defineProps<FolderProps>(), {
 	isSelectable: true,
@@ -57,12 +54,7 @@ if (!treeContext) {
 	throw new Error('[Folder] must be used inside <Tree>')
 }
 
-const {
-	expandedItems,
-	handleExpand,
-	direction,
-	indicator,
-} = treeContext
+const { expandedItems, handleExpand, direction, indicator } = treeContext
 
 const isExpanded = computed<boolean>(() => {
 	return !!expandedItems.value?.includes(id.value)

@@ -35,7 +35,9 @@
 		<div
 			class="pointer-events-none absolute bottom-0 w-full flex flex-row translate-y-10 transform-gpu items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
 		>
-			<a :href="href"> {{ cta }} → </a>
+			<GlassBorderButton as-child class="pointer-events-auto w-37 h-7">
+				<a :href="href" class="text-[12px]"> {{ cta }} → </a>
+			</GlassBorderButton>
 		</div>
 		<div
 			class="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10"
@@ -45,7 +47,8 @@
 
 <script lang="ts" setup>
 import { cn } from '@/lib/utils'
-import type { HTMLAttributes } from '@vue/runtime-dom'
+import type { HTMLAttributes } from 'vue'
+import GlassBorderButton from '~/components/stunning/button/GlassBorderButton.vue'
 
 interface Props {
 	name: string

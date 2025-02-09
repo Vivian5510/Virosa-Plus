@@ -10,7 +10,7 @@
 				}"
 				:class="
 					cn(
-						'font-display text-xl font-bold tracking-[-0.02em] text-black drop-shadow-sm md:text-xl md:leading-[5rem]',
+						'fonts-display text-xl fonts-bold tracking-[-0.02em] text-black drop-shadow-sm md:text-xl md:leading-[5rem]',
 						props.class,
 					)
 				"

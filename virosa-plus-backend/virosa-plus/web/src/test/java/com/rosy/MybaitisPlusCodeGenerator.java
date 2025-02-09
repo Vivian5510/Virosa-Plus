@@ -16,7 +16,7 @@ public class MybaitisPlusCodeGenerator {
                         .commentDate("yyyy-MM-dd")
                 )
                 .packageConfig(builder -> builder
-                        .parent("com.rosy.main")
+                        .parent("com.rosy.side")
                         .entity("domain.entity")
                         .mapper("mapper")
                         .service("service")

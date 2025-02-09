@@ -14,9 +14,18 @@ dependencies:
   '@fortawesome/vue-fontawesome':
     specifier: ^3.0.8
     version: 3.0.8(@fortawesome/fontawesome-svg-core@6.7.2)(vue@3.5.3)
+  '@tsparticles/preset-stars':
+    specifier: ^3.2.0
+    version: 3.2.0
+  '@tsparticles/shape-star':
+    specifier: ^3.8.1
+    version: 3.8.1
   cobe:
     specifier: ^0.6.3
     version: 0.6.3
+  colord:
+    specifier: ^2.9.3
+    version: 2.9.3
   motion-v:
     specifier: ^0.9.0
     version: 0.9.0(vue@3.5.3)
@@ -55,6 +64,9 @@ devDependencies:
   '@vitejs/plugin-vue-jsx':
     specifier: ^3.1.0
     version: 3.1.0(vite@5.4.3)(vue@3.5.3)
+  '@vue/runtime-dom':
+    specifier: ^3.5.13
+    version: 3.5.13
   '@vueuse/components':
     specifier: ^10.11.1
     version: 10.11.1(vue@3.5.3)
@@ -1753,6 +1765,93 @@ packages:
       '@swc/counter': 0.1.3
     dev: true
 
+  /@tsparticles/basic@3.8.1:
+    resolution: {integrity: sha512-my114zRmekT/+I2cGuEnHxlX5G/jO0iVtNnsxxlsgspXUTSY+fDixmrNF4UgFkuaIwd9Bv/yH+7S/4HE4qte7A==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+      '@tsparticles/move-base': 3.8.1
+      '@tsparticles/plugin-hex-color': 3.8.1
+      '@tsparticles/plugin-hsl-color': 3.8.1
+      '@tsparticles/plugin-rgb-color': 3.8.1
+      '@tsparticles/shape-circle': 3.8.1
+      '@tsparticles/updater-color': 3.8.1
+      '@tsparticles/updater-opacity': 3.8.1
+      '@tsparticles/updater-out-modes': 3.8.1
+      '@tsparticles/updater-size': 3.8.1
+    dev: false
+
+  /@tsparticles/engine@3.8.1:
+    resolution: {integrity: sha512-S8h10nuZfElY7oih//NUHnT5qf4v3/dnsU8CMs7dz5lBEGr3amrYrXk0V+YKPTIQwfdmJHUaSBoAqFiv4aEGIA==}
+    requiresBuild: true
+    dev: false
+
+  /@tsparticles/move-base@3.8.1:
+    resolution: {integrity: sha512-DNFRL1QT8ZQYLg3fIk74EbHJq5HGOq9CM2bCci9dDcdymvN4L7aWVFQavRiWDbi3y1EUW3+jeHSMbD3qHAfOeA==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/plugin-hex-color@3.8.1:
+    resolution: {integrity: sha512-AmgB7XIYBCvg5HcqYb19YpcjEx2k4DpU2e24n0rradDDeqKKcz7EWI/08FlAnDb5HUs1em63vaAanl1vdm3+OA==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/plugin-hsl-color@3.8.1:
+    resolution: {integrity: sha512-Ja6oEX6yu0064e4a+Fv1TBJiG5y0hqWwoOKSqf/Ra/zo01ageOEvDVX70FOVSrP+iEPGPznKVNcZs1tEOOvO0g==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/plugin-rgb-color@3.8.1:
+    resolution: {integrity: sha512-xNLqnaFUYjU+7dCHQXjZdM4UojUAVorPVmXlYmkh1xmujLljEaFTwCg1UJVlNq+fXENIFkeaf3/XT0U/q0ZBTA==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/preset-stars@3.2.0:
+    resolution: {integrity: sha512-sCqqRD0/wq8YAJf/izu4Bv2Ol5SRMZtK3SVzRjaxNdhW5Wf0iw2aCt81Ve8YklIii2I6vYAPWjGtTPGUiyZpwg==}
+    dependencies:
+      '@tsparticles/basic': 3.8.1
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/shape-circle@3.8.1:
+    resolution: {integrity: sha512-dM/f+qcpd8/KfviuVuKiTS8KLDE/T7xxHK7EI2S49yPW6yrJJBXdL7T4N9/n/6PF+Wslcl+kf/eTDjEAI3WjNQ==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/shape-star@3.8.1:
+    resolution: {integrity: sha512-wBxnawqan/ocguNxY6cOEXF+YVnLIUmGBlnVGYx/7U9E2UHuHEKkoumob4fUflKISjvj5eQLpm/E1eUfYMd6RA==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/updater-color@3.8.1:
+    resolution: {integrity: sha512-HKrZzrF8YJ+TD+FdIwaWOPV565bkBhe+Ewj7CwKblG7H/SG+C6n1xIYobXkGP5pYkkQ+Cm1UV/Aq0Ih7sa+rJg==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/updater-opacity@3.8.1:
+    resolution: {integrity: sha512-41dJ0T7df7AUFFkV9yU0buUfUwh+hLYcViXxkDy+6CJiiNCNZ4H404w1DTpBQLL4fbxUcDk9BXZLV7gkE2OfAw==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/updater-out-modes@3.8.1:
+    resolution: {integrity: sha512-BY8WqQwoDFpgPybwTzBU2GnxtRkjWnGStqBnR53x5+f1j7geTSY6WjcOvl1W+IkjtwtjiifriwBl41EbqMrjdQ==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
+  /@tsparticles/updater-size@3.8.1:
+    resolution: {integrity: sha512-SC2ZxewtpwKadCalotK6x2YanxRO3hTMW1Rxzx9V2rcjAIgh/Nw49Vuithy2TDq8RtTc9rHDAPic2vMQ/lYQwA==}
+    dependencies:
+      '@tsparticles/engine': 3.8.1
+    dev: false
+
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: true
@@ -2527,16 +2626,38 @@ packages:
       rfdc: 1.4.1
     dev: true
 
+  /@vue/reactivity@3.5.13:
+    resolution: {integrity: sha512-NaCwtw8o48B9I6L1zl2p41OHo/2Z4wqYGGIK1Khu5T7yxrn+ATOixn/Udn2m+6kZKB/J7cuT9DbWWhRxqixACg==}
+    dependencies:
+      '@vue/shared': 3.5.13
+    dev: true
+
   /@vue/reactivity@3.5.3:
     resolution: {integrity: sha512-2w61UnRWTP7+rj1H/j6FH706gRBHdFVpIqEkSDAyIpafBXYH8xt4gttstbbCWdU3OlcSWO8/3mbKl/93/HSMpw==}
     dependencies:
       '@vue/shared': 3.5.3
+
+  /@vue/runtime-core@3.5.13:
+    resolution: {integrity: sha512-Fj4YRQ3Az0WTZw1sFe+QDb0aXCerigEpw418pw1HBUKFtnQHWzwojaukAs2X/c9DQz4MQ4bsXTGlcpGxU/RCIw==}
+    dependencies:
+      '@vue/reactivity': 3.5.13
+      '@vue/shared': 3.5.13
+    dev: true
 
   /@vue/runtime-core@3.5.3:
     resolution: {integrity: sha512-5b2AQw5OZlmCzSsSBWYoZOsy75N4UdMWenTfDdI5bAzXnuVR7iR8Q4AOzQm2OGoA41xjk53VQKrqQhOz2ktWaw==}
     dependencies:
       '@vue/reactivity': 3.5.3
       '@vue/shared': 3.5.3
+
+  /@vue/runtime-dom@3.5.13:
+    resolution: {integrity: sha512-dLaj94s93NYLqjLiyFzVs9X6dWhTdAlEAciC3Moq7gzAc13VJUdCnjjRurNM6uTLFATRHexHCTu/Xp3eW6yoog==}
+    dependencies:
+      '@vue/reactivity': 3.5.13
+      '@vue/runtime-core': 3.5.13
+      '@vue/shared': 3.5.13
+      csstype: 3.1.3
+    dev: true
 
   /@vue/runtime-dom@3.5.3:
     resolution: {integrity: sha512-wPR1DEGc3XnQ7yHbmkTt3GoY0cEnVGQnARRdAkDzZ8MbUKEs26gogCQo6AOvvgahfjIcnvWJzkZArQ1fmWjcSg==}
@@ -2565,6 +2686,10 @@ packages:
 
   /@vue/shared@3.4.38:
     resolution: {integrity: sha512-q0xCiLkuWWQLzVrecPb0RMsNWyxICOjPrcrwxTUEHb1fsnvni4dcuyG7RT/Ie7VPTvnjzIaWzRMUBsrqNj/hhw==}
+    dev: true
+
+  /@vue/shared@3.5.13:
+    resolution: {integrity: sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==}
     dev: true
 
   /@vue/shared@3.5.3:
@@ -3295,6 +3420,10 @@ packages:
   /color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
     dev: true
+
+  /colord@2.9.3:
+    resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
+    dev: false
 
   /colorette@1.4.0:
     resolution: {integrity: sha512-Y2oEozpomLn7Q3HFP7dpww7AtMJplbM9lGZP6RDfHqmbeRjiwRg4n6VM6j4KLmRke85uWEI7JqF17f3pqdRA0g==}

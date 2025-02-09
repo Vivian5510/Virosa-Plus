@@ -1,7 +1,6 @@
 @import './md.css';
 @import './tailwind.css';
 
-
 html.dark {
 	background: #100c2a !important;
 }

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import PhotoGallery from '~/components/inspira/miscellaneous/PhotoGallery.vue'
 import BlurReveal from '~/components/inspira/special-effects/BlurReveal.vue'
-import { ORBIT_DIRECTION } from '~/components/inspira/miscellaneous/orbit'
+import { ORBIT_DIRECTION } from '@/components/inspira/miscellaneous/Orbit'
 import FallingStarsBg from '~/components/inspira/background/FallingStarsBg.vue'
 import { isDark } from 'vue-dark-switch'
 import BorderBeam from '~/components/inspira/special-effects/BorderBeam.vue'
 import IconCloud from '~/components/inspira/miscellaneous/IconCloud/IconCloud.vue'
-import Orbit from '~/components/inspira/miscellaneous/orbit/Orbit.vue'
+import Orbit from '@/components/inspira/miscellaneous/Orbit/Orbit.vue'
 
 const galleryItems = [
 	{
@@ -19,19 +19,19 @@ const galleryItems = [
 		src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=3506&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 	},
 	{
-		src: 'picture/photo-gallery/VCG211313809225.jpg',
+		src: 'picture/photo-gallery/Welcome1.jpg',
 	},
 	{
-		src: 'picture/photo-gallery/VCG211508537811.png',
+		src: 'picture/photo-gallery/Welcome3.jpg',
 	},
 	{
-		src: 'picture/photo-gallery/VCG211514957426.jpg',
+		src: 'picture/photo-gallery/Welcome2.jpg',
 	},
 	{
-		src: 'picture/photo-gallery/VCG211424736516.jpg',
+		src: 'picture/photo-gallery/Welcome4.jpg',
 	},
 	{
-		src: 'picture/photo-gallery/VCG211383857965.jpg',
+		src: 'picture/photo-gallery/Welcome5.jpg',
 	},
 ]
 

@@ -1,6 +1,7 @@
 import Tov from './presets'
 import { defineConfig } from 'vite'
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
 export default defineConfig({
-	plugins: [Tov()],
+	plugins: [Tov(), vueJsx()],
 })
