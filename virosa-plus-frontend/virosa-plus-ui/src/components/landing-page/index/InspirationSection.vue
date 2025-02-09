@@ -32,7 +32,9 @@
 							class="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-white hover:duration-300 hover:dark:text-black"
 							:duration="5"
 						>
-							<span class="text-2xl font-bold">Learn More</span>
+							<span class="text-2xl font-bold">
+								<a :href="inspiration.href"> Learn More </a>
+							</span>
 						</RadiantText>
 					</RainbowButton>
 
@@ -59,16 +61,19 @@ const inspirations = [
 		title: 'Great Minds',
 		description:
 			'Their wisdom shapes time, their courage ignites paths. In their echoes, I find strength to walk my own journey.',
+		href: '/inspiration',
 	},
 	{
 		title: 'Books',
 		description:
 			'Each Book is a window to the infinite, where words weave worlds and every page whispers new horizons.',
+		href: '/inspiration',
 	},
 	{
 		title: 'Video & Audio',
 		description:
 			'Light and shadow unveil the soul’s depths—love, loss, and the fleeting truths that linger beyond the screen.',
+		href: '/inspiration',
 	},
 ]
 </script>
