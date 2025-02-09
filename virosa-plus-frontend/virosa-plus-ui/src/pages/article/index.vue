@@ -57,7 +57,7 @@ const features = [
 	{
 		name: '为什么创建Virosa',
 		description: '从一个更严肃的角度了解这篇博客的存在',
-		href: '/article/1',
+		href: '/article/113',
 		image: 'picture/photo-gallery/Article1.png',
 		cta: 'Learn more',
 		class: 'lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3',
@@ -65,7 +65,7 @@ const features = [
 	{
 		name: '编程语言中的艺术',
 		description: '在体验过由C/C++转码Java之后，越发想要体验Java转码C/C++的感受',
-		href: '/article/2',
+		href: '/article/117',
 		image: 'picture/photo-gallery/Article4.png',
 		cta: 'Learn more',
 		class: 'lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3',
@@ -73,21 +73,21 @@ const features = [
 	{
 		name: '拖延症',
 		description: '拖延症？一个老生常谈的话题，有什么可说的？',
-		href: '/article/3',
+		href: '/article/115',
 		cta: 'Learn more',
 		class: 'lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4',
 	},
 	{
 		name: '我是I人',
 		description: 'I人进来找共鸣，E人进来认识I人的内心世界',
-		href: '/article/4',
+		href: '/article/116',
 		cta: 'Learn more',
 		class: 'lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2',
 	},
 	{
 		name: '梦与酒',
 		description: '或许我也到了爱做梦的年纪',
-		href: '/article/5',
+		href: '/article/114',
 		image: 'picture/photo-gallery/Article3.png',
 		cta: 'Learn more',
 		class: 'lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4',

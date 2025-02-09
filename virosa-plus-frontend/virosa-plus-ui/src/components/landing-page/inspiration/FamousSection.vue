@@ -4,16 +4,16 @@ import SparklesText from '~/components/inspira/text/SparklesText.vue'
 
 const items = ref([
 	{
-		title: '丘吉尔',
+		title: 'Faker',
 		description: '“坚定如铁，舌灿如花。”',
-		imageUrl: 'picture/photo-gallery/丘吉尔.png',
+		imageUrl: 'picture/photo-gallery/Faker.png',
 		href: 'article/6',
 		buttonText: 'Learn More',
 	},
 	{
-		title: '特斯拉',
+		title: '列宁',
 		description: '“真正的天才。”',
-		imageUrl: 'picture/photo-gallery/特斯拉.jpg',
+		imageUrl: 'picture/photo-gallery/列宁1.jpg',
 		href: 'article/7',
 		buttonText: 'Learn More',
 	},
