@@ -1,5 +1,5 @@
 <template>
-	<div :class="cn('group h-72 w-56 [perspective:1000px]', props.class)">
+	<div :class="cn('group h-110 w-56 [perspective:1000px]', props.class)">
 		<div
 			:class="
 				cn(
@@ -15,7 +15,7 @@
 					alt="image"
 					class="size-full rounded-2xl object-cover shadow-2xl shadow-black/40"
 				/>
-				<div class="absolute bottom-4 left-4 text-xl text-white font-bold">
+				<div class="absolute bottom-4 left-4 text-gray-800 font-bold">
 					{{ props.title }}
 				</div>
 			</div>
