@@ -1,16 +1,8 @@
-```markdown
 # 🌌 灵思宇宙 - 个人数字花园
 
 > 思维碎片回收站 × 美学实验田 × 开放式精神洞穴
 
-[![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Vue3](https://img.shields.io/badge/vue-3.4.21-%234FC08D?logo=vue.js)](https://vuejs.org/)
-[![TypeScript](https://img.shields.io/badge/typescript-5.0.4-%233178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.0-%236DB33F?logo=spring&logoColor=white)](https://spring.io/projects/spring-boot)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0-%234479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Redis](https://img.shields.io/badge/Redis-7.0-%23D92D2E?logo=redis&logoColor=white)](https://redis.io/)
-[![MyBatis Plus](https://img.shields.io/badge/MyBatis%20Plus-%232B2B2B?logo=python&logoColor=white)](https://mybatis.plus/)
+[![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)[![Vue3](https://img.shields.io/badge/vue-3.4.21-%234FC08D?logo=vue.js)](https://vuejs.org/)[![TypeScript](https://img.shields.io/badge/typescript-5.0.4-%233178C6?logo=typescript)](https://www.typescriptlang.org/)[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.0-%236DB33F?logo=spring&logoColor=white)](https://spring.io/projects/spring-boot)[![MySQL](https://img.shields.io/badge/MySQL-8.0-%234479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)[![Redis](https://img.shields.io/badge/Redis-7.0-%23D92D2E?logo=redis&logoColor=white)](https://redis.io/)[![MyBatis Plus](https://img.shields.io/badge/MyBatis%20Plus-%232B2B2B?logo=python&logoColor=white)](https://mybatis.plus/)
 
 <p align="center">
   <img src="https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif" width="400" alt="digital-garden">
@@ -33,8 +25,8 @@
 - 实时灵感捕捉器
 
 ### 🎨 美学反应堆
-| 维度       | 特色功能                     |
-|------------|------------------------------|
+| 维度         | 特色功能                     |
+| ------------ | ---------------------------- |
 | **电影宇宙** | 胶片时间轴 × 导演语言分析器  |
 | **书影迷宫** | 跨媒介叙事图谱 × 文学DNA解析 |
 | **音乐粒子** | 声波可视化 × 情绪频谱分析    |
@@ -57,6 +49,7 @@ graph LR
 ```
 
 ### 👤 元人格画像
+
 - 技能森林可视化
 - 人生版本变更日志
 - 精神熵值监测仪
@@ -88,7 +81,7 @@ graph LR
 - SpringBoot 3.4.0+
 - MySQL
 - Redis
-- MyBaitis Plus
+- MyBatis Plus
 
 
 
@@ -140,7 +133,7 @@ pnpm build --compress-timeline
 ## License
 [MIT 时空许可证](LICENSE) © 2024 [你的名字]
 
-```
+
 
 **设计哲学**：
 1. 使用科技隐喻构建神秘感
@@ -155,12 +148,11 @@ pnpm build --compress-timeline
 - 完善贡献指南部分
 - 添加CI/CD徽章
 - 扩展路线图章节
-```
 
 
 
 
 
-## TODO List
+## TODO LIST
 
 暂无
