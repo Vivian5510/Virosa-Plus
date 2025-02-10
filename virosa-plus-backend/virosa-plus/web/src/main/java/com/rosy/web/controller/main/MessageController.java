@@ -19,6 +19,8 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 留言 前端控制器
@@ -120,6 +122,18 @@ public class MessageController {
         Page<Message> messagePage = messageService.page(new Page<>(current, size), messageService.getQueryWrapper(messageQueryRequest));
         Page<MessageVO> messageVOPage = PageUtils.convert(messagePage, messageService::getMessageVO);
         return AjaxResult.success(messageVOPage);
+    }
+
+    // endregion
+
+    // business region
+
+    @PostMapping("/list/all")
+    public AjaxResult listAllMessage() {
+        List<Message> messages = messageService.list();
+        List<MessageVO> messageVOs = messageService.getMessageVOs(messages);
+
+        return AjaxResult.success(messageVOs);
     }
 
     // endregion

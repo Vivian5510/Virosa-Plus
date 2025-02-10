@@ -7,6 +7,8 @@ import com.rosy.main.domain.entity.Message;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.rosy.main.domain.vo.MessageVO;
 
+import java.util.List;
+
 /**
  * <p>
  * 留言 服务类
@@ -19,4 +21,6 @@ public interface IMessageService extends IService<Message> {
     MessageVO getMessageVO(Message message);
 
     Wrapper<Message> getQueryWrapper(MessageQueryRequest messageQueryRequest);
+
+    List<MessageVO> getMessageVOs(List<Message> messages);
 }

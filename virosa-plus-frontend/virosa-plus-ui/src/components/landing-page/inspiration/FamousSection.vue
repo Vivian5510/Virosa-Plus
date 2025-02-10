@@ -5,14 +5,14 @@ import SparklesText from '~/components/inspira/text/SparklesText.vue'
 const items = ref([
 	{
 		title: 'Faker',
-		description: '“坚定如铁，舌灿如花。”',
+		description: '“代表着对极致的追求和对不断超越自我挑战的精神。”',
 		imageUrl: 'picture/photo-gallery/Faker.png',
 		href: 'article/6',
 		buttonText: 'Learn More',
 	},
 	{
 		title: '列宁',
-		description: '“真正的天才。”',
+		description: '“专制政权的奠基者，无产阶级的捍卫者。”',
 		imageUrl: 'picture/photo-gallery/列宁1.jpg',
 		href: 'article/7',
 		buttonText: 'Learn More',
@@ -26,7 +26,7 @@ const items = ref([
 	},
 	{
 		title: '苏格拉底',
-		description: '“诘问为剑。”',
+		description: '“以诘问为剑。”',
 		imageUrl: 'public/picture/photo-gallery/苏格拉底之死.jpg',
 		href: 'article/9',
 		buttonText: 'Learn More',

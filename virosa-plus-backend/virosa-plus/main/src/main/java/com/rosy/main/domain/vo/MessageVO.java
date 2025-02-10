@@ -1,6 +1,7 @@
 package com.rosy.main.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serial;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
  * @since 2025-01-17
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MessageVO implements Serializable {
 
     @Serial
@@ -30,6 +32,12 @@ public class MessageVO implements Serializable {
      * 内容
      */
     private String content;
+
+    private String name;
+
+    private String username;
+
+    private String avatar;
 
     /**
      * 创建时间
