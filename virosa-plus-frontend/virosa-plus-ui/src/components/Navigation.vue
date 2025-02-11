@@ -2,10 +2,8 @@
 import { SwitchIcon } from 'vue-dark-switch'
 import MorphingTabs from '~/components/inspira/miscellaneous/MorphingTabs.vue'
 import DockIcon from '~/components/inspira/dock/DockIcon.vue'
-import GoogleDriveIcon from '~/components/common/icons/GoogleDriveIcon.vue'
 import Dock from '~/components/inspira/dock/Dock.vue'
 import GitHubIcon from '~/components/common/icons/GitHubIcon.vue'
-import OpenAIIcon from '~/components/common/icons/OpenAIIcon.vue'
 
 const routes = [
 	{ path: '/', name: 'home' },
@@ -18,6 +16,10 @@ const route = useRoute() // 获取当前路由
 const activeTab = ref(
 	routes.find((r) => r.path.startsWith(route.path))?.name || 'home',
 ) // 匹配当前路由
+
+const goToLink = (to: string) => {
+	window.location.href = to
+}
 </script>
 
 <template>
@@ -40,13 +42,13 @@ const activeTab = ref(
 		<div class="ml-auto flex items-center space-x-6">
 			<Dock class="mb-6" direction="'bottom'">
 				<DockIcon>
-					<GitHubIcon />
+					<GitHubIcon @click="goToLink('https://github.com/Vivian5510')" />
 				</DockIcon>
 				<DockIcon>
-					<GoogleDriveIcon />
+					<img src="/svg/message.svg" @click="goToLink('/comment')" />
 				</DockIcon>
 				<DockIcon>
-					<OpenAIIcon />
+					<img src="/svg/issue.svg" @click="goToLink('/issue')" />
 				</DockIcon>
 			</Dock>
 

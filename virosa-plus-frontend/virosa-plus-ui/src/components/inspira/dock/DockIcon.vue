@@ -16,7 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue'
 
 const iconRef = ref<HTMLDivElement | null>(null)
 

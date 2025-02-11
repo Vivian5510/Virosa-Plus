@@ -1,7 +1,7 @@
 {
   "name": "virosa-plus",
   "version": "1.19.0",
-  "description": "vite + vue3 + ts 开箱即用现代开发模板 | vite + vue3 + ts out-of-the-box modern development template",
+  "description": "virosa-plus",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
@@ -145,8 +145,10 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@tsparticles/preset-stars": "^3.2.0",
     "@tsparticles/shape-star": "^3.8.1",
+    "@types/date-fns": "^2.6.3",
     "cobe": "^0.6.3",
     "colord": "^2.9.3",
+    "date-fns": "^4.1.0",
     "motion-v": "^0.9.0",
     "vue-use-spring": "^0.3.3"
   }
