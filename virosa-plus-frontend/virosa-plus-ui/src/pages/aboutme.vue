@@ -161,6 +161,43 @@
 					</CardContainer>
 					<BorderBeam :size="250" :duration="20" :delay="5" :border-width="2" />
 				</div>
+
+				<div
+					class="relative mt-6 size-fit flex flex-col items-center justify-center rounded-3xl"
+				>
+					<CardContainer>
+						<CardBody
+							class="group/card h-fit w-full gap-2 border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
+						>
+							<CardItem :translate-z="25" class="min-w-60 w-full flex">
+								<RadiantText
+									class="inline-flex items-center justify-center transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400"
+									:duration="5"
+								>
+									<span class="text-center text-xl font-bold"
+									>Tags for myself 😎</span
+									>
+								</RadiantText>
+							</CardItem>
+
+							<CardItem
+								:translate-z="25"
+								class="mt-3 min-h-28 min-w-60 max-h-100 w-full flex flex-col items-center justify-center"
+							>
+								<ParticleImage
+									image-src="logo.png"
+									:responsive-width="true"
+								/>
+							</CardItem>
+						</CardBody>
+					</CardContainer>
+					<BorderBeam
+						:size="250"
+						:duration="12"
+						:delay="17"
+						:border-width="2"
+					/>
+				</div>
 			</aside>
 
 			<!-- 主内容区域 -->
@@ -336,6 +373,7 @@ import LineShadowText from '~/components/inspira/text/LineShadowText.vue'
 import { isDark } from 'vue-dark-switch'
 import HyperText from '~/components/inspira/text/HyperText.vue'
 import LetterPullup from '~/components/inspira/text/LetterPullup.vue'
+import ParticleImage from '~/components/inspira/special-effects/particle-image/ParticleImage.vue'
 
 const shadowColor = computed(() => (isDark.value ? 'white' : 'black'))
 

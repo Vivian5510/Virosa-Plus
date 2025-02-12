@@ -10,11 +10,11 @@
 			</div>
 		</ScrollIsland>
 
-		<WelcomeSection />
-		<LeadingSection />
-		<InspirationSection />
-		<ArticleSection />
-		<RecreationSection />
+		<WelcomeSection id="Welcome" />
+		<LeadingSection id="Leading" />
+		<InspirationSection id="Inspiration" />
+		<ArticleSection id="Article" />
+		<RecreationSection id="Recreation" />
 	</div>
 </template>
 

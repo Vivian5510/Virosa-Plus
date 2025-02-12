@@ -5,7 +5,7 @@ import FlipWords from '~/components/inspira/text/FlipWords.vue'
 </script>
 
 <template>
-	<section id="Welcome">
+	<section >
 		<div class="flex flex-col overflow-hidden">
 			<ContainerScroll>
 				<template #title>
@@ -26,7 +26,7 @@ import FlipWords from '~/components/inspira/text/FlipWords.vue'
 				</template>
 				<template #card>
 					<img
-						src="/photo-vision-pro.avif"
+						src="/picture/miscellaneous/photo-vision-pro.avif"
 						class="mx-auto h-full rounded-2xl object-cover object-left-top"
 						alt="hero"
 						height="2000"

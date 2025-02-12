@@ -76,7 +76,6 @@ const imageUrls = slugs.map((slug) => `/svg/${slug}.svg`)
 
 <template>
 	<section
-		id="Recreation"
 		class="mb-50 max-w-7xl flex flex-col items-center justify-center"
 	>
 		<BlurReveal :delay="0" :duration="1.5">
