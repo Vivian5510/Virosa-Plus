@@ -308,24 +308,23 @@ onMounted(async () => {
 				>
 					<CardContainer>
 						<CardBody
-							class="group/card h-fit w-full gap-2 overflow-hidden border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
+							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
 						>
-							<CardItem :translate-z="25" class="w-full flex">
+							<CardItem
+								:translate-z="25"
+								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-40 pb-40 pt-8 md:pb-60"
+							>
 								<span
 									class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-8xl text-transparent font-semibold leading-none dark:from-white dark:to-slate-900/10 max-lg:-mt-12"
 								>
 									Read
 								</span>
-							</CardItem>
-
-							<CardItem
-								:translate-z="25"
-								class="mt-3 min-h-28 min-w-60 w-full flex"
-							>
-								<Globe />
+								<Globe class="top-28 mt-20" />
+								<div class="pointer-events-none absolute inset-0 h-full" />
 							</CardItem>
 						</CardBody>
 					</CardContainer>
+
 					<BorderBeam
 						:size="250"
 						:duration="12"
