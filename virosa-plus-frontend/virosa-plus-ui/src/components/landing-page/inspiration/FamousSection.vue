@@ -7,35 +7,35 @@ const items = ref([
 		title: 'Faker',
 		description: '“代表着对极致的追求和对不断超越自我挑战的精神。”',
 		imageUrl: 'picture/photo-gallery/Faker.png',
-		href: 'article/6',
+		href: 'article/136',
 		buttonText: 'Learn More',
 	},
 	{
 		title: '列宁',
 		description: '“专制政权的奠基者，无产阶级的捍卫者。”',
 		imageUrl: 'picture/photo-gallery/列宁1.jpg',
-		href: 'article/7',
+		href: 'article/137',
 		buttonText: 'Learn More',
 	},
 	{
 		title: '尼采',
 		description: '“凝视深渊者。”',
 		imageUrl: 'picture/photo-gallery/尼采.jpg',
-		href: 'article/8',
+		href: 'article/138',
 		buttonText: 'Learn More',
 	},
 	{
 		title: '苏格拉底',
 		description: '“以诘问为剑。”',
 		imageUrl: 'public/picture/photo-gallery/苏格拉底之死.jpg',
-		href: 'article/9',
+		href: 'article/139',
 		buttonText: 'Learn More',
 	},
 ])
 </script>
 
 <template>
-	<section id="famous">
+	<section>
 		<div>
 			<div class="flex flex-col items-center justify-center">
 				<h1

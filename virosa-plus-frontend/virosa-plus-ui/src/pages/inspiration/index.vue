@@ -24,10 +24,10 @@ definePage({
 			</div>
 		</ScrollIsland>
 
-		<IntroSection />
-		<BookSection />
-		<FamousSection />
-		<VideoSection />
+		<IntroSection id="intro" />
+		<BookSection  id="book" />
+		<FamousSection  id="famous" />
+		<VideoSection  id="video" />
 	</div>
 </template>
 

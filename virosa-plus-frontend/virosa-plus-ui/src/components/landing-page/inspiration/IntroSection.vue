@@ -7,7 +7,7 @@ const particlesColor = computed(() =>
 </script>
 
 <template>
-	<section id="intro">
+	<section>
 		<div
 			class="h-[40rem] w-full flex flex-col items-center justify-center overflow-hidden rounded-md"
 		>

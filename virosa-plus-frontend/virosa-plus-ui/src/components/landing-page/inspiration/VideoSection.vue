@@ -9,64 +9,64 @@ const cards = ref([
 		title: '冰菓',
 		description: '一部我看过上百遍的动漫，每看一次都会有新的收获和感悟',
 		image: 'picture/photo-gallery/冰菓15.png',
-		link: '/article/10',
+		link: '/article/120',
 	},
 	{
 		title: '紫罗兰永恒花园',
 		description: '“机械手指书写血肉情书，战争废墟里打捞爱的语言学。”',
 		image: 'picture/photo-gallery/紫罗兰永恒花园7.jpg',
-		link: '/article/11',
+		link: '/article/121',
 	},
 	{
 		title: '葬送的芙莉莲',
 		description:
 			'“漫长岁月中，逝去之人未曾远去，行走的步伐，是思念与成长的见证。”',
 		image: 'picture/photo-gallery/葬送的芙莉莲63.png',
-		link: '/article/12',
+		link: '/article/122',
 	},
 	{
 		title: '漂流少年',
 		description: '“在扭曲现实中迷失，少年少女们踏上寻找自我与归属的无尽漂流。”',
 		image: 'picture/photo-gallery/漂流少年1.png',
-		link: '/article/13',
+		link: '/article/123',
 	},
 	{
 		title: '教父系列',
 		description: '“完美诠释了承担权利所需要的能力以及代价”',
 		image: 'picture/photo-gallery/教父0.jpg',
-		link: '/article/14',
+		link: '/article/124',
 	},
 	{
 		title: '绿皮书',
 		description: '“一场跨越偏见的旅途”',
 		image: 'picture/photo-gallery/绿皮书0.jpg',
-		link: '/article/15',
+		link: '/article/125',
 	},
 	{
 		title: '奇蛋物语',
 		description:
 			'“少女们在梦与现实的裂隙中奔跑，以伤痕换取成长，以离别寻得新生。”',
 		image: 'picture/photo-gallery/奇蛋物语0.png',
-		link: '/article/16',
+		link: '/article/126',
 	},
 	{
 		title: 'Just Because!',
 		description: '“青春的悸动，在错过与再见之间，悄然绽放最纯粹的情感。”',
 		image: 'picture/photo-gallery/Just Because!0.png',
-		link: '/article/17',
+		link: '/article/127',
 	},
 	{
 		title: 'CAROLE & TUESDAY',
 		description:
 			'“在音乐的星空下，两颗孤独的心找到了彼此，共同谱写梦想与希望的旋律。”',
 		image: 'picture/photo-gallery/CAROLE & TUESDAY0.jpg',
-		link: '/article/18',
+		link: '/article/128',
 	},
 ])
 </script>
 
 <template>
-	<section id="video">
+	<section>
 		<h1
 			class="relative z-20 mt-36 text-center text-xl text-black font-bold lg:text-5xl md:text-3xl dark:text-white"
 		>
