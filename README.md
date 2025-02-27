@@ -154,6 +154,4 @@ pnpm build --compress-timeline
 
 
 ## TODO LIST
-
-暂无
 - [ ] 响应式 适配移动端
