@@ -7,18 +7,72 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+*.lcov
+.nyc_output
+
+# Production
+.next
+.swc
+_static
+out
 dist
 dist-ssr
 *.local
+build
+storybook-static
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Editor directories and files
 .vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/*.code-snippets
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Typescript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+.ncurc.js
+
+# OS specific
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Deployment
+.vercel
+.netlify
+
+# Vite
+.vite/
+
+# PWA
+dev-dist/
+public/workbox-*.js
+public/sw.js
+
+# Cache
+.eslintcache
+.cache

@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rosy.common.annotation.ValidateRequest;
 import com.rosy.common.domain.entity.AjaxResult;
-import com.rosy.common.domain.entity.IdRequest;
+import com.rosy.common.domain.IdRequest;
 import com.rosy.common.enums.ErrorCode;
 import com.rosy.common.exception.BusinessException;
 import com.rosy.common.utils.PageUtils;

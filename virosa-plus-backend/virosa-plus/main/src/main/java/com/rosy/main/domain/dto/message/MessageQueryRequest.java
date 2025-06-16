@@ -1,7 +1,6 @@
 package com.rosy.main.domain.dto.message;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.rosy.common.domain.entity.PageRequest;
+import com.rosy.common.domain.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

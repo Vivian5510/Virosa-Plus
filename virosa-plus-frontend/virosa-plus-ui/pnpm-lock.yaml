@@ -35,6 +35,9 @@ dependencies:
   motion-v:
     specifier: ^0.9.0
     version: 0.9.0(vue@3.5.3)
+  pnpm:
+    specifier: ^10.10.0
+    version: 10.10.0
   vue-use-spring:
     specifier: ^0.3.3
     version: 0.3.3(vue@3.5.3)
@@ -6587,6 +6590,12 @@ packages:
       ora: 8.0.1
       v8flags: 4.0.1
     dev: true
+
+  /pnpm@10.10.0:
+    resolution: {integrity: sha512-1hXbJG/nDyXc/qbY1z3ueCziPiJF48T2+Igkn7VoFJMYY33Kc8LFyO8qTKDVZX+5VnGIv6tH9WbR7mzph4FcOQ==}
+    engines: {node: '>=18.12'}
+    hasBin: true
+    dev: false
 
   /postcss-import@15.1.0(postcss@8.5.1):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}

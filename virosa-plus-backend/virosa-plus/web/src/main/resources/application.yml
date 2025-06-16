@@ -10,7 +10,7 @@ server:
 
 spring:
   application:
-    name: springboot3.4.x-init
+    name: virosa-plus
   # 默认 dev 环境
   profiles:
     active: dev

@@ -1,7 +1,6 @@
 package com.rosy.main.domain.dto.famous;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.rosy.common.domain.entity.PageRequest;
+import com.rosy.common.domain.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
