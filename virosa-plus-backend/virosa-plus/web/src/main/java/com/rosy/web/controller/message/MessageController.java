@@ -2,7 +2,6 @@ package com.rosy.web.controller.message;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rosy.common.annotation.ValidateRequest;
 import com.rosy.common.domain.AjaxResult;
 import com.rosy.common.domain.PageResult;
 import com.rosy.common.enums.ErrorCode;
@@ -15,7 +14,9 @@ import com.rosy.web.controller.message.vo.req.MessageQueryReqVO;
 import com.rosy.web.controller.message.vo.req.MessageUpdateReqVO;
 import com.rosy.web.controller.message.vo.resp.MessageRespVO;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/messages")
+@Validated
 public class MessageController {
 
     @Resource
@@ -39,8 +41,7 @@ public class MessageController {
      * 获取留言分页列表
      */
     @GetMapping("/page")
-    @ValidateRequest
-    public AjaxResult page(MessageQueryReqVO reqVO) {
+    public AjaxResult page(@Valid MessageQueryReqVO reqVO) {
         // 参数转换
         Message message = new Message();
         BeanUtils.copyProperties(reqVO, message);
@@ -72,8 +73,7 @@ public class MessageController {
      * 新增留言
      */
     @PostMapping
-    @ValidateRequest
-    public AjaxResult add(@RequestBody MessageAddReqVO reqVO) {
+    public AjaxResult add(@Valid @RequestBody MessageAddReqVO reqVO) {
         Message message = new Message();
         BeanUtils.copyProperties(reqVO, message);
 
@@ -87,8 +87,7 @@ public class MessageController {
      * 修改留言
      */
     @PutMapping("/{id}")
-    @ValidateRequest
-    public AjaxResult update(@PathVariable Long id, @RequestBody MessageUpdateReqVO reqVO) {
+    public AjaxResult update(@PathVariable Long id, @Valid @RequestBody MessageUpdateReqVO reqVO) {
         // 确保ID匹配
         if (!id.equals(reqVO.getId())) {
             throw new ServiceException(ErrorCode.PARAMS_ERROR, "路径ID与请求体ID不一致");

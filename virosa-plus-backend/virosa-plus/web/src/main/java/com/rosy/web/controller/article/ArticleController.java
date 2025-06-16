@@ -2,7 +2,6 @@ package com.rosy.web.controller.article;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rosy.common.annotation.ValidateRequest;
 import com.rosy.common.domain.AjaxResult;
 import com.rosy.common.domain.PageResult;
 import com.rosy.common.enums.ErrorCode;
@@ -19,7 +18,9 @@ import com.rosy.web.controller.article.vo.req.NodeArticleReqVO;
 import com.rosy.web.controller.article.vo.resp.ArticleRespVO;
 import com.rosy.web.controller.article.vo.resp.NodeRespVO;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/articles")
+@Validated
 public class ArticleController {
 
     @Resource
@@ -48,8 +50,7 @@ public class ArticleController {
      * 创建文章
      */
     @PostMapping
-    @ValidateRequest
-    public AjaxResult createArticle(@RequestBody ArticleAddReqVO reqVO) {
+    public AjaxResult createArticle(@Valid @RequestBody ArticleAddReqVO reqVO) {
         // 保存文章
         Article article = new Article();
         BeanUtils.copyProperties(reqVO, article);
@@ -63,7 +64,6 @@ public class ArticleController {
      * 删除文章
      */
     @DeleteMapping("/{id}")
-    @ValidateRequest
     public AjaxResult deleteArticle(@PathVariable("id") Long id) {
         // 首先查找所有引用此文章的节点并删除
         List<Node> nodes = nodeService.lambdaQuery()
@@ -86,8 +86,7 @@ public class ArticleController {
      * 更新文章
      */
     @PutMapping("/{id}")
-    @ValidateRequest
-    public AjaxResult updateArticle(@PathVariable("id") Long id, @RequestBody ArticleUpdateReqVO reqVO) {
+    public AjaxResult updateArticle(@PathVariable("id") Long id, @Valid @RequestBody ArticleUpdateReqVO reqVO) {
         // 确保ID匹配
         if (!id.equals(reqVO.getId())) {
             throw new ServiceException(ErrorCode.PARAMS_ERROR, "路径ID与请求体ID不一致");
@@ -121,7 +120,6 @@ public class ArticleController {
      * 根据ID获取文章详情
      */
     @GetMapping("/{id}")
-    @ValidateRequest
     public AjaxResult getArticleById(@PathVariable("id") Long id) {
         Article article = articleService.getById(id);
         ThrowUtils.throwIf(article == null, ErrorCode.NOT_FOUND_ERROR);
@@ -137,8 +135,7 @@ public class ArticleController {
      * 条件查询文章分页列表
      */
     @GetMapping("/page")
-    @ValidateRequest
-    public AjaxResult page(ArticleQueryReqVO reqVO) {
+    public AjaxResult page(@Valid ArticleQueryReqVO reqVO) {
         // 将请求参数转换为查询条件
         Article article = new Article();
         BeanUtils.copyProperties(reqVO, article);
@@ -154,7 +151,6 @@ public class ArticleController {
      * 获取文章所在的所有目录节点
      */
     @GetMapping("/{id}/nodes")
-    @ValidateRequest
     public AjaxResult getArticleNodes(@PathVariable("id") Long id) {
         // 检查文章是否存在
         Article article = articleService.getById(id);
@@ -176,8 +172,7 @@ public class ArticleController {
      * 获取未归档的文章（没有关联到任何目录节点的文章）
      */
     @GetMapping("/unarchived")
-    @ValidateRequest
-    public AjaxResult getUnarchivedArticles(ArticleQueryReqVO reqVO) {
+    public AjaxResult getUnarchivedArticles(@Valid ArticleQueryReqVO reqVO) {
         // 限制爬虫
         ThrowUtils.throwIf(reqVO.getPageSize() > 20, ErrorCode.PARAMS_ERROR);
 
@@ -217,8 +212,7 @@ public class ArticleController {
      * 将文章添加到目录中
      */
     @PostMapping("/{id}/directory")
-    @ValidateRequest
-    public AjaxResult addArticleToDirectory(@PathVariable("id") Long id, @RequestBody NodeArticleReqVO reqVO) {
+    public AjaxResult addArticleToDirectory(@PathVariable("id") Long id, @Valid @RequestBody NodeArticleReqVO reqVO) {
         // 检查文章是否存在
         Article article = articleService.getById(id);
         ThrowUtils.throwIf(article == null, ErrorCode.NOT_FOUND_ERROR, "文章不存在");

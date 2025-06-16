@@ -2,7 +2,6 @@ package com.rosy.web.controller.article;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rosy.common.annotation.ValidateRequest;
 import com.rosy.common.domain.AjaxResult;
 import com.rosy.common.domain.PageResult;
 import com.rosy.common.enums.ErrorCode;
@@ -15,7 +14,9 @@ import com.rosy.web.controller.article.vo.req.NodeQueryReqVO;
 import com.rosy.web.controller.article.vo.req.NodeUpdateReqVO;
 import com.rosy.web.controller.article.vo.resp.NodeRespVO;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/nodes")
+@Validated
 public class NodeController {
 
     @Resource
@@ -39,8 +41,7 @@ public class NodeController {
      * 获取节点分页列表
      */
     @GetMapping("/page")
-    @ValidateRequest
-    public AjaxResult page(NodeQueryReqVO reqVO) {
+    public AjaxResult page(@Valid NodeQueryReqVO reqVO) {
         // 构造查询条件
         Node node = new Node();
         BeanUtils.copyProperties(reqVO, node);
@@ -73,8 +74,7 @@ public class NodeController {
      * 新增节点
      */
     @PostMapping
-    @ValidateRequest
-    public AjaxResult add(@RequestBody NodeAddReqVO reqVO) {
+    public AjaxResult add(@Valid @RequestBody NodeAddReqVO reqVO) {
         Node node = new Node();
         BeanUtils.copyProperties(reqVO, node);
 
@@ -88,8 +88,7 @@ public class NodeController {
      * 修改节点
      */
     @PutMapping("/{id}")
-    @ValidateRequest
-    public AjaxResult update(@PathVariable Long id, @RequestBody NodeUpdateReqVO reqVO) {
+    public AjaxResult update(@PathVariable Long id, @Valid @RequestBody NodeUpdateReqVO reqVO) {
         // 确保ID匹配
         if (!id.equals(reqVO.getId())) {
             throw new ServiceException(ErrorCode.PARAMS_ERROR, "路径ID与请求体ID不一致");

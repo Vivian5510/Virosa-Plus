@@ -2,7 +2,6 @@ package com.rosy.web.controller.issue;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.rosy.common.annotation.ValidateRequest;
 import com.rosy.common.domain.AjaxResult;
 import com.rosy.common.domain.PageResult;
 import com.rosy.common.enums.ErrorCode;
@@ -15,7 +14,9 @@ import com.rosy.web.controller.issue.vo.req.IssueQueryReqVO;
 import com.rosy.web.controller.issue.vo.req.IssueUpdateReqVO;
 import com.rosy.web.controller.issue.vo.resp.IssueRespVO;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/issues")
+@Validated
 public class IssueController {
 
     @Resource
@@ -39,8 +41,7 @@ public class IssueController {
      * 获取问题分页列表
      */
     @GetMapping("/page")
-    @ValidateRequest
-    public AjaxResult page(IssueQueryReqVO reqVO) {
+    public AjaxResult page(@Valid IssueQueryReqVO reqVO) {
         // 参数转换
         Issue issue = new Issue();
         BeanUtils.copyProperties(reqVO, issue);
@@ -71,8 +72,7 @@ public class IssueController {
      * 新增问题
      */
     @PostMapping
-    @ValidateRequest
-    public AjaxResult add(@RequestBody IssueAddReqVO reqVO) {
+    public AjaxResult add(@Valid @RequestBody IssueAddReqVO reqVO) {
         Issue issue = new Issue();
         BeanUtils.copyProperties(reqVO, issue);
 
@@ -86,8 +86,7 @@ public class IssueController {
      * 修改问题
      */
     @PutMapping("/{id}")
-    @ValidateRequest
-    public AjaxResult update(@PathVariable Long id, @RequestBody IssueUpdateReqVO reqVO) {
+    public AjaxResult update(@PathVariable Long id, @Valid @RequestBody IssueUpdateReqVO reqVO) {
         // 确保ID匹配
         if (!id.equals(reqVO.getId())) {
             throw new ServiceException(ErrorCode.PARAMS_ERROR, "路径ID与请求体ID不一致");
