@@ -11,7 +11,7 @@ export default {
 			heading: ['Bricolage Grotesque', 'Manrope'],
 			sans: ['Manrope'],
 			mono: ['monospace'],
-			lxgw: ['LXGWenKai', 'Manrope'],
+			lxgw: ['"LXGW WenKai"', 'Manrope', 'sans-serif'],
 		},
 		extend: {
 			animation: {
