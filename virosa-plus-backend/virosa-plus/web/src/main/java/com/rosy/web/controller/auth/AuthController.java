@@ -1,9 +1,9 @@
 package com.rosy.web.controller.auth;
 
+import com.rosy.common.domain.AjaxResult;
 import com.rosy.main.domain.SysUser;
 import com.rosy.main.service.ISysUserService;
 import com.rosy.web.controller.auth.vo.req.LoginReqVO;
-import com.rosy.web.controller.common.api.CommonResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class AuthController {
      */
     @PostMapping("/login")
     @Operation(summary = "用户登录", description = "用户登录接口")
-    public CommonResult<Map<String, String>> login(@RequestBody LoginReqVO loginReq) {
+    public AjaxResult login(@RequestBody LoginReqVO loginReq) {
         Map<String, String> loginParams = new HashMap<>();
         loginParams.put("username", loginReq.getUsername());
         loginParams.put("password", loginReq.getPassword());
@@ -36,7 +36,7 @@ public class AuthController {
         String token = userService.login(loginParams);
         Map<String, String> result = new HashMap<>();
         result.put("token", token);
-        return CommonResult.success(result);
+        return AjaxResult.success(result);
     }
 
     /**
@@ -44,10 +44,10 @@ public class AuthController {
      */
     @GetMapping("/info")
     @Operation(summary = "获取用户信息", description = "获取当前登录用户信息")
-    public CommonResult<SysUser> getUserInfo() {
+    public AjaxResult getUserInfo() {
         SysUser user = userService.getLoginUserInfo();
         user.setPassword(null); // 不返回密码信息
-        return CommonResult.success(user);
+        return AjaxResult.success(user);
     }
 
     /**
@@ -55,8 +55,8 @@ public class AuthController {
      */
     @PostMapping("/logout")
     @Operation(summary = "退出登录", description = "用户退出登录接口")
-    public CommonResult<Void> logout() {
+    public AjaxResult logout() {
         // 简化实现，因为使用JWT,客户端可自行清除token
-        return CommonResult.success();
+        return AjaxResult.success();
     }
 }

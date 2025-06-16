@@ -22,6 +22,16 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     private static final char ASTERISK = '*';
 
     /**
+     * 构造函数
+     * 
+     * @deprecated 工具类不应该被实例化
+     */
+    @Deprecated(since = "1.0.0")
+    private StringUtils() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
+
+    /**
      * 获取参数不为空值
      *
      * @param value defaultValue 要判断的value
@@ -437,7 +447,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。 例如：HELLO_WORLD->HelloWorld
+     * 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。
+     * 例如：HELLO_WORLD->HelloWorld
      *
      * @param name 转换前的下划线大写方式命名的字符串
      * @return 转换后的驼峰式命名的字符串

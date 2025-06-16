@@ -1,11 +1,12 @@
 package com.rosy.web.controller.article;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rosy.common.annotation.ValidateRequest;
 import com.rosy.common.domain.AjaxResult;
+import com.rosy.common.domain.PageResult;
 import com.rosy.common.enums.ErrorCode;
-import com.rosy.common.exception.BusinessException;
-import com.rosy.common.utils.PageUtils;
+import com.rosy.common.exception.ServiceException;
 import com.rosy.common.utils.ThrowUtils;
 import com.rosy.main.domain.Article;
 import com.rosy.main.domain.Node;
@@ -89,7 +90,7 @@ public class ArticleController {
     public AjaxResult updateArticle(@PathVariable("id") Long id, @RequestBody ArticleUpdateReqVO reqVO) {
         // 确保ID匹配
         if (!id.equals(reqVO.getId())) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "路径ID与请求体ID不一致");
+            throw new ServiceException(ErrorCode.PARAMS_ERROR, "路径ID与请求体ID不一致");
         }
 
         // 更新文章
@@ -135,29 +136,18 @@ public class ArticleController {
     /**
      * 条件查询文章分页列表
      */
-    @GetMapping
+    @GetMapping("/page")
     @ValidateRequest
-    public AjaxResult listArticles(ArticleQueryReqVO reqVO) {
-        // 限制爬虫
-        ThrowUtils.throwIf(reqVO.getPageSize() > 20, ErrorCode.PARAMS_ERROR);
+    public AjaxResult page(ArticleQueryReqVO reqVO) {
+        // 将请求参数转换为查询条件
+        Article article = new Article();
+        BeanUtils.copyProperties(reqVO, article);
 
-        // 查询条件转换
-        Article queryArticle = new Article();
-        BeanUtils.copyProperties(reqVO, queryArticle);
+        // 调用服务层获取分页数据，返回PageResult
+        PageResult<Article> pageResult = articleService.getArticlePage(reqVO.getPageNum(), reqVO.getPageSize(),
+                article);
 
-        // 查询数据
-        Page<Article> articlePage = articleService.page(
-                new Page<>(reqVO.getPageNum(), reqVO.getPageSize()),
-                articleService.getQueryWrapper(queryArticle));
-
-        // 转换为VO
-        Page<ArticleRespVO> respVOPage = PageUtils.convert(articlePage, article -> {
-            ArticleRespVO respVO = new ArticleRespVO();
-            BeanUtils.copyProperties(article, respVO);
-            return respVO;
-        });
-
-        return AjaxResult.success(respVOPage);
+        return AjaxResult.success(pageResult);
     }
 
     /**
@@ -176,11 +166,8 @@ public class ArticleController {
                 .eq(Node::getType, "file")
                 .list();
 
-        List<NodeRespVO> nodeRespVOs = nodes.stream().map(node -> {
-            NodeRespVO respVO = new NodeRespVO();
-            BeanUtils.copyProperties(node, respVO);
-            return respVO;
-        }).collect(Collectors.toList());
+        // 使用Hutool的BeanUtil进行转换
+        List<NodeRespVO> nodeRespVOs = BeanUtil.copyToList(nodes, NodeRespVO.class);
 
         return AjaxResult.success(nodeRespVOs);
     }
@@ -220,14 +207,10 @@ public class ArticleController {
         Page<Article> resultPage = new Page<>(reqVO.getPageNum(), reqVO.getPageSize(), articlePage.getTotal());
         resultPage.setRecords(unarchivedArticles);
 
-        // 转换为VO
-        Page<ArticleRespVO> responseVOPage = PageUtils.convert(resultPage, article -> {
-            ArticleRespVO respVO = new ArticleRespVO();
-            BeanUtils.copyProperties(article, respVO);
-            return respVO;
-        });
-
-        return AjaxResult.success(responseVOPage);
+        // 转换为PageResult，使用Hutool的BeanUtil
+        List<ArticleRespVO> respVOList = BeanUtil.copyToList(resultPage.getRecords(), ArticleRespVO.class);
+        PageResult<ArticleRespVO> pageResult = new PageResult<>(respVOList, resultPage.getTotal());
+        return AjaxResult.success(pageResult);
     }
 
     /**
@@ -257,55 +240,5 @@ public class ArticleController {
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
 
         return AjaxResult.success(fileNode.getId());
-    }
-
-    /**
-     * 获取书评类型的文章
-     */
-    @GetMapping("/types/books")
-    @ValidateRequest
-    public AjaxResult getBookReviews(ArticleQueryReqVO reqVO) {
-        reqVO.setCategory("书评");
-        return listArticles(reqVO);
-    }
-
-    /**
-     * 获取影评类型的文章
-     */
-    @GetMapping("/types/videos")
-    @ValidateRequest
-    public AjaxResult getVideoReviews(ArticleQueryReqVO reqVO) {
-        reqVO.setCategory("影评");
-        return listArticles(reqVO);
-    }
-
-    /**
-     * 获取乐评类型的文章
-     */
-    @GetMapping("/types/music")
-    @ValidateRequest
-    public AjaxResult getMusicReviews(ArticleQueryReqVO reqVO) {
-        reqVO.setCategory("乐评");
-        return listArticles(reqVO);
-    }
-
-    /**
-     * 获取名人评传类型的文章
-     */
-    @GetMapping("/types/famous")
-    @ValidateRequest
-    public AjaxResult getFamousPeople(ArticleQueryReqVO reqVO) {
-        reqVO.setCategory("名人评传");
-        return listArticles(reqVO);
-    }
-
-    /**
-     * 按作者查询文章
-     */
-    @GetMapping("/by-author")
-    @ValidateRequest
-    public AjaxResult getByAuthor(ArticleQueryReqVO reqVO) {
-        ThrowUtils.throwIf(reqVO.getAuthor() == null, ErrorCode.PARAMS_ERROR, "作者参数不能为空");
-        return listArticles(reqVO);
     }
 }

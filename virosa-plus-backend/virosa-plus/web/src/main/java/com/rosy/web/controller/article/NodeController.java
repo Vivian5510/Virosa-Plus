@@ -1,16 +1,16 @@
 package com.rosy.web.controller.article;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rosy.common.annotation.ValidateRequest;
 import com.rosy.common.domain.AjaxResult;
+import com.rosy.common.domain.PageResult;
 import com.rosy.common.enums.ErrorCode;
-import com.rosy.common.exception.BusinessException;
-import com.rosy.common.utils.PageUtils;
+import com.rosy.common.exception.ServiceException;
 import com.rosy.common.utils.ThrowUtils;
 import com.rosy.main.domain.Node;
 import com.rosy.main.service.INodeService;
 import com.rosy.web.controller.article.vo.req.NodeAddReqVO;
-import com.rosy.web.controller.article.vo.req.NodeArticleReqVO;
 import com.rosy.web.controller.article.vo.req.NodeQueryReqVO;
 import com.rosy.web.controller.article.vo.req.NodeUpdateReqVO;
 import com.rosy.web.controller.article.vo.resp.NodeRespVO;
@@ -19,11 +19,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
- * 节点 前端控制器
+ * 目录/文件节点 前端控制器
  * </p>
  *
  * @author Rosy
@@ -32,170 +31,137 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/nodes")
 public class NodeController {
+
     @Resource
     private INodeService nodeService;
 
     /**
-     * 创建节点
+     * 获取节点分页列表
+     */
+    @GetMapping("/page")
+    @ValidateRequest
+    public AjaxResult page(NodeQueryReqVO reqVO) {
+        // 构造查询条件
+        Node node = new Node();
+        BeanUtils.copyProperties(reqVO, node);
+
+        // 分页查询
+        Page<Node> page = new Page<>(reqVO.getPageNum(), reqVO.getPageSize());
+        Page<Node> pageResult = nodeService.page(page, nodeService.getQueryWrapper(node));
+
+        // 使用Hutool的BeanUtil直接转换列表
+        List<NodeRespVO> voList = BeanUtil.copyToList(pageResult.getRecords(), NodeRespVO.class);
+
+        // 直接构造PageResult返回
+        PageResult<NodeRespVO> result = new PageResult<>(voList, pageResult.getTotal());
+        return AjaxResult.success(result);
+    }
+
+    /**
+     * 获取节点详情
+     */
+    @GetMapping("/{id}")
+    public AjaxResult getInfo(@PathVariable Long id) {
+        Node node = nodeService.getById(id);
+        ThrowUtils.throwIf(node == null, ErrorCode.NOT_FOUND_ERROR, "节点不存在");
+
+        NodeRespVO vo = BeanUtil.copyProperties(node, NodeRespVO.class);
+        return AjaxResult.success(vo);
+    }
+
+    /**
+     * 新增节点
      */
     @PostMapping
     @ValidateRequest
-    public AjaxResult createNode(@RequestBody NodeAddReqVO reqVO) {
-        // 检查类型是否正确
-        if (reqVO.getTitle() == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "节点标题不能为空");
-        }
-
-        // 保存节点
+    public AjaxResult add(@RequestBody NodeAddReqVO reqVO) {
         Node node = new Node();
         BeanUtils.copyProperties(reqVO, node);
-        node.setType("directory"); // 强制设置为目录类型
-        node.setName(reqVO.getTitle()); // 设置名称为标题
 
-        boolean result = nodeService.save(node);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        boolean success = nodeService.save(node);
+        ThrowUtils.throwIf(!success, ErrorCode.OPERATION_ERROR, "新增节点失败");
 
         return AjaxResult.success(node.getId());
+    }
+
+    /**
+     * 修改节点
+     */
+    @PutMapping("/{id}")
+    @ValidateRequest
+    public AjaxResult update(@PathVariable Long id, @RequestBody NodeUpdateReqVO reqVO) {
+        // 确保ID匹配
+        if (!id.equals(reqVO.getId())) {
+            throw new ServiceException(ErrorCode.PARAMS_ERROR, "路径ID与请求体ID不一致");
+        }
+
+        Node node = new Node();
+        BeanUtils.copyProperties(reqVO, node);
+
+        boolean success = nodeService.updateById(node);
+        ThrowUtils.throwIf(!success, ErrorCode.OPERATION_ERROR, "修改节点失败");
+
+        return AjaxResult.success();
     }
 
     /**
      * 删除节点
      */
     @DeleteMapping("/{id}")
-    @ValidateRequest
-    public AjaxResult deleteNode(@PathVariable("id") Long id) {
-        boolean result = nodeService.removeById(id);
-        return AjaxResult.success(result);
+    public AjaxResult remove(@PathVariable Long id) {
+        boolean success = nodeService.removeById(id);
+        ThrowUtils.throwIf(!success, ErrorCode.OPERATION_ERROR, "删除节点失败");
+
+        return AjaxResult.success();
     }
 
     /**
-     * 更新节点
-     */
-    @PutMapping("/{id}")
-    @ValidateRequest
-    public AjaxResult updateNode(@PathVariable("id") Long id, @RequestBody NodeUpdateReqVO reqVO) {
-        // 确保ID匹配
-        if (!id.equals(reqVO.getId())) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "路径ID与请求体ID不一致");
-        }
-
-        // 更新节点
-        Node node = new Node();
-        BeanUtils.copyProperties(reqVO, node);
-        node.setName(reqVO.getTitle()); // 设置名称为标题
-
-        boolean result = nodeService.updateById(node);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-
-        return AjaxResult.success(true);
-    }
-
-    /**
-     * 根据ID获取节点详情
-     */
-    @GetMapping("/{id}")
-    @ValidateRequest
-    public AjaxResult getNodeById(@PathVariable("id") Long id) {
-        Node node = nodeService.getById(id);
-        ThrowUtils.throwIf(node == null, ErrorCode.NOT_FOUND_ERROR);
-
-        // 转换为VO
-        NodeRespVO respVO = new NodeRespVO();
-        BeanUtils.copyProperties(node, respVO);
-        respVO.setTitle(node.getName());
-
-        return AjaxResult.success(respVO);
-    }
-
-    /**
-     * 条件查询节点分页列表
-     */
-    @GetMapping
-    @ValidateRequest
-    public AjaxResult listNodes(NodeQueryReqVO reqVO) {
-        // 限制爬虫
-        ThrowUtils.throwIf(reqVO.getPageSize() > 20, ErrorCode.PARAMS_ERROR);
-
-        // 查询条件转换
-        Node queryNode = new Node();
-        if (reqVO.getTitle() != null) {
-            queryNode.setName(reqVO.getTitle());
-        }
-        queryNode.setParentId(reqVO.getParentId());
-        queryNode.setArticleId(reqVO.getArticleId());
-
-        // 查询数据
-        Page<Node> nodePage = nodeService.page(
-                new Page<>(reqVO.getPageNum(), reqVO.getPageSize()),
-                nodeService.getQueryWrapper(queryNode));
-
-        // 转换为VO
-        Page<NodeRespVO> respVOPage = PageUtils.convert(nodePage, node -> {
-            NodeRespVO respVO = new NodeRespVO();
-            BeanUtils.copyProperties(node, respVO);
-            respVO.setTitle(node.getName());
-            return respVO;
-        });
-
-        return AjaxResult.success(respVOPage);
-    }
-
-    /**
-     * 获取文件树结构
+     * 获取树形结构的节点列表
      */
     @GetMapping("/tree")
-    @ValidateRequest
     public AjaxResult getFileTree() {
-        // 获取文件树
         List<Node> nodeTree = nodeService.getFileTree();
 
-        // 转换为VO
-        List<NodeRespVO> respVOList = nodeTree.stream().map(node -> {
-            NodeRespVO respVO = new NodeRespVO();
-            BeanUtils.copyProperties(node, respVO);
-            respVO.setTitle(node.getName());
-            return respVO;
-        }).collect(Collectors.toList());
+        // 使用Hutool的BeanUtil直接转换列表
+        List<NodeRespVO> voList = BeanUtil.copyToList(nodeTree, NodeRespVO.class);
 
-        return AjaxResult.success(respVOList);
+        return AjaxResult.success(voList);
     }
 
     /**
-     * 添加文章到目录
+     * 将文章添加到目录
      */
-    @PostMapping("/articles")
-    @ValidateRequest
-    public AjaxResult addArticleToDirectory(@RequestBody NodeArticleReqVO reqVO) {
-        Long nodeId = nodeService.addArticleToDirectory(
-                reqVO.getArticleId(),
-                reqVO.getNodeId(),
-                null); // 使用文章标题作为节点名称
+    @PostMapping("/directory/{directoryId}/article/{articleId}")
+    public AjaxResult addArticleToDirectory(
+            @PathVariable Long directoryId,
+            @PathVariable Long articleId,
+            @RequestParam(required = false) String nodeName) {
 
-        return AjaxResult.success(nodeId);
+        Long newNodeId = nodeService.addArticleToDirectory(articleId, directoryId, nodeName);
+        ThrowUtils.throwIf(newNodeId == null, ErrorCode.OPERATION_ERROR, "添加文章到目录失败");
+
+        return AjaxResult.success(newNodeId);
     }
 
     /**
-     * 从目录移除文章
+     * 从目录中移除文章
      */
-    @DeleteMapping("/articles/{id}")
-    @ValidateRequest
-    public AjaxResult removeArticleFromDirectory(@PathVariable("id") Long id) {
-        boolean result = nodeService.removeArticleFromDirectory(id);
-        return AjaxResult.success(result);
+    @DeleteMapping("/file/{nodeId}")
+    public AjaxResult removeArticleFromDirectory(@PathVariable Long nodeId) {
+        boolean success = nodeService.removeArticleFromDirectory(nodeId);
+        ThrowUtils.throwIf(!success, ErrorCode.OPERATION_ERROR, "从目录中移除文章失败");
+
+        return AjaxResult.success();
     }
 
     /**
-     * 移动节点到新目录
+     * 移动节点到新的父目录
      */
-    @PutMapping("/{id}/move")
-    @ValidateRequest
-    public AjaxResult moveNode(@PathVariable("id") Long id, @RequestBody NodeUpdateReqVO reqVO) {
-        // 确保ID匹配
-        if (!id.equals(reqVO.getId()) || reqVO.getParentId() == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "节点ID和父节点ID不能为空");
-        }
+    @PutMapping("/{nodeId}/parent/{newParentId}")
+    public AjaxResult moveNode(@PathVariable Long nodeId, @PathVariable Long newParentId) {
+        boolean success = nodeService.moveNode(nodeId, newParentId);
+        ThrowUtils.throwIf(!success, ErrorCode.OPERATION_ERROR, "移动节点失败");
 
-        boolean result = nodeService.moveNode(id, reqVO.getParentId());
-        return AjaxResult.success(result);
+        return AjaxResult.success();
     }
 }

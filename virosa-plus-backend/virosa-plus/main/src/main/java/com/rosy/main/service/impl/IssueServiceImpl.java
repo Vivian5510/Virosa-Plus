@@ -2,6 +2,8 @@ package com.rosy.main.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rosy.common.domain.PageResult;
 import com.rosy.common.enums.ErrorCode;
 import com.rosy.common.exception.ServiceException;
 import com.rosy.common.utils.QueryWrapperUtil;
@@ -30,15 +32,27 @@ public class IssueServiceImpl extends ServiceImpl<IssueMapper, Issue> implements
         LambdaQueryWrapper<Issue> queryWrapper = new LambdaQueryWrapper<>();
 
         // 动态添加查询条件
-        QueryWrapperUtil.addCondition(queryWrapper, issue.getId(), Issue::getId);
-        QueryWrapperUtil.addCondition(queryWrapper, issue.getTitle(), Issue::getTitle);
-        QueryWrapperUtil.addCondition(queryWrapper, issue.getDescription(), Issue::getDescription);
-        QueryWrapperUtil.addCondition(queryWrapper, issue.getStatus(), Issue::getStatus);
-        QueryWrapperUtil.addCondition(queryWrapper, issue.getType(), Issue::getType);
-        QueryWrapperUtil.addCondition(queryWrapper, issue.getTags(), Issue::getTags);
-        QueryWrapperUtil.addCondition(queryWrapper, issue.getCreateTime(), Issue::getCreateTime);
-        QueryWrapperUtil.addCondition(queryWrapper, issue.getUpdateTime(), Issue::getUpdateTime);
+        QueryWrapperUtil.addEqualCondition(queryWrapper, issue.getId(), Issue::getId);
+        QueryWrapperUtil.addEqualCondition(queryWrapper, issue.getTitle(), Issue::getTitle);
+        QueryWrapperUtil.addEqualCondition(queryWrapper, issue.getDescription(), Issue::getDescription);
+        QueryWrapperUtil.addEqualCondition(queryWrapper, issue.getStatus(), Issue::getStatus);
+        QueryWrapperUtil.addEqualCondition(queryWrapper, issue.getType(), Issue::getType);
+        QueryWrapperUtil.addEqualCondition(queryWrapper, issue.getTags(), Issue::getTags);
+        QueryWrapperUtil.addEqualCondition(queryWrapper, issue.getCreateTime(), Issue::getCreateTime);
+        QueryWrapperUtil.addEqualCondition(queryWrapper, issue.getUpdateTime(), Issue::getUpdateTime);
 
         return queryWrapper;
+    }
+
+    @Override
+    public PageResult<Issue> getIssuePage(long pageNum, long pageSize, Issue issue) {
+        // 构建查询条件
+        Wrapper<Issue> wrapper = getQueryWrapper(issue);
+
+        // 执行分页查询
+        Page<Issue> page = page(new Page<>(pageNum, pageSize), wrapper);
+
+        // 直接构造PageResult，不使用PageUtils
+        return new PageResult<>(page.getRecords(), page.getTotal());
     }
 }

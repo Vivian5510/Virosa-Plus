@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.annotation.Version;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.Data;
 
@@ -83,4 +84,10 @@ public class Node implements Serializable {
      */
     @TableLogic
     private Byte isDeleted;
+
+    /**
+     * 子节点列表，不持久化到数据库
+     */
+    @TableField(exist = false)
+    private List<Node> children;
 }

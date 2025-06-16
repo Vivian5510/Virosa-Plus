@@ -1,8 +1,7 @@
-package com.rosy.framework.handler;
+package com.rosy.common.exception;
 
 import com.rosy.common.domain.AjaxResult;
 import com.rosy.common.enums.ErrorCode;
-import com.rosy.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(BusinessException.class)
-    public AjaxResult businessExceptionHandler(BusinessException e) {
-        log.error("BusinessException", e);
+    @ExceptionHandler(ServiceException.class)
+    public AjaxResult serviceExceptionHandler(ServiceException e) {
+        log.error("ServiceException", e);
         return AjaxResult.error(e.getCode(), e.getMessage());
     }
 
