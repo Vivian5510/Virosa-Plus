@@ -2,15 +2,14 @@ package com.rosy.common.domain;
 
 import com.rosy.common.constant.HttpStatus;
 import com.rosy.common.utils.StringUtils;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serial;
 import java.util.HashMap;
 import java.util.Objects;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class AjaxResult extends HashMap<String, Object> {
     /**
      * 状态码

@@ -1,7 +1,7 @@
 package com.rosy.framework.security;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.rosy.main.domain.entity.SysUser;
+import com.rosy.main.domain.SysUser;
 import com.rosy.main.mapper.SysUserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

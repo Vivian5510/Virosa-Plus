@@ -27,15 +27,14 @@ export type ConfigValue = {
   amplify: { userPoolId: string; userPoolWebClientId: string; region: string };
   auth0: { clientId: string; domain: string; callbackUrl: string };
   supabase: { url: string; key: string };
-  theme: string;
 };
 
 // ----------------------------------------------------------------------
 
 export const CONFIG: ConfigValue = {
-  appName: 'Virosa Plus Admin',
+  appName: 'Minimal UI',
   appVersion: packageJson.version,
-  serverUrl: '',
+  serverUrl: import.meta.env.VITE_SERVER_URL ?? '',
   assetsDir: import.meta.env.VITE_ASSETS_DIR ?? '',
   /**
    * Auth
@@ -85,10 +84,4 @@ export const CONFIG: ConfigValue = {
     url: import.meta.env.VITE_SUPABASE_URL ?? '',
     key: import.meta.env.VITE_SUPABASE_ANON_KEY ?? '',
   },
-  theme: 'light',
 };
-
-/* eslint-disable no-console */
-if (import.meta.env.DEV) {
-  console.log('CONFIG', JSON.stringify(CONFIG, null, 2));
-}

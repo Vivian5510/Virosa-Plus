@@ -1,11 +1,13 @@
 package com.rosy.common.exception;
 
+import com.rosy.common.enums.ErrorCode;
+import lombok.Getter;
+
 /**
  * 业务异常
  */
+@Getter
 public class ServiceException extends RuntimeException {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 错误码
@@ -32,12 +34,26 @@ public class ServiceException extends RuntimeException {
         this.code = code;
     }
 
+    /**
+     * 基于错误码构造异常
+     */
+    public ServiceException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.code = errorCode.getCode();
+        this.message = errorCode.getMessage();
+    }
+
+    /**
+     * 基于错误码和自定义消息构造异常
+     */
+    public ServiceException(ErrorCode errorCode, String message) {
+        super(message);
+        this.code = errorCode.getCode();
+        this.message = message;
+    }
+
     @Override
     public String getMessage() {
         return message;
-    }
-
-    public Integer getCode() {
-        return code;
     }
 }

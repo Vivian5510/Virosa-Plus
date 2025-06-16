@@ -1,0 +1,28 @@
+package com.rosy.web.controller.message.vo.req;
+
+import com.rosy.common.domain.PageParam;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * 消息查询请求对象
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class MessageQueryReqVO extends PageParam {
+
+    /**
+     * 消息内容，模糊查询
+     */
+    private String content;
+
+    /**
+     * 消息类型（0：公告通知；1：提醒；）
+     */
+    private Integer type;
+
+    /**
+     * 消息状态（0：未读；1：已读）
+     */
+    private Integer status;
+}

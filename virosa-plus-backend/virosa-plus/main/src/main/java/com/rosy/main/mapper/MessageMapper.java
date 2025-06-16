@@ -1,6 +1,6 @@
 package com.rosy.main.mapper;
 
-import com.rosy.main.domain.entity.Message;
+import com.rosy.main.domain.Message;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

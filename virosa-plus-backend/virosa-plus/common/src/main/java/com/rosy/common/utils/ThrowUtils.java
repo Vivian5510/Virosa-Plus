@@ -1,7 +1,7 @@
 package com.rosy.common.utils;
 
 import com.rosy.common.enums.ErrorCode;
-import com.rosy.common.exception.BusinessException;
+import com.rosy.common.exception.ServiceException;
 
 /**
  * 抛异常工具类
@@ -21,13 +21,13 @@ public class ThrowUtils {
      * 条件成立则抛异常
      */
     public static void throwIf(boolean condition, ErrorCode errorCode) {
-        throwIf(condition, new BusinessException(errorCode));
+        throwIf(condition, new ServiceException(errorCode));
     }
 
     /**
      * 条件成立则抛异常
      */
     public static void throwIf(boolean condition, ErrorCode errorCode, String message) {
-        throwIf(condition, new BusinessException(errorCode, message));
+        throwIf(condition, new ServiceException(errorCode, message));
     }
 }

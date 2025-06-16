@@ -1,6 +1,6 @@
 package com.rosy.framework.handler;
 
-import com.rosy.common.domain.entity.AjaxResult;
+import com.rosy.common.domain.AjaxResult;
 import com.rosy.common.enums.ErrorCode;
 import com.rosy.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;

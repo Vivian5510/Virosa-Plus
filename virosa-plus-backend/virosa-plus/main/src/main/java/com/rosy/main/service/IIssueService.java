@@ -1,11 +1,8 @@
 package com.rosy.main.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.rosy.main.domain.dto.issue.IssueQueryRequest;
-import com.rosy.main.domain.entity.Issue;
-import com.rosy.main.domain.entity.Issue;
+import com.rosy.main.domain.Issue;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rosy.main.domain.vo.IssueVO;
 
 /**
  * <p>
@@ -16,7 +13,11 @@ import com.rosy.main.domain.vo.IssueVO;
  * @since 2025-01-17
  */
 public interface IIssueService extends IService<Issue> {
-    IssueVO getIssueVO(Issue issue);
-
-    Wrapper<Issue> getQueryWrapper(IssueQueryRequest issueQueryRequest);
+    /**
+     * 获取查询包装器
+     * 
+     * @param issue 查询条件
+     * @return 查询包装器
+     */
+    Wrapper<Issue> getQueryWrapper(Issue issue);
 }

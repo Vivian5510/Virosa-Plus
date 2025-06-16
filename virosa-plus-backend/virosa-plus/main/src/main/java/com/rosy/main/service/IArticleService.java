@@ -1,10 +1,8 @@
 package com.rosy.main.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.rosy.main.domain.dto.article.ArticleQueryRequest;
-import com.rosy.main.domain.entity.Article;
+import com.rosy.main.domain.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.rosy.main.domain.vo.ArticleVO;
 
 /**
  * <p>
@@ -16,7 +14,5 @@ import com.rosy.main.domain.vo.ArticleVO;
  */
 public interface IArticleService extends IService<Article> {
 
-    ArticleVO getArticleVO(Article article);
-
-    Wrapper<Article> getQueryWrapper(ArticleQueryRequest articleQueryRequest);
+    Wrapper<Article> getQueryWrapper(Article article);
 }
