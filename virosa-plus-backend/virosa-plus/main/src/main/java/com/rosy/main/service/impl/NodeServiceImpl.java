@@ -1,13 +1,14 @@
 package com.rosy.main.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.rosy.common.enums.ErrorCode;
+import com.rosy.common.enums.StatusEnum;
 import com.rosy.common.exception.ServiceException;
 import com.rosy.common.utils.QueryWrapperUtil;
 import com.rosy.main.domain.Article;
 import com.rosy.main.domain.Node;
+import com.rosy.common.enums.NodeType;
 import com.rosy.main.mapper.NodeMapper;
 import com.rosy.main.service.IArticleService;
 import com.rosy.main.service.INodeService;
@@ -70,7 +71,7 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, Node> implements IN
             throw new ServiceException(ErrorCode.NOT_FOUND_ERROR, "目录节点不存在");
         }
 
-        if (!"directory".equals(directoryNode.getType())) {
+        if (!NodeType.DIRECTORY.getCode().equals(directoryNode.getType())) {
             throw new ServiceException(ErrorCode.PARAMS_ERROR, "指定节点不是目录类型");
         }
 
@@ -78,7 +79,7 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, Node> implements IN
         LambdaQueryWrapper<Node> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Node::getParentId, directoryNodeId)
                 .eq(Node::getArticleId, articleId)
-                .eq(Node::getType, "file");
+                .eq(Node::getType, NodeType.FILE.getCode());
 
         long count = this.count(queryWrapper);
         if (count > 0) {
@@ -87,10 +88,10 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, Node> implements IN
 
         // 4. 创建新的文件节点
         Node fileNode = new Node();
-        fileNode.setType("file");
+        fileNode.setType(NodeType.FILE.getCode());
         fileNode.setParentId(directoryNodeId);
         fileNode.setArticleId(articleId);
-        fileNode.setStatus((byte) 1); // 默认启用
+        fileNode.setStatus(StatusEnum.ENABLED.getCode()); // 默认启用
 
         // 如果未指定节点名称，则使用文章标题
         if (StringUtils.hasText(nodeName)) {
@@ -118,7 +119,7 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, Node> implements IN
         }
 
         // 2. 确保是文件类型的节点
-        if (!"file".equals(node.getType())) {
+        if (!NodeType.FILE.getCode().equals(node.getType())) {
             throw new ServiceException(ErrorCode.PARAMS_ERROR, "该节点不是文件类型");
         }
 
@@ -141,7 +142,7 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, Node> implements IN
             throw new ServiceException(ErrorCode.NOT_FOUND_ERROR, "目标父节点不存在");
         }
 
-        if (!"directory".equals(parentNode.getType())) {
+        if (!NodeType.DIRECTORY.getCode().equals(parentNode.getType())) {
             throw new ServiceException(ErrorCode.PARAMS_ERROR, "目标节点不是目录类型");
         }
 

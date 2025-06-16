@@ -59,7 +59,7 @@ public class Node implements Serializable {
     /**
      * 是否已发布（0: 关闭, 1: 开启）
      */
-    private Byte status;
+    private Integer status;
 
     /**
      * 更新时间
@@ -77,13 +77,13 @@ public class Node implements Serializable {
      * 版本
      */
     @Version
-    private Byte version;
+    private Integer version;
 
     /**
      * 是否删除
      */
     @TableLogic
-    private Byte isDeleted;
+    private Integer isDeleted;
 
     /**
      * 子节点列表，不持久化到数据库

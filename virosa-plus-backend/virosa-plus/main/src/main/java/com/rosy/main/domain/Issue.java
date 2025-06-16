@@ -54,7 +54,7 @@ public class Issue {
     /**
      * 状态: OPEN/CLOSE/RESOLVED/IN_PROGRESS
      */
-    private Byte status;
+    private Integer status;
 
     /**
      * 昵称
@@ -82,11 +82,11 @@ public class Issue {
      * 版本
      */
     @Version
-    private Byte version;
+    private Integer version;
 
     /**
      * 是否删除
      */
     @TableLogic
-    private Byte isDeleted;
+    private Integer isDeleted;
 }

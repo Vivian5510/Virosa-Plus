@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rosy.common.domain.AjaxResult;
 import com.rosy.common.domain.PageResult;
 import com.rosy.common.enums.ErrorCode;
+import com.rosy.common.enums.StatusEnum;
 import com.rosy.common.exception.ServiceException;
 import com.rosy.common.utils.ThrowUtils;
 import com.rosy.main.domain.Article;
 import com.rosy.main.domain.Node;
+import com.rosy.common.enums.NodeType;
 import com.rosy.main.service.IArticleService;
 import com.rosy.main.service.INodeService;
 import com.rosy.web.controller.article.vo.req.ArticleAddReqVO;
@@ -68,7 +70,7 @@ public class ArticleController {
         // 首先查找所有引用此文章的节点并删除
         List<Node> nodes = nodeService.lambdaQuery()
                 .eq(Node::getArticleId, id)
-                .eq(Node::getType, "file")
+                .eq(Node::getType, NodeType.FILE.getCode())
                 .list();
 
         if (!nodes.isEmpty()) {
@@ -102,7 +104,7 @@ public class ArticleController {
         if (reqVO.getTitle() != null) {
             List<Node> nodes = nodeService.lambdaQuery()
                     .eq(Node::getArticleId, id)
-                    .eq(Node::getType, "file")
+                    .eq(Node::getType, NodeType.FILE.getCode())
                     .list();
 
             if (!nodes.isEmpty()) {
@@ -159,7 +161,7 @@ public class ArticleController {
         // 查找所有引用此文章的节点
         List<Node> nodes = nodeService.lambdaQuery()
                 .eq(Node::getArticleId, id)
-                .eq(Node::getType, "file")
+                .eq(Node::getType, NodeType.FILE.getCode())
                 .list();
 
         // 使用Hutool的BeanUtil进行转换
@@ -187,7 +189,7 @@ public class ArticleController {
 
         // 获取所有已经归档的文章ID
         Set<Long> archivedArticleIds = nodeService.lambdaQuery()
-                .eq(Node::getType, "file")
+                .eq(Node::getType, NodeType.FILE.getCode())
                 .isNotNull(Node::getArticleId)
                 .list()
                 .stream()
@@ -220,15 +222,16 @@ public class ArticleController {
         // 检查节点是否存在且为目录节点
         Node directory = nodeService.getById(reqVO.getNodeId());
         ThrowUtils.throwIf(directory == null, ErrorCode.NOT_FOUND_ERROR, "目录节点不存在");
-        ThrowUtils.throwIf(!"directory".equals(directory.getType()), ErrorCode.PARAMS_ERROR, "指定的节点不是一个目录节点");
+        ThrowUtils.throwIf(!NodeType.DIRECTORY.getCode().equals(directory.getType()),
+                ErrorCode.PARAMS_ERROR, "指定的节点不是一个目录节点");
 
         // 创建新的文件节点
         Node fileNode = new Node();
         fileNode.setName(article.getTitle());
-        fileNode.setType("file");
+        fileNode.setType(NodeType.FILE.getCode());
         fileNode.setArticleId(id);
         fileNode.setParentId(reqVO.getNodeId());
-        fileNode.setStatus((byte) 1);
+        fileNode.setStatus(StatusEnum.ENABLED.getCode());
 
         boolean result = nodeService.save(fileNode);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);

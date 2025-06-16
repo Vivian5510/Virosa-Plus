@@ -62,11 +62,11 @@ public class Message implements Serializable {
      * 版本
      */
     @Version
-    private Byte version;
+    private Integer version;
 
     /**
      * 是否删除
      */
     @TableLogic
-    private Byte isDeleted;
+    private Integer isDeleted;
 }

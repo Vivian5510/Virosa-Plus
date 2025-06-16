@@ -73,7 +73,7 @@ public class Article implements Serializable {
     /**
      * 是否已发布（0: 草稿, 1: 已发布）
      */
-    private Byte isPublished;
+    private Integer isPublished;
 
     /**
      * 更新时间
@@ -91,11 +91,11 @@ public class Article implements Serializable {
      * 版本
      */
     @Version
-    private Byte version;
+    private Integer version;
 
     /**
      * 是否删除
      */
     @TableLogic
-    private Byte isDeleted;
+    private Integer isDeleted;
 }

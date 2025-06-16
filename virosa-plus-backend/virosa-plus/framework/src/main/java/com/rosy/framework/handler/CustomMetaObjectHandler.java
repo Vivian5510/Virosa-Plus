@@ -5,10 +5,10 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-//TODO: 1.这里的createTime和updateTime的类型要根据数据库字段的类型来修改
-//TODO: 2.这里的createBy和updateBy的类型要根据数据库字段的类型来修改, 生成的逻辑也要根据实际情况来修改，这里0表示系统超级管理员或者默认值
+/**
+ * MyBatis-Plus自动填充处理器
+ */
 @Component
 public class CustomMetaObjectHandler implements MetaObjectHandler {
 
@@ -16,13 +16,12 @@ public class CustomMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
-        this.strictInsertFill(metaObject, "createBy", Long.class, 0L);
-        this.strictInsertFill(metaObject, "updateBy", Long.class, 0L);
+        this.strictInsertFill(metaObject, "isDeleted", Integer.class, 0);
+        this.strictInsertFill(metaObject, "version", Integer.class, 0);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
-        this.strictUpdateFill(metaObject, "updateBy", Long.class, 0L);
     }
 }
