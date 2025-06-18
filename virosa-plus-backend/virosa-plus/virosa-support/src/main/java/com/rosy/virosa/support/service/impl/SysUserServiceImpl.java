@@ -7,6 +7,7 @@ import com.rosy.virosa.support.domain.SysUser;
 import com.rosy.virosa.support.mapper.SysUserMapper;
 import com.rosy.virosa.support.service.ISysUserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ import java.util.Map;
  * 用户服务实现类
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
@@ -75,6 +77,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         user.setPassword(null);
 
         return user;
+    }
+
+    @Override
+    public SysUser getByUsername(String username) {
+        return userMapper.selectOne(
+                new LambdaQueryWrapper<SysUser>()
+                        .eq(SysUser::getUsername, username));
     }
 
     @Override

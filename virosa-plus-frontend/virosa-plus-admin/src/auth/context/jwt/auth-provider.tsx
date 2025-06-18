@@ -36,17 +36,17 @@ export function AuthProvider({ children }: Props) {
         // 检查返回的数据结构
         const responseData = res.data;
 
-        // 假设后端返回格式是 { code: '0', msg: 'success', data: { ... 用户信息 ... } }
-        if (responseData.code === '0' && responseData.data) {
+        // 适配后端返回格式：{ code: 200, msg: "操作成功", data: { ... 用户信息 ... } }
+        if ((responseData.code === 200 || responseData.code === '0') && responseData.data) {
           const user = responseData.data;
 
-          // 适配用户字段
+          // 适配用户字段 - 注意后端可能没有 email 和 nickname 字段
           const adaptedUser = {
             id: user.id,
             username: user.username,
-            email: user.email || '',
-            displayName: user.nickname || user.username,
-            role: user.role || 'admin',
+            email: '', // 后端没有这个字段
+            displayName: user.username, // 使用用户名作为显示名
+            role: 'admin', // 默认角色
             accessToken,
           };
 

@@ -2,8 +2,6 @@ import type { AxiosRequestConfig } from 'axios';
 
 import axios from 'axios';
 
-import { CONFIG } from 'src/global-config';
-
 // ----------------------------------------------------------------------
 
 // 创建 axios 实例，baseURL 指向 /api，这样所有请求都是相对于 Vite 服务器的
@@ -74,9 +72,10 @@ export const apiEndpoints = {
     create: '/nodes',
     update: (id: string | number) => `/nodes/${id}`,
     delete: (id: string | number) => `/nodes/${id}`,
-    move: (id: string | number, newParentId: string | number) => `/nodes/${id}/parent/${newParentId}`,
+    move: (id: string | number, newParentId: string | number) =>
+      `/nodes/${id}/parent/${newParentId}`,
     addArticle: (directoryId: string | number, articleId: string | number) =>
       `/nodes/directory/${directoryId}/article/${articleId}`,
     removeArticle: (nodeId: string | number) => `/nodes/file/${nodeId}`,
-  }
+  },
 };

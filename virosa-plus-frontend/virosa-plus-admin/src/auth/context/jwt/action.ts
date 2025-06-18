@@ -1,7 +1,6 @@
 import axiosInstance, { endpoints } from 'src/lib/axios';
 
 import { setSession } from './utils';
-import { JWT_STORAGE_KEY } from './constant';
 
 // ----------------------------------------------------------------------
 
@@ -13,8 +12,6 @@ export type SignInParams = {
 export type SignUpParams = {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
 };
 
 /** **************************************
@@ -22,12 +19,13 @@ export type SignUpParams = {
  *************************************** */
 export const signInWithPassword = async ({ email, password }: SignInParams): Promise<void> => {
   try {
+    // 只发送用户名和密码
     const params = { username: email, password };
 
     const res = await axiosInstance.post(endpoints.auth.signIn, params, {
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     });
 
@@ -35,7 +33,8 @@ export const signInWithPassword = async ({ email, password }: SignInParams): Pro
 
     const { code, data } = res.data;
 
-    if (code === '0' && data?.token) {
+    // 适配后端返回格式：code 是数字 200
+    if ((code === 200 || code === '0') && data?.token) {
       setSession(data.token);
     } else {
       throw new Error('Invalid response format or token not found');
@@ -51,22 +50,19 @@ export const signInWithPassword = async ({ email, password }: SignInParams): Pro
  *************************************** */
 export const signUp = async ({
   email,
-  password,
-  firstName,
-  lastName,
+  password
 }: SignUpParams): Promise<void> => {
+  // 只发送用户名和密码，移除多余字段
   const params = {
     username: email,
     password,
-    email,
-    nickname: `${firstName} ${lastName}`,
   };
 
   try {
     const res = await axiosInstance.post(endpoints.auth.signUp, params, {
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     });
 
@@ -74,7 +70,8 @@ export const signUp = async ({
 
     const { code, data } = res.data;
 
-    if (code === '0' && data?.token) {
+    // 适配后端返回格式：code 是数字 200
+    if ((code === 200 || code === '0') && data?.token) {
       setSession(data.token);
     } else {
       throw new Error('Invalid response format or token not found');

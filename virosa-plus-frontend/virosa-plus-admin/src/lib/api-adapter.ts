@@ -146,6 +146,17 @@ export const postService = {
       throw error;
     }
   },
+
+  // 获取文章关联的目录
+  async getArticleDirectories(articleId: string | number) {
+    try {
+      const response = await axiosInstance.get(apiEndpoints.article.nodes(articleId));
+      return response.data.data || [];
+    } catch (error) {
+      console.error(`Failed to fetch directories for article ${articleId}:`, error);
+      return [];
+    }
+  },
 };
 
 // 节点(目录)服务
@@ -205,6 +216,17 @@ export const nodeService = {
       return response.data;
     } catch (error) {
       console.error(`Failed to move node ${nodeId} to parent ${newParentId}:`, error);
+      throw error;
+    }
+  },
+
+  // 移除文章与目录的关联
+  async removeArticleFromDirectory(nodeId: string | number) {
+    try {
+      const response = await axiosInstance.delete(apiEndpoints.node.removeArticle(nodeId));
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to remove article from node ${nodeId}:`, error);
       throw error;
     }
   },

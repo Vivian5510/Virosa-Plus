@@ -37,4 +37,10 @@ springdoc:
     path: /swagger-ui.html  # 配置 Swagger UI 的路径
     enabled: true  # 启用 Swagger UI
 
+# 日志配置
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.rosy.virosa: DEBUG
+
 
