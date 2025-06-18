@@ -109,8 +109,8 @@ export function PostListView() {
         newStatus === 'published'
       );
 
-      // 检查响应是否成功 - 兼容后端可能返回的两种成功代码格式
-      const isSuccess = response.code === 200 || response.code === '0' || response.code === 0;
+      // 检查响应是否成功 - 只有200表示成功
+      const isSuccess = response.code === 200;
 
       if (isSuccess) {
         // 显示成功通知

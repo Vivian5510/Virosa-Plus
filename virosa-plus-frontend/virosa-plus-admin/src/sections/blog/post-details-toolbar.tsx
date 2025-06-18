@@ -17,38 +17,27 @@ type Props = BoxProps & {
   liveHref: string;
 };
 
-export function PostDetailsToolbar({
-  sx,
-  backHref,
-  editHref,
-  liveHref,
-  ...other
-}: Props) {
+export function PostDetailsToolbar({ sx, backHref, editHref, liveHref, ...other }: Props) {
   return (
-    <>
-      <Box
-        sx={[
-          { gap: 1.5, display: 'flex', mb: { xs: 3, md: 5 } },
-          ...(Array.isArray(sx) ? sx : [sx]),
-        ]}
-        {...other}
+    <Box
+      sx={[{ gap: 1.5, display: 'flex', mb: { xs: 3, md: 5 } }, ...(Array.isArray(sx) ? sx : [sx])]}
+      {...other}
+    >
+      <Button
+        component={RouterLink}
+        href={backHref}
+        startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
       >
-        <Button
-          component={RouterLink}
-          href={backHref}
-          startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
-        >
-          返回
-        </Button>
+        返回
+      </Button>
 
-        <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ flexGrow: 1 }} />
 
-        <Tooltip title="编辑">
-          <IconButton component={RouterLink} href={editHref}>
-            <Iconify icon="solar:pen-bold" />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    </>
+      <Tooltip title="编辑">
+        <IconButton component={RouterLink} href={editHref}>
+          <Iconify icon="solar:pen-bold" />
+        </IconButton>
+      </Tooltip>
+    </Box>
   );
 }

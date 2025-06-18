@@ -12,8 +12,45 @@ const axiosInstance = axios.create({
 
 // 添加响应拦截器
 axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!')
+  (response) => {
+    // 即使HTTP状态是200，也检查响应体中是否有错误码
+    if (response.data && typeof response.data === 'object') {
+      const data = response.data;
+
+      // 检查响应体中的错误码（只有200表示成功）
+      if (data.code !== undefined && data.code !== 200) {
+        // 创建包含响应数据的错误对象
+        const error = new Error(data.msg || 'API返回了错误状态码');
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        error.response = response;
+        return Promise.reject(error);
+      }
+    }
+
+    return response;
+  },
+  (error) => {
+    // 增强错误信息
+    const errorMessage =
+      error.response?.data?.msg ||
+      error.response?.data?.message ||
+      error.message ||
+      '请求失败，请检查网络连接';
+
+    console.error('API请求失败:', errorMessage, error);
+
+    // 创建新的错误对象，包含更详细的信息
+    const enhancedError = new Error(errorMessage);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    enhancedError.originalError = error;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    enhancedError.response = error.response;
+
+    return Promise.reject(enhancedError);
+  }
 );
 
 export default axiosInstance;

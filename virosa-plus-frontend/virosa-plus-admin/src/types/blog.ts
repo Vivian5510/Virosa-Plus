@@ -55,28 +55,15 @@ export type INodeItem = {
 export type IPostItem = {
   id: string;
   title: string;
-  tags: string[];
-  publish: string;
   content: string;
   coverUrl: string;
-  metaTitle: string;
-  totalViews: number;
-  totalShares: number;
-  description: string;
-  totalComments: number;
+  type: string;
+  tags: string[];
+  publish: string;
+  author: string;
+  extraInfo?: string;
+  externalLink?: string;
+  isPublished?: number;
   createdAt: IDateValue;
-  totalFavorites: number;
-  metaKeywords: string[];
-  metaDescription: string;
-  comments: IPostComment[];
-  author: {
-    name: string;
-    avatarUrl: string;
-  };
-  favoritePerson: {
-    name: string;
-    avatarUrl: string;
-  }[];
-  // 扩展属性：文章所在的节点
   nodes?: INodeItem[];
 };

@@ -1,5 +1,4 @@
 import type { IPostItem } from 'src/types/blog';
-import type { BoxProps } from '@mui/material/Box';
 import type { CardProps } from '@mui/material/Card';
 
 import { varAlpha } from 'minimal-shared/utils';
@@ -14,12 +13,10 @@ import CardContent from '@mui/material/CardContent';
 import { RouterLink } from 'src/routes/components';
 
 import { fDate } from 'src/utils/format-time';
-import { fShortenNumber } from 'src/utils/format-number';
 
 import { AvatarShape } from 'src/assets/illustrations';
 
 import { Image } from 'src/components/image';
-import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -73,12 +70,6 @@ export function PostItem({ post, detailsHref, sx, ...other }: PostItemProps) {
         >
           {post.title}
         </Link>
-
-        <InfoBlock
-          totalViews={post.totalViews}
-          totalShares={post.totalShares}
-          totalComments={post.totalComments}
-        />
       </CardContent>
     </Card>
   );
@@ -149,52 +140,7 @@ export function PostItemLatest({ post, index, detailsHref }: PostItemLatestProps
         >
           {post.title}
         </Link>
-
-        <InfoBlock
-          totalViews={post.totalViews}
-          totalShares={post.totalShares}
-          totalComments={post.totalComments}
-          sx={{ opacity: 0.64, color: 'common.white' }}
-        />
       </CardContent>
     </Card>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-type InfoBlockProps = BoxProps & Pick<IPostItem, 'totalViews' | 'totalShares' | 'totalComments'>;
-
-function InfoBlock({ sx, totalViews, totalShares, totalComments, ...other }: InfoBlockProps) {
-  return (
-    <Box
-      sx={[
-        () => ({
-          mt: 3,
-          gap: 1.5,
-          display: 'flex',
-          typography: 'caption',
-          color: 'text.disabled',
-          justifyContent: 'flex-end',
-        }),
-        ...(Array.isArray(sx) ? sx : [sx]),
-      ]}
-      {...other}
-    >
-      <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-        <Iconify width={16} icon="eva:message-circle-fill" />
-        {fShortenNumber(totalComments)}
-      </Box>
-
-      <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-        <Iconify width={16} icon="solar:eye-bold" />
-        {fShortenNumber(totalViews)}
-      </Box>
-
-      <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-        <Iconify width={16} icon="solar:share-bold" />
-        {fShortenNumber(totalShares)}
-      </Box>
-    </Box>
   );
 }

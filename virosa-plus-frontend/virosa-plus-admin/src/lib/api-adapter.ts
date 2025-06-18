@@ -1,4 +1,4 @@
-import type { IPostItem, INodeItem } from 'src/types/blog';
+import type { IPostItem } from 'src/types/blog';
 
 import axiosInstance, { apiEndpoints } from './axios';
 
@@ -13,15 +13,18 @@ export function articleToPostItem(article: any, nodes: any[] = []): IPostItem {
   let publishStatus = 'draft'; // 默认为草稿
 
   if (Object.prototype.hasOwnProperty.call(article, 'isPublished')) {
-    publishStatus = article.isPublished === 1 || article.isPublished === true ? 'published' : 'draft';
+    publishStatus =
+      article.isPublished === 1 || article.isPublished === true ? 'published' : 'draft';
   } else if (Object.prototype.hasOwnProperty.call(article, 'publish')) {
-    publishStatus = article.publish === 'published' || article.publish === 1 || article.publish === true
-      ? 'published'
-      : 'draft';
+    publishStatus =
+      article.publish === 'published' || article.publish === 1 || article.publish === true
+        ? 'published'
+        : 'draft';
   } else if (Object.prototype.hasOwnProperty.call(article, 'status')) {
-    publishStatus = article.status === 1 || article.status === true || article.status === 'published'
-      ? 'published'
-      : 'draft';
+    publishStatus =
+      article.status === 1 || article.status === true || article.status === 'published'
+        ? 'published'
+        : 'draft';
   }
 
   // 获取标签信息
@@ -32,29 +35,27 @@ export function articleToPostItem(article: any, nodes: any[] = []): IPostItem {
     tags = [article.type];
   }
 
+  // 文章类型，优先使用type字段
+  const type = article.type || (tags.length > 0 ? tags[0] : '随笔');
+
   // 构建格式化的文章对象
   const formattedPost: IPostItem = {
     id: article.id?.toString() || '',
     title: article.title || '',
-    tags,
-    publish: publishStatus,
     content: article.content || '',
     coverUrl: article.cover || '/assets/images/cover/cover_1.jpg',
-    metaTitle: article.title || '',
-    totalViews: 0, // 始终设置为0，因为文章没有设计浏览量
-    totalShares: 0,
-    description: article.content ? article.content.substring(0, 200) : '',
-    totalComments: 0,
+    type, // 文章类型
+    tags, // 保留tags以兼容现有代码
+    publish: publishStatus, // 保留publish以兼容现有代码
     createdAt: article.createTime || new Date().toISOString(),
-    totalFavorites: 0,
-    metaKeywords: tags,
-    metaDescription: article.content ? article.content.substring(0, 200) : '',
-    comments: [],
     author: {
       name: article.author || 'Admin',
       avatarUrl: '/assets/images/avatar/avatar_1.jpg',
     },
-    favoritePerson: [],
+    // 额外字段
+    extraInfo: article.extraInfo || '',
+    externalLink: article.externalLink || '',
+    isPublished: article.isPublished || 0,
     // 扩展字段，保存节点信息
     nodes: nodes || [],
   };
@@ -63,7 +64,10 @@ export function articleToPostItem(article: any, nodes: any[] = []): IPostItem {
     id: formattedPost.id,
     title: formattedPost.title,
     publish: formattedPost.publish,
-    tags: formattedPost.tags
+    tags: formattedPost.tags,
+    type: formattedPost.type,
+    extraInfo: formattedPost.extraInfo,
+    externalLink: formattedPost.externalLink,
   });
 
   return formattedPost;
@@ -71,14 +75,36 @@ export function articleToPostItem(article: any, nodes: any[] = []): IPostItem {
 
 // 将前端IPostItem转换为后端Article
 export function postItemToArticle(postItem: Partial<IPostItem>): any {
+  // 检查是否有标签
+  let tags = '';
+  if (postItem.tags && postItem.tags.length > 0) {
+    tags = postItem.tags.join(',');
+  }
+
+  // 处理封面图片URL
+  let coverUrl = postItem.coverUrl;
+  if (typeof coverUrl === 'object' && coverUrl !== null) {
+    // 处理上传的文件对象，它可能有preview属性
+    // @ts-expect-error - 忽略类型检查，因为我们知道这里可能是一个文件上传对象
+    coverUrl = coverUrl.preview || '';
+  }
+
+  // 优先使用type字段，如果没有则使用tags的第一个值
+  const articleType =
+    postItem.type || (postItem.tags && postItem.tags.length > 0 ? postItem.tags[0] : '随笔');
+
   const articleData = {
     id: postItem.id,
     title: postItem.title || '',
     content: postItem.content || '',
-    cover: postItem.coverUrl || '',
+    cover: coverUrl || '',
     author: postItem.author?.name || 'Admin',
-    type: postItem.tags?.[0] || '',
+    type: articleType, // 使用type字段作为文章类型
+    tags, // 添加完整的标签列表
     isPublished: postItem.publish === 'published' ? 1 : 0,
+    // 添加新增字段
+    extraInfo: postItem.extraInfo || '',
+    externalLink: postItem.externalLink || '',
   };
 
   console.log('将文章数据转换为后端格式:', articleData);
@@ -194,11 +220,16 @@ export const postService = {
       const response = await axiosInstance.put(apiEndpoints.article.update(id), article);
       console.log('文章更新响应:', response.data);
 
-      if (response.data.code !== 200) {
-        throw new Error(response.data.msg || '更新文章失败');
+      // 检查响应是否成功 - 只有200表示成功
+      const isSuccess = response.data.code === 200;
+
+      if (isSuccess) {
+        console.log('成功更新文章');
+        return response.data;
       }
 
-      return response.data;
+      // 如果不是成功状态码，抛出错误
+      throw new Error(response.data.msg || '更新文章失败');
     } catch (error) {
       console.error(`更新文章失败, ID: ${id}`, error);
       throw error;
@@ -220,7 +251,7 @@ export const postService = {
         title: article.title || '',
         content: article.content || '',
         author: article.author?.name || 'Admin',
-        isPublished: isPublished ? 1 : 0
+        isPublished: isPublished ? 1 : 0,
       };
 
       console.log('发送更新状态请求:', updateData);
@@ -228,12 +259,8 @@ export const postService = {
 
       console.log('更新发布状态响应:', response.data);
 
-      // 检查响应是否成功 - 兼容不同的成功状态码格式
-      const isSuccess =
-        response.data.code === 200 ||
-        response.data.code === 0 ||
-        response.data.code === '0' ||
-        response.data.code === '200';
+      // 检查响应是否成功 - 只有200表示成功
+      const isSuccess = response.data.code === 200;
 
       if (isSuccess) {
         console.log('成功更新文章发布状态');

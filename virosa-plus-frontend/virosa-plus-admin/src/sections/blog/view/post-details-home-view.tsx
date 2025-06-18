@@ -4,19 +4,13 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-
-import { fShortenNumber } from 'src/utils/format-number';
 
 import { Iconify } from 'src/components/iconify';
 import { Markdown } from 'src/components/markdown';
@@ -25,8 +19,6 @@ import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 import { PostItem } from '../post-item';
 import { PostDetailsSkeleton } from '../post-skeleton';
-import { PostCommentList } from '../post-comment-list';
-import { PostCommentForm } from '../post-comment-form';
 import { PostDetailsHero } from '../post-details-hero';
 
 // ----------------------------------------------------------------------
@@ -92,7 +84,7 @@ export function PostDetailsHomeView({ post, latestPosts, loading, error }: Props
 
       <Container maxWidth={false}>
         <Stack sx={{ maxWidth: 720, mx: 'auto' }}>
-          <Typography variant="subtitle1">{post?.description}</Typography>
+          <Typography variant="subtitle1">{post?.content?.substring(0, 200)}</Typography>
 
           <Markdown children={post?.content} />
 
@@ -109,47 +101,13 @@ export function PostDetailsHomeView({ post, latestPosts, loading, error }: Props
             <Box sx={{ gap: 1, display: 'flex', flexWrap: 'wrap' }}>
               {post?.tags.map((tag) => <Chip key={tag} label={tag} variant="soft" />)}
             </Box>
-
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <FormControlLabel
-                label={fShortenNumber(post?.totalFavorites)}
-                control={
-                  <Checkbox
-                    defaultChecked
-                    size="small"
-                    color="error"
-                    icon={<Iconify icon="solar:heart-bold" />}
-                    checkedIcon={<Iconify icon="solar:heart-bold" />}
-                    inputProps={{
-                      id: 'favorite-checkbox',
-                      'aria-label': 'Favorite checkbox',
-                    }}
-                  />
-                }
-                sx={{ mr: 1 }}
-              />
-
-              <AvatarGroup>
-                {post?.favoritePerson.map((person) => (
-                  <Avatar key={person.name} alt={person.name} src={person.avatarUrl} />
-                ))}
-              </AvatarGroup>
-            </Box>
           </Stack>
 
           <Box sx={{ mb: 3, mt: 5, display: 'flex' }}>
-            <Typography variant="h4">Comments</Typography>
-
-            <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
-              ({post?.comments.length})
-            </Typography>
+            <Typography variant="h4">评论</Typography>
           </Box>
 
-          <PostCommentForm />
-
           <Divider sx={{ mt: 5, mb: 2 }} />
-
-          <PostCommentList comments={post?.comments} />
         </Stack>
       </Container>
 

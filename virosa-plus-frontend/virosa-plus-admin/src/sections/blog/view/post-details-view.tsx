@@ -2,12 +2,10 @@ import type { IPostItem } from 'src/types/blog';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid2';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -86,13 +84,7 @@ export function PostDetailsView({ post, loading, error }: Props) {
                     分类:
                   </Typography>
                   {post.tags.map((tag) => (
-                    <Chip
-                      key={tag}
-                      label={tag}
-                      variant="soft"
-                      size="small"
-                      sx={{ mr: 1 }}
-                    />
+                    <Chip key={tag} label={tag} variant="soft" size="small" sx={{ mr: 1 }} />
                   ))}
                 </Box>
               )}
@@ -104,11 +96,13 @@ export function PostDetailsView({ post, loading, error }: Props) {
 
           {/* 右侧目录关联组件 */}
           <Grid size={{ xs: 12, md: 4, lg: 4 }}>
-            <Box sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              pr: { xs: 0, md: 3 }
-            }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                pr: { xs: 0, md: 3 },
+              }}
+            >
               {post && <ArticlesToDirectory post={post} />}
             </Box>
           </Grid>

@@ -14,6 +14,13 @@ const swrOptions: SWRConfiguration = {
   revalidateOnReconnect: false,
 };
 
+// 文章列表专用的SWR选项，允许自动刷新
+const postsSwrOptions: SWRConfiguration = {
+  revalidateOnFocus: true, // 当页面重新获得焦点时重新验证
+  revalidateOnReconnect: true, // 当网络重新连接时重新验证
+  dedupingInterval: 5000, // 5秒内不重复请求
+};
+
 // ----------------------------------------------------------------------
 
 type PostsData = {
@@ -62,7 +69,7 @@ export function useGetPosts(params = { pageNum: 1, pageSize: 10, publish: '' }) 
   const { data, isLoading, error, isValidating, mutate } = useSWR<PostsData>(
     [`articles/page`, params],
     customFetcher,
-    swrOptions
+    postsSwrOptions
   );
 
   // 调试SWR状态
@@ -104,10 +111,17 @@ export function useGetPost(id: string) {
     return { post };
   };
 
-  const { data, isLoading, error, isValidating } = useSWR<PostData>(
+  // 使用特定于文章详情的SWR选项，允许自动重新验证
+  const postSwrOptions: SWRConfiguration = {
+    revalidateOnFocus: true,  // 当页面重新获得焦点时重新验证
+    revalidateOnReconnect: true, // 当网络重新连接时重新验证
+    dedupingInterval: 5000, // 5秒内不重复请求
+  };
+
+  const { data, isLoading, error, isValidating, mutate } = useSWR<PostData>(
     id ? `articles/${id}` : null,
     id ? customFetcher : null,
-    swrOptions
+    postSwrOptions
   );
 
   const memoizedValue = useMemo(
@@ -116,8 +130,9 @@ export function useGetPost(id: string) {
       postLoading: isLoading,
       postError: error,
       postValidating: isValidating,
+      refetchPost: () => mutate(), // 添加重新获取文章的函数
     }),
-    [data?.post, error, isLoading, isValidating]
+    [data?.post, error, isLoading, isValidating, mutate]
   );
 
   return memoizedValue;
@@ -203,8 +218,8 @@ export function useSearchPosts(query: string) {
         return true;
       }
 
-      // 搜索内容摘要（如果有）
-      if (post.description?.toLowerCase().includes(searchTerm)) {
+      // 搜索文章内容
+      if (post.content?.toLowerCase().includes(searchTerm)) {
         return true;
       }
 

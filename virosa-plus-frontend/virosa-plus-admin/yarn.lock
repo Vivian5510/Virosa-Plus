@@ -2869,6 +2869,13 @@
   resolved "https://registry.npmjs.org/@types/aws-lambda/-/aws-lambda-8.10.146.tgz"
   integrity sha512-3BaDXYTh0e6UCJYL/jwV/3+GRslSc08toAiZSmleYtkAUyV5rtvdPYxrG/88uqvTuT6sb27WE9OS90ZNTIuQ0g==
 
+"@types/codemirror@^5.60.10", "@types/codemirror@~5.60.5":
+  version "5.60.16"
+  resolved "https://registry.npmmirror.com/@types/codemirror/-/codemirror-5.60.16.tgz"
+  integrity sha512-V/yHdamffSS075jit+fDxaOAmdP2liok8NSNJnAZfDJErzOheuygHZEhAJrfmk5TEyM32MhkZjwo/idX791yxw==
+  dependencies:
+    "@types/tern" "*"
+
 "@types/cookie@^0.6.0":
   version "0.6.0"
   resolved "https://registry.npmjs.org/@types/cookie/-/cookie-0.6.0.tgz"
@@ -2934,6 +2941,11 @@
   dependencies:
     "@types/linkify-it" "^5"
     "@types/mdurl" "^2"
+
+"@types/marked@^4.0.7":
+  version "4.3.2"
+  resolved "https://registry.npmmirror.com/@types/marked/-/marked-4.3.2.tgz"
+  integrity sha512-a79Yc3TOk6dGdituy8hmTTJXjOkZ7zsFYV10L337ttq/rec8lRMDBpV7fL3uLx6TgbFCa5DU/h8FmIBQPSbU0w==
 
 "@types/mdast@^4.0.0":
   version "4.0.4"
@@ -3001,6 +3013,13 @@
   version "4.2.7"
   resolved "https://registry.npmjs.org/@types/stylis/-/stylis-4.2.7.tgz"
   integrity sha512-VgDNokpBoKF+wrdvhAAfS55OMQpL6QRglwTwNC3kIgBrzZxA4WsFj+2eLfEA/uMUDzBcEhYmjSbwQakn/i3ajA==
+
+"@types/tern@*":
+  version "0.23.9"
+  resolved "https://registry.npmmirror.com/@types/tern/-/tern-0.23.9.tgz"
+  integrity sha512-ypzHFE/wBzh+BlH6rrBgS5I/Z7RD21pGhZ2rltb/+ZrVM1awdZwjx7hE5XfuYgHWk9uvV5HLZN3SloevCAp3Bw==
+  dependencies:
+    "@types/estree" "*"
 
 "@types/turndown@^5.0.5":
   version "5.0.5"
@@ -3555,6 +3574,18 @@ clsx@^2.1.1:
   resolved "https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz"
   integrity sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==
 
+codemirror-spell-checker@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npmmirror.com/codemirror-spell-checker/-/codemirror-spell-checker-1.1.2.tgz"
+  integrity sha512-2Tl6n0v+GJRsC9K3MLCdLaMOmvWL0uukajNJseorZJsslaxZyZMgENocPU8R0DyoTAiKsyqiemSOZo7kjGV0LQ==
+  dependencies:
+    typo-js "*"
+
+codemirror@^5.65.15:
+  version "5.65.19"
+  resolved "https://registry.npmmirror.com/codemirror/-/codemirror-5.65.19.tgz"
+  integrity sha512-+aFkvqhaAVr1gferNMuN8vkTSrWIFvzlMV9I2KBLCWS2WpZ2+UAkZjlMZmEuT+gcXTi6RrGQCkWq1/bDtGqhIA==
+
 color-convert@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz"
@@ -3798,6 +3829,17 @@ earcut@^2.2.4:
   version "2.2.4"
   resolved "https://registry.npmjs.org/earcut/-/earcut-2.2.4.tgz"
   integrity sha512-/pjZsA1b4RPHbeWZQn66SWS8nZZWLQQ23oE3Eam7aroEFGEvwKAsJfZ9ytiEMycfzXWpca4FA9QIOehf7PocBQ==
+
+easymde@^2.20.0, "easymde@>= 2.0.0 < 3.0.0":
+  version "2.20.0"
+  resolved "https://registry.npmmirror.com/easymde/-/easymde-2.20.0.tgz"
+  integrity sha512-V1Z5f92TfR42Na852OWnIZMbM7zotWQYTddNaLYZFVKj7APBbyZ3FYJ27gBw2grMW3R6Qdv9J8n5Ij7XRSIgXQ==
+  dependencies:
+    "@types/codemirror" "^5.60.10"
+    "@types/marked" "^4.0.7"
+    codemirror "^5.65.15"
+    codemirror-spell-checker "1.1.2"
+    marked "^4.1.0"
 
 embla-carousel-auto-height@^8.5.1:
   version "8.5.1"
@@ -5404,6 +5446,11 @@ markdown-table@^3.0.0:
   resolved "https://registry.npmjs.org/markdown-table/-/markdown-table-3.0.4.tgz"
   integrity sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==
 
+marked@^4.1.0:
+  version "4.3.0"
+  resolved "https://registry.npmmirror.com/marked/-/marked-4.3.0.tgz"
+  integrity sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==
+
 math-intrinsics@^1.0.0, math-intrinsics@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz"
@@ -6462,7 +6509,7 @@ react-apexcharts@^1.7.0:
   dependencies:
     prop-types "^15.8.1"
 
-"react-dom@^16.11.0 || ^17 || ^18", "react-dom@^16.7.0 || ^17 || ^18 || ^19", "react-dom@^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^18.0.0 || ^19.0.0", "react-dom@^18.0.0 || ^19.0.0 || ^19.0.0-rc", react-dom@^18.1.0, react-dom@^18.3.1, "react-dom@>= 16.12.0", react-dom@>=16.3.0, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, react-dom@>=18, "react-dom@15 - 18":
+"react-dom@^16.11.0 || ^17 || ^18", "react-dom@^16.7.0 || ^17 || ^18 || ^19", "react-dom@^17.0.0 || ^18.0.0 || ^19.0.0", "react-dom@^18.0.0 || ^19.0.0", "react-dom@^18.0.0 || ^19.0.0 || ^19.0.0-rc", react-dom@^18.1.0, react-dom@^18.3.1, "react-dom@>= 16.12.0", react-dom@>=16.3.0, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, react-dom@>=16.8.2, react-dom@>=18, "react-dom@15 - 18":
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz"
   integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -6606,6 +6653,13 @@ react-router@^7.1.1:
     set-cookie-parser "^2.6.0"
     turbo-stream "2.4.0"
 
+react-simplemde-editor@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.npmmirror.com/react-simplemde-editor/-/react-simplemde-editor-5.2.0.tgz"
+  integrity sha512-GkTg1MlQHVK2Rks++7sjuQr/GVS/xm6y+HchZ4GPBWrhcgLieh4CjK04GTKbsfYorSRYKa0n37rtNSJmOzEDkQ==
+  dependencies:
+    "@types/codemirror" "~5.60.5"
+
 react-transition-group@^4.4.5:
   version "4.4.5"
   resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz"
@@ -6616,7 +6670,7 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^16.11.0 || ^17 || ^18", "react@^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.6.0 || ^17.0.0 || ^18.0.0", "react@^16.7.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc", "react@^17.0.0 || ^18.0.0 || ^19.0.0", "react@^18.0.0 || ^19.0.0", "react@^18.0.0 || ^19.0.0 || ^19.0.0-rc", react@^18.1.0, react@^18.3.1, "react@>= 16.12.0", "react@>= 16.8 || 18.0.0", "react@>= 16.8.0", "react@>=0.0.0 <=99", react@>=0.13, react@>=16, react@>=16.3.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=18, "react@15 - 18":
+"react@^16.11.0 || ^17 || ^18", "react@^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.6.0 || ^17.0.0 || ^18.0.0", "react@^16.7.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17 || ^18 || ^19", "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0", "react@^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc", "react@^17.0.0 || ^18.0.0 || ^19.0.0", "react@^18.0.0 || ^19.0.0", "react@^18.0.0 || ^19.0.0 || ^19.0.0-rc", react@^18.1.0, react@^18.3.1, "react@>= 16.12.0", "react@>= 16.8 || 18.0.0", "react@>= 16.8.0", "react@>=0.0.0 <=99", react@>=0.13, react@>=16, react@>=16.3.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=16.8.2, react@>=18, "react@15 - 18":
   version "18.3.1"
   resolved "https://registry.npmjs.org/react/-/react-18.3.1.tgz"
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
@@ -7423,6 +7477,11 @@ typewise@^1.0.3:
   integrity sha512-aXofE06xGhaQSPzt8hlTY+/YWQhm9P0jYUp1f2XtmW/3Bk0qzXcyFWAtPoo2uTGQj1ZwbDuSyuxicq+aDo8lCQ==
   dependencies:
     typewise-core "^1.2.0"
+
+typo-js@*:
+  version "1.2.5"
+  resolved "https://registry.npmmirror.com/typo-js/-/typo-js-1.2.5.tgz"
+  integrity sha512-F45vFWdGX8xahIk/sOp79z2NJs8ETMYsmMChm9D5Hlx3+9j7VnCyQyvij5MOCrNY3NNe8noSyokRjQRfq+Bc7A==
 
 uc.micro@^2.0.0, uc.micro@^2.1.0:
   version "2.1.0"

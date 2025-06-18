@@ -16,7 +16,6 @@ import Typography from '@mui/material/Typography';
 import { RouterLink } from 'src/routes/components';
 
 import { fDate } from 'src/utils/format-time';
-import { fShortenNumber } from 'src/utils/format-number';
 
 import { Label } from 'src/components/label';
 import { Image } from 'src/components/image';
@@ -117,7 +116,7 @@ export function PostItemHorizontal({ sx, post, editHref, detailsHref, ...other }
                 }),
               ]}
             >
-              {post.description}
+              {post.content.substring(0, 200)}
             </Typography>
           </Stack>
 
@@ -128,33 +127,6 @@ export function PostItemHorizontal({ sx, post, editHref, detailsHref, ...other }
             >
               <Iconify icon="eva:more-horizontal-fill" />
             </IconButton>
-
-            <Box
-              sx={{
-                gap: 1.5,
-                flexGrow: 1,
-                display: 'flex',
-                flexWrap: 'wrap',
-                typography: 'caption',
-                color: 'text.disabled',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-                <Iconify icon="eva:message-circle-fill" width={16} />
-                {fShortenNumber(post.totalComments)}
-              </Box>
-
-              <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-                <Iconify icon="solar:eye-bold" width={16} />
-                {fShortenNumber(post.totalViews)}
-              </Box>
-
-              <Box sx={{ gap: 0.5, display: 'flex', alignItems: 'center' }}>
-                <Iconify icon="solar:share-bold" width={16} />
-                {fShortenNumber(post.totalShares)}
-              </Box>
-            </Box>
           </Box>
         </Stack>
 

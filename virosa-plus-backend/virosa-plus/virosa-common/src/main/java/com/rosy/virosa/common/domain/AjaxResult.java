@@ -42,7 +42,7 @@ public class AjaxResult extends HashMap<String, Object> {
      */
     public AjaxResult(int code, String msg) {
         // 如果是成功状态码 200，则返回字符串 "0"，以适配前端
-        super.put(CODE_TAG, code == HttpStatus.SUCCESS ? "0" : String.valueOf(code));
+        super.put(CODE_TAG, code);
         super.put(MSG_TAG, msg);
     }
 
@@ -55,7 +55,7 @@ public class AjaxResult extends HashMap<String, Object> {
      */
     public AjaxResult(int code, String msg, Object data) {
         // 如果是成功状态码 200，则返回字符串 "0"，以适配前端
-        super.put(CODE_TAG, code == HttpStatus.SUCCESS ? "0" : String.valueOf(code));
+        super.put(CODE_TAG, code);
         super.put(MSG_TAG, msg);
         if (StringUtils.isNotNull(data)) {
             super.put(DATA_TAG, data);
