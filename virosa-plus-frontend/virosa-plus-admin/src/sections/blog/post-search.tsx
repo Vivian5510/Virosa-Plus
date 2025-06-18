@@ -4,9 +4,8 @@ import type { Theme, SxProps } from '@mui/material/styles';
 import { useState, useCallback } from 'react';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import { useDebounce } from 'minimal-shared/hooks';
 
-import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Link, { linkClasses } from '@mui/material/Link';
@@ -25,39 +24,38 @@ import { SearchNotFound } from 'src/components/search-not-found';
 
 type Props = {
   sx?: SxProps<Theme>;
-  redirectPath: (title: string) => string;
+  redirectPath?: (id: string) => string;
 };
 
-export function PostSearch({ redirectPath, sx }: Props) {
+export function PostSearch({ sx, redirectPath }: Props) {
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedItem, setSelectedItem] = useState<IPostItem | null>(null);
+  const [selectedPost, setSelectedPost] = useState<IPostItem | null>(null);
 
-  const debouncedQuery = useDebounce(searchQuery);
-  const { searchResults: options, searchLoading: loading } = useSearchPosts(debouncedQuery);
+  const { searchResults, searchLoading } = useSearchPosts(searchQuery);
 
   const handleChange = useCallback(
-    (item: IPostItem | null) => {
-      setSelectedItem(item);
-      if (item) {
-        router.push(redirectPath(item.title));
+    (post: IPostItem | null) => {
+      setSelectedPost(post);
+      if (post) {
+        const path = redirectPath ? redirectPath(post.id) : `/dashboard/post/details?id=${post.id}`;
+        router.push(path);
       }
     },
-    [redirectPath, router]
+    [router, redirectPath]
   );
 
   const paperStyles: SxProps<Theme> = {
-    width: 320,
+    width: 400,
+    borderRadius: 1,
     [` .${autocompleteClasses.listbox}`]: {
       [` .${autocompleteClasses.option}`]: {
         p: 0,
         [` .${linkClasses.root}`]: {
-          p: 0.75,
-          gap: 1.5,
+          px: 1.5,
+          py: 1,
           width: 1,
-          display: 'flex',
-          alignItems: 'center',
         },
       },
     },
@@ -67,20 +65,41 @@ export function PostSearch({ redirectPath, sx }: Props) {
     <Autocomplete
       autoHighlight
       popupIcon={null}
-      loading={loading}
-      options={options}
-      value={selectedItem}
+      loading={searchLoading}
+      options={searchResults}
+      value={selectedPost}
       onChange={(event, newValue) => handleChange(newValue)}
       onInputChange={(event, newValue) => setSearchQuery(newValue)}
       getOptionLabel={(option) => option.title}
-      noOptionsText={<SearchNotFound query={debouncedQuery} />}
+      noOptionsText={<SearchNotFound query={searchQuery} />}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      slotProps={{ paper: { sx: paperStyles } }}
-      sx={[{ width: { xs: 1, sm: 260 } }, ...(Array.isArray(sx) ? sx : [sx])]}
+      slotProps={{
+        paper: { sx: paperStyles },
+        popper: {
+          placement: 'bottom-start',
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 8],
+              },
+            },
+          ],
+        },
+      }}
+      sx={[
+        {
+          width: { xs: 1, sm: 400 },
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 1,
+          },
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Search..."
+          placeholder="搜索文章..."
           slotProps={{
             input: {
               ...params.InputProps,
@@ -90,55 +109,49 @@ export function PostSearch({ redirectPath, sx }: Props) {
                 </InputAdornment>
               ),
               endAdornment: (
-                <>
-                  {loading ? <Iconify icon="svg-spinners:8-dots-rotate" sx={{ mr: -3 }} /> : null}
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  {searchLoading ? (
+                    <Iconify icon="svg-spinners:8-dots-rotate" sx={{ mr: 1 }} />
+                  ) : null}
                   {params.InputProps.endAdornment}
-                </>
+                </Box>
               ),
             },
           }}
         />
       )}
       renderOption={(props, post, { inputValue }) => {
-        const matches = match(post.title, inputValue);
-        const parts = parse(post.title, matches);
+        const title = post.title || '';
+        const matches = match(title, inputValue);
+        const parts = parse(title, matches);
+
+        const linkPath = redirectPath
+          ? redirectPath(post.id)
+          : `/dashboard/post/details?id=${post.id}`;
 
         return (
           <li {...props} key={post.id}>
-            <Link
-              component={RouterLink}
-              href={redirectPath(post.title)}
-              color="inherit"
-              underline="none"
-            >
-              <Avatar
-                key={post.id}
-                alt={post.title}
-                src={post.coverUrl}
-                variant="rounded"
-                sx={{
-                  width: 48,
-                  height: 48,
-                  flexShrink: 0,
-                  borderRadius: 1,
-                }}
-              />
-
-              <div key={inputValue}>
-                {parts.map((part, index) => (
-                  <Typography
-                    key={index}
-                    component="span"
-                    color={part.highlight ? 'primary' : 'textPrimary'}
-                    sx={{
-                      typography: 'body2',
-                      fontWeight: part.highlight ? 'fontWeightSemiBold' : 'fontWeightMedium',
-                    }}
-                  >
-                    {part.text}
+            <Link component={RouterLink} href={linkPath} color="inherit" underline="none">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ flexGrow: 1 }}>
+                  {parts.map((part, index) => (
+                    <Typography
+                      key={index}
+                      component="span"
+                      color={part.highlight ? 'primary' : 'textPrimary'}
+                      sx={{
+                        typography: 'body2',
+                        fontWeight: part.highlight ? 'fontWeightSemiBold' : 'fontWeightMedium',
+                      }}
+                    >
+                      {part.text}
+                    </Typography>
+                  ))}
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    {post.author?.name || '未知作者'}
                   </Typography>
-                ))}
-              </div>
+                </Box>
+              </Box>
             </Link>
           </li>
         );

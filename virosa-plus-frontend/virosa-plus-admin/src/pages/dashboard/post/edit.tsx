@@ -9,12 +9,12 @@ import { PostEditView } from 'src/sections/blog/view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `Post edit | Dashboard - ${CONFIG.appName}` };
+const metadata = { title: `编辑文章 | 控制面板 - ${CONFIG.appName}` };
 
 export default function Page() {
-  const { title = '' } = useParams();
+  const { id = '' } = useParams();
 
-  const { post } = useGetPost(title);
+  const { post } = useGetPost(id);
 
   return (
     <>

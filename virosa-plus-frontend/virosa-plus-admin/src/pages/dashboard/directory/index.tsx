@@ -2,20 +2,20 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/global-config';
 
-import { PostCreateView } from 'src/sections/blog/view';
+import { DirectoryView } from 'src/sections/directory/view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `新建文章 | 控制面板 - ${CONFIG.appName}` };
+const metadata = { title: `目录管理 | Dashboard - ${CONFIG.appName}` };
 
 export default function Page() {
   return (
     <>
       <Helmet>
-        <title> {metadata.title}</title>
+        <title>{metadata.title}</title>
       </Helmet>
 
-      <PostCreateView />
+      <DirectoryView />
     </>
   );
 }

@@ -171,8 +171,8 @@ export const dashboardRoutes: RouteObject[] = [
         children: [
           { index: true, element: <BlogPostsPage /> },
           { path: 'list', element: <BlogPostsPage /> },
-          { path: ':title', element: <BlogPostPage /> },
-          { path: ':title/edit', element: <BlogEditPostPage /> },
+          { path: ':id', element: <BlogPostPage /> },
+          { path: ':id/edit', element: <BlogEditPostPage /> },
           { path: 'new', element: <BlogNewPostPage /> },
         ],
       },

@@ -9,12 +9,12 @@ import { PostDetailsView } from 'src/sections/blog/view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `Post details | Dashboard - ${CONFIG.appName}` };
+const metadata = { title: `文章详情 | 控制面板 - ${CONFIG.appName}` };
 
 export default function Page() {
-  const { title = '' } = useParams();
+  const { id = '' } = useParams();
 
-  const { post, postLoading, postError } = useGetPost(title);
+  const { post, postLoading, postError } = useGetPost(id);
 
   return (
     <>

@@ -22,9 +22,10 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import { _tags } from 'src/_mock';
+import { postService } from 'src/lib/api-adapter';
 
 import { toast } from 'src/components/snackbar';
-import { Form, Field, schemaHelper } from 'src/components/hook-form';
+import { Form, Field } from 'src/components/hook-form';
 
 import { PostDetailsPreview } from './post-details-preview';
 
@@ -33,18 +34,11 @@ import { PostDetailsPreview } from './post-details-preview';
 export type NewPostSchemaType = zod.infer<typeof NewPostSchema>;
 
 export const NewPostSchema = zod.object({
-  title: zod.string().min(1, { message: 'Title is required!' }),
-  description: zod.string().min(1, { message: 'Description is required!' }),
-  content: schemaHelper
-    .editor()
-    .min(100, { message: 'Content must be at least 100 characters' })
-    .max(500, { message: 'Content must be less than 500 characters' }),
-  coverUrl: schemaHelper.file({ message: 'Cover is required!' }),
-  tags: zod.string().array().min(2, { message: 'Must have at least 2 items!' }),
-  metaKeywords: zod.string().array().min(1, { message: 'Meta keywords is required!' }),
-  // Not required
-  metaTitle: zod.string(),
-  metaDescription: zod.string(),
+  title: zod.string().min(1, { message: '标题是必填项!' }),
+  content: zod.string().min(1, { message: '内容是必填项!' }),
+  coverUrl: zod.any().nullable(),
+  tags: zod.string().array().optional().default([]),
+  publish: zod.string().optional().default('draft'),
 });
 
 // ----------------------------------------------------------------------
@@ -60,13 +54,10 @@ export function PostNewEditForm({ currentPost }: Props) {
 
   const defaultValues: NewPostSchemaType = {
     title: '',
-    description: '',
     content: '',
     coverUrl: null,
     tags: [],
-    metaKeywords: [],
-    metaTitle: '',
-    metaDescription: '',
+    publish: 'draft',
   };
 
   const methods = useForm<NewPostSchemaType>({
@@ -88,14 +79,26 @@ export function PostNewEditForm({ currentPost }: Props) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (currentPost?.id) {
+        await postService.updatePost(currentPost.id, {
+          ...data,
+          publish: data.publish || 'draft',
+        });
+        toast.success('文章更新成功!');
+      } else {
+        await postService.createPost({
+          ...data,
+          publish: data.publish || 'draft',
+        });
+        toast.success('文章创建成功!');
+      }
+
       reset();
       showPreview.onFalse();
-      toast.success(currentPost ? 'Update success!' : 'Create success!');
       router.push(paths.dashboard.post.root);
-      console.info('DATA', data);
     } catch (error) {
       console.error(error);
+      toast.error('操作失败，请重试');
     }
   });
 
@@ -105,22 +108,20 @@ export function PostNewEditForm({ currentPost }: Props) {
 
   const renderDetails = () => (
     <Card>
-      <CardHeader title="Details" subheader="Title, short description, image..." sx={{ mb: 3 }} />
+      <CardHeader title="文章内容" subheader="标题、内容、封面图片..." sx={{ mb: 3 }} />
 
       <Divider />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        <Field.Text name="title" label="Post title" />
-
-        <Field.Text name="description" label="Description" multiline rows={3} />
+        <Field.Text name="title" label="文章标题" />
 
         <Stack spacing={1.5}>
-          <Typography variant="subtitle2">Content</Typography>
+          <Typography variant="subtitle2">文章内容</Typography>
           <Field.Editor name="content" sx={{ maxHeight: 480 }} />
         </Stack>
 
         <Stack spacing={1.5}>
-          <Typography variant="subtitle2">Cover</Typography>
+          <Typography variant="subtitle2">封面图片</Typography>
           <Field.Upload name="coverUrl" maxSize={3145728} onDelete={handleRemoveFile} />
         </Stack>
       </Stack>
@@ -129,51 +130,15 @@ export function PostNewEditForm({ currentPost }: Props) {
 
   const renderProperties = () => (
     <Card>
-      <CardHeader
-        title="Properties"
-        subheader="Additional functions and attributes..."
-        sx={{ mb: 3 }}
-      />
+      <CardHeader title="属性" subheader="标签和发布状态..." sx={{ mb: 3 }} />
 
       <Divider />
 
       <Stack spacing={3} sx={{ p: 3 }}>
         <Field.Autocomplete
           name="tags"
-          label="Tags"
-          placeholder="+ Tags"
-          multiple
-          freeSolo
-          disableCloseOnSelect
-          options={_tags.map((option) => option)}
-          getOptionLabel={(option) => option}
-          renderOption={(props, option) => (
-            <li {...props} key={option}>
-              {option}
-            </li>
-          )}
-          renderTags={(selected, getTagProps) =>
-            selected.map((option, index) => (
-              <Chip
-                {...getTagProps({ index })}
-                key={option}
-                label={option}
-                size="small"
-                color="info"
-                variant="soft"
-              />
-            ))
-          }
-        />
-
-        <Field.Text name="metaTitle" label="Meta title" />
-
-        <Field.Text name="metaDescription" label="Meta description" fullWidth multiline rows={3} />
-
-        <Field.Autocomplete
-          name="metaKeywords"
-          label="Meta keywords"
-          placeholder="+ Keywords"
+          label="标签"
+          placeholder="+ 添加标签"
           multiple
           freeSolo
           disableCloseOnSelect
@@ -199,8 +164,14 @@ export function PostNewEditForm({ currentPost }: Props) {
         />
 
         <FormControlLabel
-          label="Enable comments"
-          control={<Switch defaultChecked inputProps={{ id: 'comments-switch' }} />}
+          label="发布"
+          control={
+            <Switch
+              checked={values.publish === 'published'}
+              onChange={(e) => setValue('publish', e.target.checked ? 'published' : 'draft')}
+              inputProps={{ id: 'publish-switch' }}
+            />
+          }
         />
       </Stack>
     </Card>
@@ -215,15 +186,9 @@ export function PostNewEditForm({ currentPost }: Props) {
         justifyContent: 'flex-end',
       }}
     >
-      <FormControlLabel
-        label="Publish"
-        control={<Switch defaultChecked inputProps={{ id: 'publish-switch' }} />}
-        sx={{ pl: 3, flexGrow: 1 }}
-      />
-
       <div>
         <Button color="inherit" variant="outlined" size="large" onClick={showPreview.onTrue}>
-          Preview
+          预览
         </Button>
 
         <LoadingButton
@@ -233,7 +198,7 @@ export function PostNewEditForm({ currentPost }: Props) {
           loading={isSubmitting}
           sx={{ ml: 2 }}
         >
-          {!currentPost ? 'Create post' : 'Save changes'}
+          {!currentPost ? '创建文章' : '保存更改'}
         </LoadingButton>
       </div>
     </Box>
@@ -248,15 +213,17 @@ export function PostNewEditForm({ currentPost }: Props) {
       </Stack>
 
       <PostDetailsPreview
-        isValid={isValid}
-        onSubmit={onSubmit}
         title={values.title}
-        open={showPreview.value}
         content={values.content}
+        coverUrl={
+          typeof values.coverUrl === 'string'
+            ? values.coverUrl
+            : values.coverUrl?.preview
+              ? values.coverUrl?.preview
+              : null
+        }
+        open={showPreview.value}
         onClose={showPreview.onFalse}
-        coverUrl={values.coverUrl}
-        isSubmitting={isSubmitting}
-        description={values.description}
       />
     </Form>
   );

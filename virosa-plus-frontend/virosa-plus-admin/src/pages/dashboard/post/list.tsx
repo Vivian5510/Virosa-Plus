@@ -6,7 +6,7 @@ import { PostListView } from 'src/sections/blog/view';
 
 // ----------------------------------------------------------------------
 
-const metadata = { title: `Post list | Dashboard - ${CONFIG.appName}` };
+const metadata = { title: `文章管理 | 控制面板 - ${CONFIG.appName}` };
 
 export default function Page() {
   return (

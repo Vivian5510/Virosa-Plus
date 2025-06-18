@@ -18,12 +18,11 @@ export function PostEditView({ post }: Props) {
   return (
     <DashboardContent>
       <CustomBreadcrumbs
-        heading="Edit"
-        backHref={paths.dashboard.post.root}
+        heading="编辑文章"
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'Blog', href: paths.dashboard.post.root },
-          { name: post?.title },
+          { name: '控制面板', href: paths.dashboard.root },
+          { name: '文章管理', href: paths.dashboard.post.root },
+          { name: '编辑文章' },
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />

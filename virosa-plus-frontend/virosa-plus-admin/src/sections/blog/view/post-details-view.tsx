@@ -5,19 +5,14 @@ import { useState, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
+import Grid from '@mui/material/Grid2';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-
-import { fShortenNumber } from 'src/utils/format-number';
 
 import { POST_PUBLISH_OPTIONS } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
@@ -28,9 +23,9 @@ import { EmptyContent } from 'src/components/empty-content';
 
 import { PostDetailsSkeleton } from '../post-skeleton';
 import { PostDetailsHero } from '../post-details-hero';
-import { PostCommentList } from '../post-comment-list';
-import { PostCommentForm } from '../post-comment-form';
 import { PostDetailsToolbar } from '../post-details-toolbar';
+// 导入目录关联组件
+import { ArticlesToDirectory } from '../../directory/articles-to-directory';
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +61,7 @@ export function PostDetailsView({ post, loading, error }: Props) {
       <DashboardContent maxWidth={false}>
         <EmptyContent
           filled
-          title="Post not found!"
+          title="文章未找到！"
           action={
             <Button
               component={RouterLink}
@@ -74,7 +69,7 @@ export function PostDetailsView({ post, loading, error }: Props) {
               startIcon={<Iconify width={16} icon="eva:arrow-ios-back-fill" />}
               sx={{ mt: 3 }}
             >
-              Back to list
+              返回列表
             </Button>
           }
           sx={{ py: 10, height: 'auto', flexGrow: 'unset' }}
@@ -88,8 +83,8 @@ export function PostDetailsView({ post, loading, error }: Props) {
       <Container maxWidth={false} sx={{ px: { sm: 5 } }}>
         <PostDetailsToolbar
           backHref={paths.dashboard.post.root}
-          editHref={paths.dashboard.post.edit(`${post?.title}`)}
-          liveHref={paths.post.details(`${post?.title}`)}
+          editHref={paths.dashboard.post.edit(`${post?.id}`)}
+          liveHref={paths.post.details(`${post?.id}`)}
           publish={`${publish}`}
           onChangePublish={handleChangePublish}
           publishOptions={POST_PUBLISH_OPTIONS}
@@ -98,74 +93,41 @@ export function PostDetailsView({ post, loading, error }: Props) {
 
       <PostDetailsHero title={`${post?.title}`} coverUrl={`${post?.coverUrl}`} />
 
-      <Box
-        sx={{
-          pb: 5,
-          mx: 'auto',
-          maxWidth: 720,
-          mt: { xs: 5, md: 10 },
-          px: { xs: 2, sm: 3 },
-        }}
-      >
-        <Typography variant="subtitle1">{post?.description}</Typography>
+      <Container sx={{ mt: 5 }}>
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 12, md: 8, lg: 8 }}>
+            <Box sx={{ pb: 5, width: '100%' }}>
+              {/* 在内容顶部紧凑显示标签 */}
+              {post?.tags && post.tags.length > 0 && (
+                <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
+                  <Typography variant="body2" sx={{ mr: 1, color: 'text.secondary' }}>
+                    分类:
+                  </Typography>
+                  {post.tags.map((tag) => (
+                    <Chip
+                      key={tag}
+                      label={tag}
+                      variant="soft"
+                      size="small"
+                      sx={{ mr: 1 }}
+                    />
+                  ))}
+                </Box>
+              )}
 
-        <Markdown children={post?.content} />
+              {/* 正文内容 */}
+              <Markdown children={post?.content} />
+            </Box>
+          </Grid>
 
-        <Stack
-          spacing={3}
-          sx={[
-            (theme) => ({
-              py: 3,
-              borderTop: `dashed 1px ${theme.vars.palette.divider}`,
-              borderBottom: `dashed 1px ${theme.vars.palette.divider}`,
-            }),
-          ]}
-        >
-          <Box sx={{ gap: 1, display: 'flex', flexWrap: 'wrap' }}>
-            {post?.tags.map((tag) => <Chip key={tag} label={tag} variant="soft" />)}
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <FormControlLabel
-              label={fShortenNumber(post?.totalFavorites)}
-              control={
-                <Checkbox
-                  defaultChecked
-                  size="small"
-                  color="error"
-                  icon={<Iconify icon="solar:heart-bold" />}
-                  checkedIcon={<Iconify icon="solar:heart-bold" />}
-                  inputProps={{
-                    id: 'favorite-checkbox',
-                    'aria-label': 'Favorite checkbox',
-                  }}
-                />
-              }
-              sx={{ mr: 1 }}
-            />
-
-            <AvatarGroup sx={{ [`& .${avatarGroupClasses.avatar}`]: { width: 32, height: 32 } }}>
-              {post?.favoritePerson.map((person) => (
-                <Avatar key={person.name} alt={person.name} src={person.avatarUrl} />
-              ))}
-            </AvatarGroup>
-          </Box>
-        </Stack>
-
-        <Box sx={{ mb: 3, mt: 5, display: 'flex' }}>
-          <Typography variant="h4">Comments</Typography>
-
-          <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
-            ({post?.comments.length})
-          </Typography>
-        </Box>
-
-        <PostCommentForm />
-
-        <Divider sx={{ mt: 5, mb: 2 }} />
-
-        <PostCommentList comments={post?.comments ?? []} />
-      </Box>
+          {/* 右侧目录关联组件 */}
+          <Grid size={{ xs: 12, md: 4, lg: 4 }}>
+            <Box sx={{ pl: { xs: 0, md: 2 } }}>
+              {post && <ArticlesToDirectory post={post} />}
+            </Box>
+          </Grid>
+        </Grid>
+      </Container>
     </DashboardContent>
   );
 }

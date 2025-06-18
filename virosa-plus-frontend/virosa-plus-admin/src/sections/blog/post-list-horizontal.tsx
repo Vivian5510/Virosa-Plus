@@ -23,8 +23,8 @@ export function PostListHorizontal({ posts, loading }: Props) {
       <PostItemHorizontal
         key={post.id}
         post={post}
-        detailsHref={paths.dashboard.post.details(post.title)}
-        editHref={paths.dashboard.post.edit(post.title)}
+        detailsHref={paths.dashboard.post.details(post.id)}
+        editHref={paths.dashboard.post.edit(post.id)}
       />
     ));
 

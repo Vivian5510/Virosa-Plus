@@ -41,9 +41,14 @@ export const paths = {
     demo: { details: `/product/${MOCK_ID}` },
   },
   post: {
-    root: `/post`,
-    details: (title: string) => `/post/${kebabCase(title)}`,
-    demo: { details: `/post/${kebabCase(MOCK_TITLE)}` },
+    root: `${ROOTS.DASHBOARD}/post`,
+    new: `${ROOTS.DASHBOARD}/post/new`,
+    details: (id: string) => `${ROOTS.DASHBOARD}/post/${id}`,
+    edit: (id: string) => `${ROOTS.DASHBOARD}/post/${id}/edit`,
+    demo: {
+      details: `${ROOTS.DASHBOARD}/post/${MOCK_ID}`,
+      edit: `${ROOTS.DASHBOARD}/post/${MOCK_ID}/edit`,
+    },
   },
   // AUTH
   auth: {
@@ -145,12 +150,15 @@ export const paths = {
     post: {
       root: `${ROOTS.DASHBOARD}/post`,
       new: `${ROOTS.DASHBOARD}/post/new`,
-      details: (title: string) => `${ROOTS.DASHBOARD}/post/${kebabCase(title)}`,
-      edit: (title: string) => `${ROOTS.DASHBOARD}/post/${kebabCase(title)}/edit`,
+      details: (id: string) => `${ROOTS.DASHBOARD}/post/${id}`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/post/${id}/edit`,
       demo: {
-        details: `${ROOTS.DASHBOARD}/post/${kebabCase(MOCK_TITLE)}`,
-        edit: `${ROOTS.DASHBOARD}/post/${kebabCase(MOCK_TITLE)}/edit`,
+        details: `${ROOTS.DASHBOARD}/post/${MOCK_ID}`,
+        edit: `${ROOTS.DASHBOARD}/post/${MOCK_ID}/edit`,
       },
+    },
+    directory: {
+      root: `${ROOTS.DASHBOARD}/directory`,
     },
     order: {
       root: `${ROOTS.DASHBOARD}/order`,

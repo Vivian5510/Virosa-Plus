@@ -12,11 +12,11 @@ export function PostCreateView() {
   return (
     <DashboardContent>
       <CustomBreadcrumbs
-        heading="Create a new post"
+        heading="创建新文章"
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
-          { name: 'Blog', href: paths.dashboard.post.root },
-          { name: 'Create' },
+          { name: '控制面板', href: paths.dashboard.root },
+          { name: '文章管理', href: paths.dashboard.post.root },
+          { name: '创建文章' },
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />

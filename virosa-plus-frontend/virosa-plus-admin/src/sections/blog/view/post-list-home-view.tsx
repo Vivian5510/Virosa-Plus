@@ -75,9 +75,5 @@ function applyFilter({ inputData, sortBy }: ApplyFilterProps) {
     return orderBy(inputData, ['createdAt'], ['asc']);
   }
 
-  if (sortBy === 'popular') {
-    return orderBy(inputData, ['totalViews'], ['desc']);
-  }
-
   return inputData;
 }

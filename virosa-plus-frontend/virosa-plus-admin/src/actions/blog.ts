@@ -2,7 +2,7 @@ import type { SWRConfiguration } from 'swr';
 import type { IPostItem } from 'src/types/blog';
 
 import useSWR from 'swr';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 import { postService, nodeService } from 'src/lib/api-adapter';
 
@@ -18,30 +18,73 @@ const swrOptions: SWRConfiguration = {
 
 type PostsData = {
   posts: IPostItem[];
+  total: number;
 };
 
-export function useGetPosts() {
+export function useGetPosts(params = { pageNum: 1, pageSize: 10, publish: '' }) {
   // 使用自定义fetcher从后端获取数据
   const customFetcher = async () => {
-    const result = await postService.getPosts();
-    return { posts: result.posts };
+    // 输出请求参数，便于调试
+    console.log('获取文章列表, 请求参数:', {
+      pageNum: params.pageNum,
+      pageSize: params.pageSize,
+      publish: params.publish,
+    });
+
+    try {
+      // 执行API请求
+      const result = await postService.getPosts({
+        pageNum: params.pageNum,
+        pageSize: params.pageSize,
+        publish: params.publish,
+      });
+
+      console.log('获取文章列表结果:', {
+        总数: result.total,
+        当前页文章数: result.posts.length,
+        发布状态: params.publish || 'all',
+      });
+
+      // 检查数据有效性
+      if (!result.posts || !Array.isArray(result.posts)) {
+        console.error('API返回的文章列表格式不正确', result);
+        return { posts: [], total: 0 };
+      }
+
+      return result;
+    } catch (error) {
+      console.error('获取文章列表失败:', error);
+      return { posts: [], total: 0 };
+    }
   };
 
-  const { data, isLoading, error, isValidating } = useSWR<PostsData>(
-    'articles/page',
+  // 使用SWR来获取和缓存数据
+  const { data, isLoading, error, isValidating, mutate } = useSWR<PostsData>(
+    [`articles/page`, params],
     customFetcher,
     swrOptions
   );
 
+  // 调试SWR状态
+  console.log('SWR 文章列表状态:', {
+    isLoading,
+    isValidating,
+    hasError: !!error,
+    hasData: !!data,
+    dataLength: data?.posts?.length || 0
+  });
+
   const memoizedValue = useMemo(
     () => ({
       posts: data?.posts || [],
+      total: data?.total || 0,
       postsLoading: isLoading,
       postsError: error,
       postsValidating: isValidating,
       postsEmpty: !isLoading && !data?.posts.length,
+      refetchPosts: () => mutate(), // 添加重新获取数据的函数
     }),
-    [data?.posts, error, isLoading, isValidating]
+    [data?.posts, data?.total, error, isLoading, isValidating, mutate]
   );
 
   return memoizedValue;
@@ -124,18 +167,63 @@ type SearchResultsData = {
 
 export function useSearchPosts(query: string) {
   // 搜索文章
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 300); // 减少延迟到300ms，提高响应速度
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [query]);
+
   const customFetcher = async () => {
-    if (!query) return { results: [] };
-    const result = await postService.getPosts({ title: query });
-    return { results: result.posts };
+    if (!debouncedQuery) return { results: [] };
+
+    // 从API获取所有文章
+    const allPosts = await postService.getPosts({ pageSize: 100, pageNum: 1 });
+
+    // 前端实现部分匹配搜索，更加灵活
+    const searchTerm = debouncedQuery.toLowerCase().trim();
+    const filteredResults = allPosts.posts.filter((post: IPostItem) => {
+      // 搜索标题
+      if (post.title?.toLowerCase().includes(searchTerm)) {
+        return true;
+      }
+
+      // 搜索作者
+      if (post.author?.name?.toLowerCase().includes(searchTerm)) {
+        return true;
+      }
+
+      // 搜索标签
+      if (post.tags?.some((tag: string) => tag.toLowerCase().includes(searchTerm))) {
+        return true;
+      }
+
+      // 搜索内容摘要（如果有）
+      if (post.description?.toLowerCase().includes(searchTerm)) {
+        return true;
+      }
+
+      return false;
+    });
+
+    console.log(`搜索关键词 "${searchTerm}" 找到 ${filteredResults.length} 条结果`);
+
+    return { results: filteredResults };
   };
 
   const { data, isLoading, error, isValidating } = useSWR<SearchResultsData>(
-    query ? `articles/search?query=${query}` : null,
-    query ? customFetcher : null,
+    debouncedQuery ? `articles/search?query=${debouncedQuery}` : null,
+    debouncedQuery ? customFetcher : null,
     {
       ...swrOptions,
       keepPreviousData: true,
+      revalidateOnFocus: false,
+      dedupingInterval: 10000, // 10秒内不重复请求
     }
   );
 
@@ -159,7 +247,7 @@ export function useSearchPosts(query: string) {
 export function useGetUnarchivedPosts() {
   const customFetcher = async () => {
     const result = await postService.getUnarchivedPosts();
-    return { posts: result.posts };
+    return { posts: result.posts, total: result.total || 0 };
   };
 
   const { data, isLoading, error, isValidating } = useSWR<PostsData>(

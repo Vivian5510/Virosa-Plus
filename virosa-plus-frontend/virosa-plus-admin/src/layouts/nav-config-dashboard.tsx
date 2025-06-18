@@ -112,15 +112,18 @@ export const navData: NavSectionProps['data'] = [
         ],
       },
       {
-        title: 'Blog',
+        title: '文章',
         path: paths.dashboard.post.root,
         icon: ICONS.blog,
         children: [
-          { title: 'List', path: paths.dashboard.post.root },
-          { title: 'Details', path: paths.dashboard.post.demo.details },
-          { title: 'Create', path: paths.dashboard.post.new },
-          { title: 'Edit', path: paths.dashboard.post.demo.edit },
+          { title: '文章列表', path: paths.dashboard.post.root },
+          { title: '创建文章', path: paths.dashboard.post.new },
         ],
+      },
+      {
+        title: '目录管理',
+        path: paths.dashboard.directory.root,
+        icon: ICONS.folder,
       },
       {
         title: 'Job',

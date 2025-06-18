@@ -1,96 +1,85 @@
-import type { FileUploadType } from 'src/components/upload';
+import type { SxProps } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
+import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 
 import { Markdown } from 'src/components/markdown';
-import { Scrollbar } from 'src/components/scrollbar';
-import { EmptyContent } from 'src/components/empty-content';
-
-import { PostDetailsHero } from './post-details-hero';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   title: string;
-  open: boolean;
   content: string;
-  isValid: boolean;
-  description: string;
+  coverUrl: string | null;
+  open: boolean;
   onClose: () => void;
-  onSubmit: () => void;
-  isSubmitting: boolean;
-  coverUrl: FileUploadType;
+  sx?: SxProps;
 };
 
 export function PostDetailsPreview({
-  open,
   title,
   content,
-  isValid,
-  onClose,
   coverUrl,
-  onSubmit,
-  description,
-  isSubmitting,
+  open,
+  onClose,
+  sx,
+  ...other
 }: Props) {
-  let previewUrl = '';
-
-  if (coverUrl) {
-    if (typeof coverUrl === 'string') {
-      previewUrl = coverUrl;
-    } else {
-      previewUrl = URL.createObjectURL(coverUrl);
-    }
-  }
-
-  const hasHero = title || previewUrl;
-
-  const hasContent = title || description || content || previewUrl;
-
   return (
-    <Dialog fullScreen open={open} onClose={onClose}>
-      <DialogActions sx={{ py: 2, px: 3 }}>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Preview
-        </Typography>
+    <Dialog fullScreen open={open} onClose={onClose} {...other}>
+      <DialogTitle sx={{ p: 3 }}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
+          <Typography variant="h6"> 预览 </Typography>
 
-        <Button variant="outlined" color="inherit" onClick={onClose}>
-          Cancel
-        </Button>
+          <Button color="error" variant="outlined" onClick={onClose}>
+            关闭
+          </Button>
+        </Stack>
+      </DialogTitle>
 
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          disabled={!isValid}
-          loading={isSubmitting}
-          onClick={onSubmit}
+      <DialogContent sx={{ p: 0 }}>
+        {coverUrl && (
+          <Box
+            component="img"
+            alt={title}
+            src={coverUrl}
+            sx={{
+              width: 1,
+              height: 500,
+              objectFit: 'cover',
+            }}
+          />
+        )}
+
+        <Box
+          sx={{
+            p: 3,
+            mx: 'auto',
+            ...sx,
+          }}
         >
-          Post
-        </LoadingButton>
+          <Typography variant="h3" component="h1">
+            {title}
+          </Typography>
+
+          <Divider sx={{ my: 3 }} />
+
+          <Markdown children={content} />
+        </Box>
+      </DialogContent>
+
+      <DialogActions sx={{ p: 3 }}>
+        <Button color="inherit" variant="outlined" onClick={onClose}>
+          取消
+        </Button>
       </DialogActions>
-
-      <Divider />
-
-      {hasContent ? (
-        <Scrollbar>
-          {(hasHero || previewUrl) && <PostDetailsHero title={title} coverUrl={previewUrl} />}
-          <Container sx={{ mt: 5, mb: 10 }}>
-            <Box sx={{ mx: 'auto', maxWidth: 720 }}>
-              <Typography variant="h6">{description}</Typography>
-              <Markdown>{content}</Markdown>
-            </Box>
-          </Container>
-        </Scrollbar>
-      ) : (
-        <EmptyContent filled title="Empty content!" />
-      )}
     </Dialog>
   );
 }
