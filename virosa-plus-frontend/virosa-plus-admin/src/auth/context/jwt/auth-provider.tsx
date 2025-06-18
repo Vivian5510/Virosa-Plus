@@ -33,9 +33,27 @@ export function AuthProvider({ children }: Props) {
 
         const res = await axios.get(endpoints.auth.me);
 
-        const { user } = res.data;
+        // 检查返回的数据结构
+        const responseData = res.data;
 
-        setState({ user: { ...user, accessToken }, loading: false });
+        // 假设后端返回格式是 { code: '0', msg: 'success', data: { ... 用户信息 ... } }
+        if (responseData.code === '0' && responseData.data) {
+          const user = responseData.data;
+
+          // 适配用户字段
+          const adaptedUser = {
+            id: user.id,
+            username: user.username,
+            email: user.email || '',
+            displayName: user.nickname || user.username,
+            role: user.role || 'admin',
+            accessToken,
+          };
+
+          setState({ user: adaptedUser, loading: false });
+        } else {
+          throw new Error('无效的用户信息响应格式');
+        }
       } else {
         setState({ user: null, loading: false });
       }

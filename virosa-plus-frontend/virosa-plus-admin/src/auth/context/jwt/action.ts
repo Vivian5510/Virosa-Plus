@@ -1,4 +1,4 @@
-import axios, { endpoints } from 'src/lib/axios';
+import axiosInstance, { endpoints } from 'src/lib/axios';
 
 import { setSession } from './utils';
 import { JWT_STORAGE_KEY } from './constant';
@@ -22,17 +22,24 @@ export type SignUpParams = {
  *************************************** */
 export const signInWithPassword = async ({ email, password }: SignInParams): Promise<void> => {
   try {
-    const params = { email, password };
+    const params = { username: email, password };
 
-    const res = await axios.post(endpoints.auth.signIn, params);
+    const res = await axiosInstance.post(endpoints.auth.signIn, params, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    });
 
-    const { accessToken } = res.data;
+    console.log('Login response:', res.data);
 
-    if (!accessToken) {
-      throw new Error('Access token not found in response');
+    const { code, data } = res.data;
+
+    if (code === '0' && data?.token) {
+      setSession(data.token);
+    } else {
+      throw new Error('Invalid response format or token not found');
     }
-
-    setSession(accessToken);
   } catch (error) {
     console.error('Error during sign in:', error);
     throw error;
@@ -49,22 +56,29 @@ export const signUp = async ({
   lastName,
 }: SignUpParams): Promise<void> => {
   const params = {
-    email,
+    username: email,
     password,
-    firstName,
-    lastName,
+    email,
+    nickname: `${firstName} ${lastName}`,
   };
 
   try {
-    const res = await axios.post(endpoints.auth.signUp, params);
+    const res = await axiosInstance.post(endpoints.auth.signUp, params, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    });
 
-    const { accessToken } = res.data;
+    console.log('Register response:', res.data);
 
-    if (!accessToken) {
-      throw new Error('Access token not found in response');
+    const { code, data } = res.data;
+
+    if (code === '0' && data?.token) {
+      setSession(data.token);
+    } else {
+      throw new Error('Invalid response format or token not found');
     }
-
-    sessionStorage.setItem(JWT_STORAGE_KEY, accessToken);
   } catch (error) {
     console.error('Error during sign up:', error);
     throw error;

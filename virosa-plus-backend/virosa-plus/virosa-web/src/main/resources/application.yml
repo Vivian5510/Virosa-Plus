@@ -1,0 +1,40 @@
+server:
+  servlet:
+    context-path: /api
+    # cookie 30 天过期
+    session:
+      cookie:
+        max-age: 2592000
+
+spring:
+  application:
+    name: virosa-plus
+  # 默认 dev 环境
+  profiles:
+    active: local
+
+# JWT配置
+jwt:
+  # JWT加解密使用的密钥
+  secret: virosa-plus-jwt-secret-key-must-be-at-least-32-bytes-long
+  # JWT的过期时间，单位：毫秒，这里是7天
+  expiration: 604800000
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: is_deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs  # 配置 OpenAPI 文档的路径
+  swagger-ui:
+    path: /swagger-ui.html  # 配置 Swagger UI 的路径
+    enabled: true  # 启用 Swagger UI
+
+

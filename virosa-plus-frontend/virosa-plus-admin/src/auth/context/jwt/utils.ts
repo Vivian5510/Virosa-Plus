@@ -72,16 +72,25 @@ export function tokenExpired(exp: number) {
 export async function setSession(accessToken: string | null) {
   try {
     if (accessToken) {
-      sessionStorage.setItem(JWT_STORAGE_KEY, accessToken);
+      // 检查 token 是否已包含 "Bearer " 前缀
+      const tokenValue = accessToken.startsWith('Bearer ') ? accessToken : `Bearer ${accessToken}`;
+      // 去除前缀后保存到 sessionStorage
+      const rawToken = accessToken.startsWith('Bearer ') ? accessToken.substring(7) : accessToken;
+      sessionStorage.setItem(JWT_STORAGE_KEY, rawToken);
 
-      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      // 设置请求头，确保使用正确格式
+      axios.defaults.headers.common.Authorization = tokenValue;
 
-      const decodedToken = jwtDecode(accessToken); // ~3 days by minimals server
+      // 尝试解码 token
+      try {
+        const decodedToken = jwtDecode(rawToken);
 
-      if (decodedToken && 'exp' in decodedToken) {
-        tokenExpired(decodedToken.exp);
-      } else {
-        throw new Error('Invalid access token!');
+        if (decodedToken && 'exp' in decodedToken) {
+          tokenExpired(decodedToken.exp);
+        }
+      } catch (decodeError) {
+        console.warn('无法解码 token，但仍将继续使用:', decodeError);
+        // 即使无法解码，我们仍然使用 token 进行身份验证
       }
     } else {
       sessionStorage.removeItem(JWT_STORAGE_KEY);

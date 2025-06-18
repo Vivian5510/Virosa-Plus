@@ -36,6 +36,22 @@ export type IPostComment = {
   }[];
 };
 
+// 节点类型定义
+export type INodeItem = {
+  id: string | number;
+  title?: string;
+  name?: string;
+  content?: string;
+  parentId?: string | number | null;
+  articleId?: string | number | null;
+  orderNum?: number;
+  children?: INodeItem[];
+  createTime?: string;
+  updateTime?: string;
+  status?: number;
+  type?: number;
+};
+
 export type IPostItem = {
   id: string;
   title: string;
@@ -61,4 +77,6 @@ export type IPostItem = {
     name: string;
     avatarUrl: string;
   }[];
+  // 扩展属性：文章所在的节点
+  nodes?: INodeItem[];
 };

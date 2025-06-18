@@ -13,12 +13,13 @@
         <version>3.4.0</version>
     </parent>
 
-    <name>springboot3.4.x-init</name>
+    <name>virosa-plus</name>
+
     <modules>
-        <module>common</module>
-        <module>framework</module>
-        <module>web</module>
-        <module>main</module>
+        <module>virosa-common</module>
+        <module>virosa-framework</module>
+        <module>virosa-web</module>
+        <module>virosa-support</module>
     </modules>
 
     <properties>
@@ -36,11 +37,9 @@
         <fastjson2.version>2.0.53</fastjson2.version>
         <mysql-connector-java.version>8.0.33</mysql-connector-java.version>
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
-        <aliyun-sdk-oss.version>3.18.1</aliyun-sdk-oss.version>
         <easyexcel.version>4.0.3</easyexcel.version>
         <jjwt.version>0.12.6</jjwt.version>
         <mybatis-plus-jsqlparser.version>3.5.9</mybatis-plus-jsqlparser.version>
-        <qiniu-java-sdk.version>[7.16.0, 7.16.99]</qiniu-java-sdk.version>
         <gson.version>2.11.0</gson.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.7.0</springdoc-openapi-starter-webmvc-ui.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
@@ -53,29 +52,29 @@
             <!--common模块-->
             <dependency>
                 <groupId>com.rosy</groupId>
-                <artifactId>common</artifactId>
-                <version>0.0.1</version>
+                <artifactId>virosa-common</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <!--framework模块-->
             <dependency>
                 <groupId>com.rosy</groupId>
-                <artifactId>framework</artifactId>
-                <version>0.0.1</version>
+                <artifactId>virosa-framework</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <!--web模块-->
             <dependency>
                 <groupId>com.rosy</groupId>
-                <artifactId>web</artifactId>
-                <version>0.0.1</version>
+                <artifactId>virosa-web</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <!--main模块-->
             <dependency>
                 <groupId>com.rosy</groupId>
-                <artifactId>main</artifactId>
-                <version>0.0.1</version>
+                <artifactId>virosa-support</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <!--hutool工具包-->
@@ -126,19 +125,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
-            </dependency>
-
-            <!--阿里云OSS-->
-            <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${aliyun-sdk-oss.version}</version>
-            </dependency>
-            <!--七牛云OSS-->
-            <dependency>
-                <groupId>com.qiniu</groupId>
-                <artifactId>qiniu-java-sdk</artifactId>
-                <version>${qiniu-java-sdk.version}</version>
             </dependency>
 
             <!--easyexcel-->

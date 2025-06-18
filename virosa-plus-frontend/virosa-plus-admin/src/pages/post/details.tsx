@@ -25,7 +25,7 @@ export default function Page() {
       </Helmet>
 
       <PostDetailsHomeView
-        post={post}
+        post={post || undefined}
         latestPosts={latestPosts}
         loading={postLoading}
         error={postError}

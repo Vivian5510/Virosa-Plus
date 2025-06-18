@@ -22,7 +22,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <PostEditView post={post} />
+      <PostEditView post={post || undefined} />
     </>
   );
 }

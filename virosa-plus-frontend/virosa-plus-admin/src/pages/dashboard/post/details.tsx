@@ -22,7 +22,7 @@ export default function Page() {
         <title> {metadata.title}</title>
       </Helmet>
 
-      <PostDetailsView post={post} loading={postLoading} error={postError} />
+      <PostDetailsView post={post || undefined} loading={postLoading} error={postError} />
     </>
   );
 }
