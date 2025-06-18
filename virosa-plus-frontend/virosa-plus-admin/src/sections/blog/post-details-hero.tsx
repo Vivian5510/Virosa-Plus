@@ -6,19 +6,11 @@ import { varAlpha } from 'minimal-shared/utils';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Container from '@mui/material/Container';
-import SpeedDial from '@mui/material/SpeedDial';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
 
 import { fDate } from 'src/utils/format-time';
-
-import { _socials } from 'src/_mock';
-import { TwitterIcon, FacebookIcon, LinkedinIcon, InstagramIcon } from 'src/assets/icons';
-
-import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +23,9 @@ export function PostDetailsHero({
   ...other
 }: BoxProps & IPostHero) {
   const theme = useTheme();
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'));
+
+  // 移除HTML标签
+  const cleanTitle = title ? title.replace(/<\/?[^>]+(>|$)/g, "") : "";
 
   return (
     <Box
@@ -62,7 +56,7 @@ export function PostDetailsHero({
             color: 'common.white',
           }}
         >
-          {title}
+          {cleanTitle}
         </Typography>
 
         <Box
@@ -99,31 +93,6 @@ export function PostDetailsHero({
               />
             </Box>
           )}
-
-          <SpeedDial
-            direction={smUp ? 'left' : 'up'}
-            ariaLabel="Share post"
-            icon={<Iconify icon="solar:share-bold" />}
-            FabProps={{ size: 'medium' }}
-            sx={{ position: 'absolute', bottom: { xs: 32, md: 64 }, right: { xs: 16, md: 24 } }}
-          >
-            {_socials.map((social) => (
-              <SpeedDialAction
-                key={social.label}
-                icon={
-                  <>
-                    {social.value === 'facebook' && <FacebookIcon />}
-                    {social.value === 'instagram' && <InstagramIcon />}
-                    {social.value === 'linkedin' && <LinkedinIcon />}
-                    {social.value === 'twitter' && <TwitterIcon />}
-                  </>
-                }
-                tooltipPlacement="top"
-                FabProps={{ color: 'default' }}
-                tooltipTitle={social.label}
-              />
-            ))}
-          </SpeedDial>
         </Box>
       </Container>
     </Box>

@@ -1,7 +1,5 @@
 import type { IPostItem } from 'src/types/blog';
 
-import { useState, useEffect, useCallback } from 'react';
-
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -14,7 +12,6 @@ import Grid from '@mui/material/Grid2';
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
-import { POST_PUBLISH_OPTIONS } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
@@ -36,18 +33,6 @@ type Props = {
 };
 
 export function PostDetailsView({ post, loading, error }: Props) {
-  const [publish, setPublish] = useState('');
-
-  const handleChangePublish = useCallback((newValue: string) => {
-    setPublish(newValue);
-  }, []);
-
-  useEffect(() => {
-    if (post) {
-      setPublish(post?.publish);
-    }
-  }, [post]);
-
   if (loading) {
     return (
       <DashboardContent maxWidth={false} disablePadding>
@@ -85,9 +70,6 @@ export function PostDetailsView({ post, loading, error }: Props) {
           backHref={paths.dashboard.post.root}
           editHref={paths.dashboard.post.edit(`${post?.id}`)}
           liveHref={paths.post.details(`${post?.id}`)}
-          publish={`${publish}`}
-          onChangePublish={handleChangePublish}
-          publishOptions={POST_PUBLISH_OPTIONS}
         />
       </Container>
 
@@ -122,7 +104,11 @@ export function PostDetailsView({ post, loading, error }: Props) {
 
           {/* 右侧目录关联组件 */}
           <Grid size={{ xs: 12, md: 4, lg: 4 }}>
-            <Box sx={{ pl: { xs: 0, md: 2 } }}>
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              pr: { xs: 0, md: 3 }
+            }}>
               {post && <ArticlesToDirectory post={post} />}
             </Box>
           </Grid>

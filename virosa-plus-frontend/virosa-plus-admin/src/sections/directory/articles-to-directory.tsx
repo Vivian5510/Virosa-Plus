@@ -204,7 +204,13 @@ export function ArticlesToDirectory({ post, articleId }: ArticlesToDirectoryProp
     );
 
     return (
-        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <Card sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            maxWidth: 380
+        }}>
             <CardHeader
                 title="目录关联"
                 sx={{

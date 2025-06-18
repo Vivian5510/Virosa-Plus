@@ -108,9 +108,7 @@ export function PostNewEditForm({ currentPost }: Props) {
 
   const renderDetails = () => (
     <Card>
-      <CardHeader title="文章内容" subheader="标题、内容、封面图片..." sx={{ mb: 3 }} />
-
-      <Divider />
+      <CardHeader title="文章编辑" />
 
       <Stack spacing={3} sx={{ p: 3 }}>
         <Field.Text name="title" label="文章标题" />
@@ -130,9 +128,7 @@ export function PostNewEditForm({ currentPost }: Props) {
 
   const renderProperties = () => (
     <Card>
-      <CardHeader title="属性" subheader="标签和发布状态..." sx={{ mb: 3 }} />
-
-      <Divider />
+      <CardHeader title="类型&状态" />
 
       <Stack spacing={3} sx={{ p: 3 }}>
         <Field.Autocomplete
