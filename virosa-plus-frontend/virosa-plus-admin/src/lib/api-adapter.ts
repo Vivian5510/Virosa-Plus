@@ -1,5 +1,7 @@
 import type { IPostItem } from 'src/types/blog';
 
+import { NodeType } from 'src/types/node';
+
 import axiosInstance, { apiEndpoints } from './axios';
 
 // 将后端Article转换为前端IPostItem
@@ -439,7 +441,7 @@ export const nodeService = {
       const response = await axiosInstance.post(apiEndpoints.node.create, {
         name,
         parentId: parentId || null,
-        type: 0, // 假设0表示目录类型
+        type: NodeType.DIRECTORY, // 使用正确的枚举值
       });
       return response.data;
     } catch (error) {
@@ -466,10 +468,7 @@ export const nodeService = {
 
       const { id, ...restData } = updateData;
 
-      const response = await axiosInstance.put(
-        apiEndpoints.node.update(id),
-        restData
-      );
+      const response = await axiosInstance.put(apiEndpoints.node.update(id), restData);
 
       console.log('更新节点响应:', response.data);
       return response.data;
@@ -486,7 +485,7 @@ export const nodeService = {
 
       const response = await axiosInstance.put(apiEndpoints.node.move, {
         id: nodeId,
-        parentId: newParentId
+        parentId: newParentId,
       });
 
       console.log('移动节点响应:', response.data);

@@ -112,7 +112,7 @@ export const navData: NavSectionProps['data'] = [
         ],
       },
       {
-        title: '文章',
+        title: '文章管理',
         path: paths.dashboard.post.root,
         icon: ICONS.blog,
         children: [
@@ -124,10 +124,7 @@ export const navData: NavSectionProps['data'] = [
         title: '目录管理',
         path: paths.dashboard.directory.root,
         icon: <Iconify icon="mdi:folder-outline" />,
-        children: [
-          { title: '目录树', path: paths.dashboard.directory.tree },
-          { title: '新建目录', path: paths.dashboard.directory.new },
-        ],
+        children: [{ title: '目录树', path: paths.dashboard.directory.tree }],
       },
       {
         title: 'Job',

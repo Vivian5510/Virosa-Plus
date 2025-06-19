@@ -413,16 +413,6 @@ export default function DirectoryTreeView() {
           { name: '目录管理', href: paths.dashboard.directory.root },
           { name: '目录树' },
         ]}
-        action={
-          <Button
-            component={RouterLink}
-            href={paths.dashboard.directory.new}
-            variant="contained"
-            startIcon={<Iconify icon="mingcute:add-line" />}
-          >
-            新建目录
-          </Button>
-        }
         sx={{ mb: { xs: 3, md: 5 } }}
       />
 
@@ -545,10 +535,9 @@ export default function DirectoryTreeView() {
               description="创建您的第一个目录"
               action={
                 <Button
-                  component={RouterLink}
-                  href={paths.dashboard.directory.new}
                   variant="contained"
                   startIcon={<Iconify icon="mingcute:add-line" />}
+                  onClick={() => handleOpenCreateDialog()}
                 >
                   创建第一个目录
                 </Button>
