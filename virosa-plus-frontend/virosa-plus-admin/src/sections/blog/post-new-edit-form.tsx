@@ -263,20 +263,15 @@ export function PostNewEditForm({ currentPost }: Props) {
   };
 
   const renderDetails = () => (
-    <Card>
-      <CardHeader title="文章主题" />
+    <Card sx={{ width: '100%', overflow: 'visible' }}>
+      <CardHeader title="文章内容" />
 
-      <Stack spacing={3} sx={{ p: 3 }}>
-        <Field.Text name="title" label="文章标题" />
-
-        <Stack spacing={1.5}>
-          <Typography variant="subtitle2">文章内容</Typography>
-          <Field.Editor name="content" sx={{ maxHeight: 480 }} />
-        </Stack>
-
-        <Stack spacing={1.5}>
-          <Typography variant="subtitle2">封面图片</Typography>
-          <Field.Upload name="coverUrl" maxSize={3145728} onDelete={handleRemoveFile} />
+      <Stack spacing={2} sx={{ p: { xs: 1, sm: 2 } }}>
+        <Stack spacing={1} sx={{ width: '100%' }}>
+          <Field.MarkdownEditor
+            name="content"
+            placeholder="请使用Markdown格式编写文章内容..."
+          />
         </Stack>
       </Stack>
     </Card>
@@ -288,11 +283,13 @@ export function PostNewEditForm({ currentPost }: Props) {
       ARTICLE_TYPE_OPTIONS.find((option) => option.value === currentType)?.label || '选择类型';
 
     return (
-      <Card>
-        <CardHeader title="附加信息" />
+      <Card sx={{ width: '100%' }}>
+        <CardHeader title="文章信息" />
 
-        <Stack spacing={3} sx={{ p: 3 }}>
+        <Stack spacing={3} sx={{ p: { xs: 2, sm: 3 } }}>
           {/* 文章类型选择器 */}
+          <Field.Text name="title" label="文章标题" />
+
           <FormControl fullWidth>
             <InputLabel id="article-type-label">文章类型</InputLabel>
             <Select
@@ -338,6 +335,11 @@ export function PostNewEditForm({ currentPost }: Props) {
 
           {/* 外部链接 */}
           <Field.Text name="externalLink" label="外部链接" placeholder="如音乐链接、视频链接等" />
+
+          <Stack spacing={1.5}>
+            <Typography variant="subtitle2">封面图片</Typography>
+            <Field.Upload name="coverUrl" maxSize={3145728} onDelete={handleRemoveFile} />
+          </Stack>
         </Stack>
       </Card>
     );
@@ -352,21 +354,14 @@ export function PostNewEditForm({ currentPost }: Props) {
         justifyContent: 'flex-end',
       }}
     >
-      <div>
-        <Button color="inherit" variant="outlined" size="large" onClick={showPreview.onTrue}>
-          预览
-        </Button>
-
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          size="large"
-          loading={isSubmitting}
-          sx={{ ml: 2 }}
-        >
-          {!currentPost ? '创建文章' : '保存更改'}
-        </LoadingButton>
-      </div>
+      <LoadingButton
+        type="submit"
+        variant="contained"
+        size="large"
+        loading={isSubmitting}
+      >
+        {!currentPost ? '创建文章' : '保存更改'}
+      </LoadingButton>
     </Box>
   );
 
@@ -381,9 +376,13 @@ export function PostNewEditForm({ currentPost }: Props) {
 
   return (
     <Form methods={methods} onSubmit={onSubmit}>
-      <Stack spacing={5} sx={{ mx: 'auto', maxWidth: { xs: 720, xl: 880 } }}>
-        {renderDetails()}
+      <Stack spacing={3} sx={{
+        mx: 'auto',
+        maxWidth: { xs: '100%', sm: '98%', md: '96%', lg: '94%', xl: 1400 },
+        px: { xs: 1, sm: 2 }
+      }}>
         {renderProperties()}
+        {renderDetails()}
         {renderActions()}
       </Stack>
 

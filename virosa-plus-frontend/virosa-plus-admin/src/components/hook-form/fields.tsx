@@ -10,6 +10,7 @@ import { RHFAutocomplete } from './rhf-autocomplete';
 import { RHFCountrySelect } from './rhf-country-select';
 import { RHFSwitch, RHFMultiSwitch } from './rhf-switch';
 import { RHFSelect, RHFMultiSelect } from './rhf-select';
+import { RHFMarkdownEditor } from './rhf-markdown-editor';
 import { RHFCheckbox, RHFMultiCheckbox } from './rhf-checkbox';
 import { RHFUpload, RHFUploadBox, RHFUploadAvatar } from './rhf-upload';
 import { RHFDatePicker, RHFMobileDateTimePicker } from './rhf-date-picker';
@@ -19,6 +20,7 @@ import { RHFDatePicker, RHFMobileDateTimePicker } from './rhf-date-picker';
 export const Field = {
   Code: RHFCode,
   Editor: RHFEditor,
+  MarkdownEditor: RHFMarkdownEditor,
   Select: RHFSelect,
   Upload: RHFUpload,
   Switch: RHFSwitch,
