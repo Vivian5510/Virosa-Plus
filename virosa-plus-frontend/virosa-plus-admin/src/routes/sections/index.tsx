@@ -1,6 +1,7 @@
 import type { RouteObject } from 'react-router';
 
 import { lazy, Suspense } from 'react';
+import { Navigate } from "react-router";
 
 import { MainLayout } from 'src/layouts/main';
 
@@ -11,6 +12,7 @@ import { mainRoutes } from './main';
 import { authDemoRoutes } from './auth-demo';
 import { dashboardRoutes } from './dashboard';
 import { componentsRoutes } from './components';
+import { paths } from '../paths';
 
 // ----------------------------------------------------------------------
 
@@ -21,20 +23,9 @@ export const routesSection: RouteObject[] = [
   {
     path: '/',
     /**
-     * @skip homepage
-     * import { Navigate } from "react-router";
-     * import { CONFIG } from 'src/global-config';
-     *
-     * element: <Navigate to={CONFIG.auth.redirectPath} replace />,
-     * and remove the element below:
+     * 直接重定向到Dashboard页面
      */
-    element: (
-      <Suspense fallback={<SplashScreen />}>
-        <MainLayout>
-          <HomePage />
-        </MainLayout>
-      </Suspense>
-    ),
+    element: <Navigate to={paths.dashboard.root} replace />,
   },
 
   // Auth
