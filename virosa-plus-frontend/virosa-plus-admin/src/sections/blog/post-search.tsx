@@ -148,7 +148,7 @@ export function PostSearch({ sx, redirectPath }: Props) {
                     </Typography>
                   ))}
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {post.author?.name || '未知作者'}
+                    {post.author || '未知作者'}
                   </Typography>
                 </Box>
               </Box>

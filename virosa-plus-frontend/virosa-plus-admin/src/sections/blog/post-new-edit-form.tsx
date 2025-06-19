@@ -40,8 +40,8 @@ export const NewPostSchema = zod.object({
   title: zod.string().min(1, { message: '标题是必填项!' }),
   content: zod.string().min(1, { message: '内容是必填项!' }),
   coverUrl: zod.any().nullable(),
-  type: zod.string().optional().default('随笔'), // 文章类型，对应后端ArticleType枚举
-  author: zod.string().optional().default('Admin'), // 作者名称
+  type: zod.string().optional(), // 文章类型，对应后端ArticleType枚举
+  author: zod.string().optional().default('Rosy'), // 作者名称
   extraInfo: zod.string().optional(), // 额外信息
   externalLink: zod.string().optional(), // 外部链接
   tags: zod.string().array().optional().default([]), // 保留tags以兼容现有数据
@@ -86,8 +86,8 @@ export function PostNewEditForm({ currentPost }: Props) {
       title: '',
       content: '',
       coverUrl: null,
-      type: '随笔',
-      author: 'Admin',
+      type: '',
+      author: 'Rosy',
       extraInfo: '',
       externalLink: '',
       tags: [],
@@ -129,7 +129,7 @@ export function PostNewEditForm({ currentPost }: Props) {
           content: currentPost.content || '',
           coverUrl: currentPost.coverUrl || null,
           type: typeValue, // 使用确定的类型值
-          author: currentPost.author || 'Admin',
+          author: currentPost.author || 'Rosy',
           extraInfo: currentPost.extraInfo || '',
           externalLink: currentPost.externalLink || '',
           tags: currentPost.tags || [],

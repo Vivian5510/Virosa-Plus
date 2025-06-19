@@ -38,16 +38,6 @@ export const paths = {
     details: (id: string) => `/product/${id}`,
     demo: { details: `/product/${MOCK_ID}` },
   },
-  post: {
-    root: `${ROOTS.DASHBOARD}/post`,
-    new: `${ROOTS.DASHBOARD}/post/new`,
-    details: (id: string) => `${ROOTS.DASHBOARD}/post/${id}`,
-    edit: (id: string) => `${ROOTS.DASHBOARD}/post/${id}/edit`,
-    demo: {
-      details: `${ROOTS.DASHBOARD}/post/${MOCK_ID}`,
-      edit: `${ROOTS.DASHBOARD}/post/${MOCK_ID}/edit`,
-    },
-  },
   // AUTH
   auth: {
     amplify: {

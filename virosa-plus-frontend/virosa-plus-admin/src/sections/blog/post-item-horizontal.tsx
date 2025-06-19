@@ -141,8 +141,8 @@ export function PostItemHorizontal({ sx, post, editHref, detailsHref, ...other }
           }}
         >
           <Avatar
-            alt={post.author.name}
-            src={post.author.avatarUrl}
+            alt={post.author}
+            src="/assets/images/avatar/avatar_1.jpg"
             sx={{
               top: 16,
               right: 16,

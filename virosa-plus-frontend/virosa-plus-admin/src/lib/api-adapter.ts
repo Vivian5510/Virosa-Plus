@@ -48,10 +48,7 @@ export function articleToPostItem(article: any, nodes: any[] = []): IPostItem {
     tags, // 保留tags以兼容现有代码
     publish: publishStatus, // 保留publish以兼容现有代码
     createdAt: article.createTime || new Date().toISOString(),
-    author: {
-      name: article.author || 'Admin',
-      avatarUrl: '/assets/images/avatar/avatar_1.jpg',
-    },
+    author: article.author || 'Rosy',
     // 额外字段
     extraInfo: article.extraInfo || '',
     externalLink: article.externalLink || '',
@@ -98,7 +95,7 @@ export function postItemToArticle(postItem: Partial<IPostItem>): any {
     title: postItem.title || '',
     content: postItem.content || '',
     cover: coverUrl || '',
-    author: postItem.author?.name || 'Admin',
+    author: postItem.author || 'Rosy',
     type: articleType, // 使用type字段作为文章类型
     tags, // 添加完整的标签列表
     isPublished: postItem.publish === 'published' ? 1 : 0,
@@ -250,7 +247,7 @@ export const postService = {
         id: Number(id),
         title: article.title || '',
         content: article.content || '',
-        author: article.author?.name || 'Admin',
+        author: article.author || 'Rosy',
         isPublished: isPublished ? 1 : 0,
       };
 

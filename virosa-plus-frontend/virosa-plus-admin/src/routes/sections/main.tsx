@@ -21,9 +21,10 @@ const MaintenancePage = lazy(() => import('src/pages/maintenance'));
 const ProductListPage = lazy(() => import('src/pages/product/list'));
 const ProductDetailsPage = lazy(() => import('src/pages/product/details'));
 const ProductCheckoutPage = lazy(() => import('src/pages/product/checkout'));
-// Blog
-const PostListPage = lazy(() => import('src/pages/post/list'));
-const PostDetailsPage = lazy(() => import('src/pages/post/details'));
+// Blog 页面已删除
+// 注意：这里不再导入不存在的博客页面
+// const PostListPage = lazy(() => import('src/pages/post/list'));
+// const PostDetailsPage = lazy(() => import('src/pages/post/details'));
 // Error
 const Page500 = lazy(() => import('src/pages/error/500'));
 const Page403 = lazy(() => import('src/pages/error/403'));
@@ -61,14 +62,7 @@ export const mainRoutes: RouteObject[] = [
               { path: 'checkout', element: <ProductCheckoutPage /> },
             ],
           },
-          {
-            path: 'post',
-            children: [
-              { index: true, element: <PostListPage /> },
-              { path: 'list', element: <PostListPage /> },
-              { path: ':title', element: <PostDetailsPage /> },
-            ],
-          },
+          // 博客前台路由已移除
         ],
       },
       {

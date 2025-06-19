@@ -188,48 +188,48 @@ export function PostListView() {
       />
 
       <Card>
-        <Box
-          sx={{
+      <Box
+        sx={{
             p: 3,
-            gap: 3,
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexDirection: { xs: 'column', sm: 'row' },
-            alignItems: { xs: 'flex-end', sm: 'center' },
-          }}
-        >
+          gap: 3,
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: { xs: 'flex-end', sm: 'center' },
+        }}
+      >
           <PostSearch redirectPath={(id: string) => paths.dashboard.post.details(id)} />
 
-          <PostSort
-            sort={sortBy}
-            onSort={(newValue: string) => setSortBy(newValue)}
-            sortOptions={POST_SORT_OPTIONS}
-          />
-        </Box>
+        <PostSort
+          sort={sortBy}
+          onSort={(newValue: string) => setSortBy(newValue)}
+          sortOptions={POST_SORT_OPTIONS}
+        />
+      </Box>
 
         <Tabs value={state.publish} onChange={handleFilterPublish} sx={{ px: 3 }}>
-          {['all', 'published', 'draft'].map((tab) => (
-            <Tab
-              key={tab}
-              iconPosition="end"
-              value={tab}
+        {['all', 'published', 'draft'].map((tab) => (
+          <Tab
+            key={tab}
+            iconPosition="end"
+            value={tab}
               label={tab === 'all' ? '全部' : tab === 'published' ? '已发布' : '草稿'}
-              icon={
-                <Label
-                  variant={((tab === 'all' || tab === state.publish) && 'filled') || 'soft'}
+            icon={
+              <Label
+                variant={((tab === 'all' || tab === state.publish) && 'filled') || 'soft'}
                   color={
                     (tab === 'published' && 'info') || (tab === 'draft' && 'warning') || 'default'
                   }
-                >
+              >
                   {tab === 'all' && (posts.length || 0)}
                   {tab === 'published' && publishedCount}
                   {tab === 'draft' && draftCount}
-                </Label>
-              }
-              sx={{ textTransform: 'capitalize' }}
-            />
-          ))}
-        </Tabs>
+              </Label>
+            }
+            sx={{ textTransform: 'capitalize' }}
+          />
+        ))}
+      </Tabs>
 
         <TableContainer>
           <Table>

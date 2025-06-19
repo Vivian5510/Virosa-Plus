@@ -41,8 +41,8 @@ export function PostItem({ post, detailsHref, sx, ...other }: PostItemProps) {
         />
 
         <Avatar
-          alt={post.author.name}
-          src={post.author.avatarUrl}
+          alt={post.author}
+          src="/assets/images/avatar/avatar_1.jpg"
           sx={{
             left: 24,
             zIndex: 9,
@@ -89,8 +89,8 @@ export function PostItemLatest({ post, index, detailsHref }: PostItemLatestProps
   return (
     <Card>
       <Avatar
-        alt={post.author.name}
-        src={post.author.avatarUrl}
+        alt={post.author}
+        src="/assets/images/avatar/avatar_1.jpg"
         sx={{
           top: 24,
           left: 24,

@@ -4,11 +4,14 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
+
+import { fDate } from 'src/utils/format-time';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
@@ -67,7 +70,7 @@ export function PostDetailsView({ post, loading, error }: Props) {
         <PostDetailsToolbar
           backHref={paths.dashboard.post.root}
           editHref={paths.dashboard.post.edit(`${post?.id}`)}
-          liveHref={paths.post.details(`${post?.id}`)}
+          liveHref={paths.dashboard.post.details(`${post?.id}`)}
         />
       </Container>
 
@@ -77,17 +80,43 @@ export function PostDetailsView({ post, loading, error }: Props) {
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 8, lg: 8 }}>
             <Box sx={{ pb: 5, width: '100%' }}>
-              {/* 在内容顶部紧凑显示标签 */}
-              {post?.tags && post.tags.length > 0 && (
-                <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
-                  <Typography variant="body2" sx={{ mr: 1, color: 'text.secondary' }}>
-                    分类:
-                  </Typography>
-                  {post.tags.map((tag) => (
-                    <Chip key={tag} label={tag} variant="soft" size="small" sx={{ mr: 1 }} />
-                  ))}
+              {/* 作者信息和标签 */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  mb: 3,
+                  pb: 2,
+                  borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+                }}
+              >
+                {/* 左侧作者信息 */}
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar
+                    src="/assets/images/avatar/avatar_1.jpg"
+                    alt={post?.author || 'Rosy'}
+                    sx={{ width: 40, height: 40, mr: 1.5 }}
+                  />
+                  <Box>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                      作者：{post?.author || 'Rosy'}
+                    </Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                      发布时间：{post?.createdAt ? fDate(post.createdAt) : ''}
+                    </Typography>
+                  </Box>
                 </Box>
-              )}
+
+                {/* 右侧标签 */}
+                {post?.tags && post.tags.length > 0 && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                    {post.tags.map((tag) => (
+                      <Chip key={tag} label={tag} variant="soft" size="small" sx={{ ml: 1, mt: 0.5, mb: 0.5 }} />
+                    ))}
+                  </Box>
+                )}
+              </Box>
 
               {/* 正文内容 */}
               <Markdown children={post?.content} />

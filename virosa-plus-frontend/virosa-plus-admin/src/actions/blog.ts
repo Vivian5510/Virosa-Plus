@@ -209,7 +209,7 @@ export function useSearchPosts(query: string) {
       }
 
       // 搜索作者
-      if (post.author?.name?.toLowerCase().includes(searchTerm)) {
+      if (post.author?.toLowerCase().includes(searchTerm)) {
         return true;
       }
 

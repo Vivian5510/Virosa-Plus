@@ -38,8 +38,9 @@ export const navData: NavMainProps['data'] = [
           { title: 'Shop', path: paths.product.root },
           { title: 'Product', path: paths.product.demo.details },
           { title: 'Checkout', path: paths.product.checkout },
-          { title: 'Posts', path: paths.post.root },
-          { title: 'Post', path: paths.post.demo.details },
+          // 博客前台页面已移除
+          // { title: 'Posts', path: paths.dashboard.post.root },
+          // { title: 'Post', path: paths.dashboard.post.details('demo') },
         ],
       },
       {

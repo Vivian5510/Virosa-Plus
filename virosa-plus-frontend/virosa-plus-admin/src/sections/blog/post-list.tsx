@@ -45,7 +45,7 @@ export function PostList({ posts, loading }: Props) {
             lg: index === 0 ? 6 : 3,
           }}
         >
-          <PostItemLatest post={post} index={index} detailsHref={paths.post.details(post.title)} />
+          <PostItemLatest post={post} index={index} detailsHref={paths.dashboard.post.details(post.id)} />
         </Grid>
       ))}
 
@@ -60,7 +60,7 @@ export function PostList({ posts, loading }: Props) {
             lg: 3,
           }}
         >
-          <PostItem post={post} detailsHref={paths.post.details(post.title)} />
+          <PostItem post={post} detailsHref={paths.dashboard.post.details(post.id)} />
         </Grid>
       ))}
 
@@ -74,7 +74,7 @@ export function PostList({ posts, loading }: Props) {
             lg: 3,
           }}
         >
-          <PostItem post={post} detailsHref={paths.post.details(post.title)} />
+          <PostItem post={post} detailsHref={paths.dashboard.post.details(post.id)} />
         </Grid>
       ))}
     </Grid>
