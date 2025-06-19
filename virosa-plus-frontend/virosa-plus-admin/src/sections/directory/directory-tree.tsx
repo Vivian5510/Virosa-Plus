@@ -137,8 +137,8 @@ export function DirectoryTree({ nodes, loading, onRefresh }: Props) {
     }
 
     try {
-      await nodeService.updateNode(currentNode.id, {
-        ...currentNode,
+      await nodeService.updateNode({
+        id: currentNode.id,
         name: newDirName,
       });
       toast.success('目录更新成功');

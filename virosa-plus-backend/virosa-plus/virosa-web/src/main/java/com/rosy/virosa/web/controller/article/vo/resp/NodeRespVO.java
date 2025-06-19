@@ -14,17 +14,20 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NodeRespVO implements Serializable {
 
+    /**
+     * 节点ID
+     */
     private Long id;
 
     /**
-     * 节点标题
+     * 节点名称
      */
-    private String title;
+    private String name;
 
     /**
-     * 节点内容
+     * 节点类型 (directory: 目录, file: 文章)
      */
-    private String content;
+    private String type;
 
     /**
      * 父节点ID，如果是顶级节点则为null
@@ -37,14 +40,9 @@ public class NodeRespVO implements Serializable {
     private Long articleId;
 
     /**
-     * 排序号
+     * 状态（0: 关闭, 1: 开启）
      */
-    private Integer orderNum;
-
-    /**
-     * 子节点列表
-     */
-    private List<NodeRespVO> children;
+    private Integer status;
 
     /**
      * 创建时间
@@ -57,7 +55,7 @@ public class NodeRespVO implements Serializable {
     private LocalDateTime updateTime;
 
     /**
-     * 状态（0: 关闭, 1: 开启）
+     * 子节点列表
      */
-    private Byte status;
+    private List<NodeRespVO> children;
 }

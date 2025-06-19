@@ -180,24 +180,52 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, Node> implements IN
         // 查询所有节点
         List<Node> allNodes = this.list();
 
+        if (allNodes == null || allNodes.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         // 创建一个 Map 用来存储每个节点的 id 和节点对象
         Map<Long, Node> nodeMap = allNodes.stream()
                 .collect(Collectors.toMap(Node::getId, node -> node));
 
-        // 获取根节点 (id = 1)
-        Node rootNode = nodeMap.get(1L);
-        if (rootNode == null) {
-            throw new ServiceException(ErrorCode.NOT_FOUND_ERROR, "根节点（id=1）不存在");
+        // 获取根节点 (parentId = 0 或 null 的节点)
+        List<Node> rootNodes = allNodes.stream()
+                .filter(node -> node.getParentId() == null || node.getParentId() == 0)
+                .collect(Collectors.toList());
+
+        // 如果没有找到根节点，则检查ID为1的节点是否存在
+        if (rootNodes.isEmpty()) {
+            Node rootNode = nodeMap.get(1L);
+            if (rootNode != null) {
+                rootNodes.add(rootNode);
+            } else {
+                // 如果连ID为1的节点都不存在，则创建一个默认根节点
+                Node defaultRoot = new Node();
+                defaultRoot.setId(1L);
+                defaultRoot.setName("Root");
+                defaultRoot.setType("directory");
+                defaultRoot.setParentId(0L);
+                defaultRoot.setStatus(1);
+
+                // 保存根节点
+                try {
+                    this.save(defaultRoot);
+                    rootNodes.add(defaultRoot);
+                } catch (Exception e) {
+                    // 如果保存失败，直接返回空列表
+                    return new ArrayList<>();
+                }
+            }
         }
 
-        // 构建树
-        List<Node> rootNodeChildren = new ArrayList<>();
-        addChildrenToNode(rootNode, nodeMap, rootNodeChildren);
+        // 为每个根节点添加子节点
+        for (Node rootNode : rootNodes) {
+            List<Node> children = new ArrayList<>();
+            addChildrenToNode(rootNode, nodeMap, children);
+            rootNode.setChildren(children);
+        }
 
-        // 返回根节点列表
-        List<Node> result = new ArrayList<>();
-        result.add(rootNode);
-        return result;
+        return rootNodes;
     }
 
     /**

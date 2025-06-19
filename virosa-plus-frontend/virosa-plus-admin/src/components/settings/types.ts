@@ -26,6 +26,8 @@ export type SettingsContextValue = {
   openDrawer: boolean;
   onCloseDrawer: () => void;
   onToggleDrawer: () => void;
+  // 兼容旧代码
+  themeStretch?: boolean;
 };
 
 export type SettingsProviderProps = {

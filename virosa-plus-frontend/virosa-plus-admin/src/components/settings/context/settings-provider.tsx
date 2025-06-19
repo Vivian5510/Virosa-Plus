@@ -62,6 +62,7 @@ export function SettingsProvider({
       state,
       setState,
       setField,
+      themeStretch: false,
     }),
     [canReset, onReset, openDrawer, onCloseDrawer, onToggleDrawer, state, setField, setState]
   );

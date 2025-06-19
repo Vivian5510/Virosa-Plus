@@ -61,7 +61,7 @@
     "@milkdown/theme-nord": "^7.13.2",
     "@milkdown/transformer": "^7.13.2",
     "@mui/lab": "^6.0.0-beta.21",
-    "@mui/material": "^6.3.0",
+    "@mui/material": "^6.4.12",
     "@mui/x-data-grid": "^7.23.5",
     "@mui/x-date-pickers": "^7.23.3",
     "@mui/x-tree-view": "^7.23.2",
@@ -100,6 +100,7 @@
     "mapbox-gl": "^3.4.0",
     "minimal-shared": "^1.0.5",
     "mui-one-time-password-input": "^3.0.2",
+    "notistack": "^3.0.2",
     "nprogress": "^0.2.0",
     "react": "^18.3.1",
     "react-apexcharts": "^1.7.0",
@@ -114,6 +115,7 @@
     "react-organizational-chart": "^2.2.1",
     "react-phone-number-input": "^3.4.10",
     "react-router": "^7.1.1",
+    "react-router-dom": "^7.6.2",
     "react-simplemde-editor": "^5.2.0",
     "rehype-highlight": "^7.0.1",
     "rehype-raw": "^7.0.0",
@@ -125,6 +127,7 @@
     "swr": "^2.3.0",
     "turndown": "^7.2.0",
     "yet-another-react-lightbox": "^3.21.7",
+    "yup": "^1.6.1",
     "zod": "^3.24.1"
   },
   "devDependencies": {

@@ -12,9 +12,14 @@ import lombok.EqualsAndHashCode;
 public class NodeQueryReqVO extends PageParam {
 
     /**
-     * 节点标题，模糊匹配
+     * 节点名称，模糊匹配
      */
-    private String title;
+    private String name;
+
+    /**
+     * 节点类型 (directory: 目录, file: 文章)
+     */
+    private String type;
 
     /**
      * 父节点ID
@@ -25,4 +30,9 @@ public class NodeQueryReqVO extends PageParam {
      * 所属文章ID
      */
     private Long articleId;
+
+    /**
+     * 状态（0: 关闭, 1: 开启）
+     */
+    private Integer status;
 }

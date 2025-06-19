@@ -1,6 +1,5 @@
 import type { IDateValue } from 'src/types/common';
 import type { CardProps } from '@mui/material/Card';
-import type { TimelineItemProps } from '@mui/lab/TimelineItem';
 
 import Card from '@mui/material/Card';
 import Timeline from '@mui/lab/Timeline';
@@ -45,7 +44,7 @@ export function AnalyticsOrderTimeline({ title, subheader, list, sx, ...other }:
 
 // ----------------------------------------------------------------------
 
-type ItemProps = TimelineItemProps & {
+type ItemProps = {
   lastItem: boolean;
   item: Props['list'][number];
 };

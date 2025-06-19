@@ -275,7 +275,6 @@ export function DataGridCustom({ data: rows }: Props) {
         noResultsOverlay: () => <EmptyContent title="No results found" />,
       }}
       slotProps={{
-        panel: { anchorEl: filterButtonEl },
         toolbar: { setFilterButtonEl, showQuickFilter: true },
         columnsManagement: { getTogglableColumns },
       }}

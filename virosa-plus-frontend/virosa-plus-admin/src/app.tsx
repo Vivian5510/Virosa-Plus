@@ -9,8 +9,8 @@ import { LocalizationProvider } from 'src/locales';
 import { themeConfig, ThemeProvider } from 'src/theme';
 import { I18nProvider } from 'src/locales/i18n-provider';
 
-import { Snackbar } from 'src/components/snackbar';
 import { ProgressBar } from 'src/components/progress-bar';
+import { SnackbarProvider } from 'src/components/snackbar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
 
@@ -52,10 +52,15 @@ export default function App({ children }: AppProps) {
             >
               <MotionLazy>
                 <CheckoutProvider>
-                  <Snackbar />
-                  <ProgressBar />
-                  <SettingsDrawer defaultSettings={defaultSettings} />
-                  {children}
+                  <SnackbarProvider
+                    maxSnack={3}
+                    autoHideDuration={3000}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  >
+                    <ProgressBar />
+                    <SettingsDrawer defaultSettings={defaultSettings} />
+                    {children}
+                  </SnackbarProvider>
                 </CheckoutProvider>
               </MotionLazy>
             </ThemeProvider>

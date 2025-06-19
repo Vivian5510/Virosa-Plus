@@ -284,7 +284,6 @@ export function ProductListView() {
             }}
             slotProps={{
               toolbar: { setFilterButtonEl },
-              panel: { anchorEl: filterButtonEl },
               columnsManagement: { getTogglableColumns },
             }}
             sx={{ [`& .${gridClasses.cell}`]: { alignItems: 'center', display: 'inline-flex' } }}

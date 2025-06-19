@@ -37,7 +37,8 @@ export type TableHeadCustomProps = {
   sx?: SxProps<Theme>;
   numSelected?: number;
   order?: 'asc' | 'desc';
-  headCells: TableHeadCellProps[];
+  headCells?: TableHeadCellProps[];
+  headLabel?: any[]; // 兼容旧代码
   onSort?: (id: string) => void;
   onSelectAllRows?: (checked: boolean) => void;
 };
@@ -48,10 +49,13 @@ export function TableHeadCustom({
   onSort,
   orderBy,
   headCells,
+  headLabel, // 添加headLabel
   rowCount = 0,
   numSelected = 0,
   onSelectAllRows,
 }: TableHeadCustomProps) {
+  const cells = headCells || headLabel || []; // 使用headCells或headLabel
+
   return (
     <TableHead sx={sx}>
       <TableRow>
@@ -71,7 +75,7 @@ export function TableHeadCustom({
           </TableCell>
         )}
 
-        {headCells.map((headCell) => (
+        {cells.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={headCell.align || 'left'}

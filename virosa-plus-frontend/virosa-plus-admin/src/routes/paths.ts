@@ -147,6 +147,11 @@ export const paths = {
     },
     directory: {
       root: `${ROOTS.DASHBOARD}/directory`,
+      new: `${ROOTS.DASHBOARD}/directory/new`,
+      list: `${ROOTS.DASHBOARD}/directory/list`,
+      tree: `${ROOTS.DASHBOARD}/directory/tree`,
+      details: (id: string) => `${ROOTS.DASHBOARD}/directory/${id}`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/directory/${id}/edit`,
     },
     order: {
       root: `${ROOTS.DASHBOARD}/order`,

@@ -19,3 +19,6 @@ export function Form({ children, onSubmit, methods }: FormProps) {
     </RHFForm>
   );
 }
+
+// 添加默认导出
+export default Form;

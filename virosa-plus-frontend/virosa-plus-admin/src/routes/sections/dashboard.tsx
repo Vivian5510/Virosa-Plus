@@ -58,6 +58,11 @@ const BlogPostsPage = lazy(() => import('src/pages/dashboard/post/list'));
 const BlogPostPage = lazy(() => import('src/pages/dashboard/post/details'));
 const BlogNewPostPage = lazy(() => import('src/pages/dashboard/post/new'));
 const BlogEditPostPage = lazy(() => import('src/pages/dashboard/post/edit'));
+// Directory
+const DirectoryTreeView = lazy(() => import('src/sections/directory/view/directory-tree-view'));
+const DirectoryListView = lazy(() => import('src/sections/directory/view/directory-list-view'));
+const DirectoryNewView = lazy(() => import('src/sections/directory/view/directory-new-view'));
+const DirectoryEditView = lazy(() => import('src/sections/directory/view/directory-edit-view'));
 // Job
 const JobDetailsPage = lazy(() => import('src/pages/dashboard/job/details'));
 const JobListPage = lazy(() => import('src/pages/dashboard/job/list'));
@@ -174,6 +179,16 @@ export const dashboardRoutes: RouteObject[] = [
           { path: ':id', element: <BlogPostPage /> },
           { path: ':id/edit', element: <BlogEditPostPage /> },
           { path: 'new', element: <BlogNewPostPage /> },
+        ],
+      },
+      {
+        path: 'directory',
+        children: [
+          { index: true, element: <DirectoryTreeView /> },
+          { path: 'tree', element: <DirectoryTreeView /> },
+          { path: 'list', element: <DirectoryListView /> },
+          { path: 'new', element: <DirectoryNewView /> },
+          { path: ':id/edit', element: <DirectoryEditView /> },
         ],
       },
       {

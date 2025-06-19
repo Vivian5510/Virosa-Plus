@@ -13,7 +13,6 @@ import com.rosy.virosa.web.controller.article.vo.req.NodeAddReqVO;
 import com.rosy.virosa.web.controller.article.vo.req.NodeQueryReqVO;
 import com.rosy.virosa.web.controller.article.vo.req.NodeUpdateReqVO;
 import com.rosy.virosa.web.controller.article.vo.resp.NodeRespVO;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -51,10 +51,12 @@ public class NodeController {
         Page<Node> page = new Page<>(reqVO.getPageNum(), reqVO.getPageSize());
         Page<Node> pageResult = nodeService.page(page, nodeService.getQueryWrapper(node));
 
-        // 使用Hutool的BeanUtil直接转换列表
-        List<NodeRespVO> voList = BeanUtil.copyToList(pageResult.getRecords(), NodeRespVO.class);
+        // 转换为前端响应VO
+        List<NodeRespVO> voList = pageResult.getRecords().stream()
+                .map(this::convertToRespVO)
+                .collect(Collectors.toList());
 
-        // 直接构造PageResult返回
+        // 构造PageResult返回
         PageResult<NodeRespVO> result = new PageResult<>(voList, pageResult.getTotal());
         return AjaxResult.success(result);
     }
@@ -67,7 +69,7 @@ public class NodeController {
         Node node = nodeService.getById(id);
         ThrowUtils.throwIf(node == null, ErrorCode.NOT_FOUND_ERROR, "节点不存在");
 
-        NodeRespVO vo = BeanUtil.copyProperties(node, NodeRespVO.class);
+        NodeRespVO vo = convertToRespVO(node);
         return AjaxResult.success(vo);
     }
 
@@ -78,6 +80,11 @@ public class NodeController {
     public AjaxResult add(@Valid @RequestBody NodeAddReqVO reqVO) {
         Node node = new Node();
         BeanUtils.copyProperties(reqVO, node);
+
+        // 确保其他必要字段有默认值
+        if (node.getStatus() == null) {
+            node.setStatus(1); // 默认启用
+        }
 
         boolean success = nodeService.save(node);
         ThrowUtils.throwIf(!success, ErrorCode.OPERATION_ERROR, "新增节点失败");
@@ -120,10 +127,18 @@ public class NodeController {
      */
     @GetMapping("/tree")
     public AjaxResult getFileTree() {
-        List<Node> nodeTree = nodeService.getFileTree();
+        List<Node> nodeTree;
+        try {
+            nodeTree = nodeService.getFileTree();
+        } catch (Exception e) {
+            // 如果获取树失败，返回空列表而不是报错
+            return AjaxResult.success(List.of());
+        }
 
-        // 使用Hutool的BeanUtil直接转换列表
-        List<NodeRespVO> voList = BeanUtil.copyToList(nodeTree, NodeRespVO.class);
+        // 转换为前端响应VO
+        List<NodeRespVO> voList = nodeTree.stream()
+                .map(this::convertToRespVO)
+                .collect(Collectors.toList());
 
         return AjaxResult.success(voList);
     }
@@ -163,5 +178,26 @@ public class NodeController {
         ThrowUtils.throwIf(!success, ErrorCode.OPERATION_ERROR, "移动节点失败");
 
         return AjaxResult.success();
+    }
+
+    /**
+     * 转换Node实体为NodeRespVO
+     */
+    private NodeRespVO convertToRespVO(Node node) {
+        if (node == null) {
+            return null;
+        }
+
+        NodeRespVO vo = new NodeRespVO();
+        BeanUtils.copyProperties(node, vo);
+
+        // 处理children
+        if (node.getChildren() != null && !node.getChildren().isEmpty()) {
+            vo.setChildren(node.getChildren().stream()
+                    .map(this::convertToRespVO)
+                    .collect(Collectors.toList()));
+        }
+
+        return vo;
     }
 }

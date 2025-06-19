@@ -19,7 +19,6 @@ import com.rosy.virosa.web.controller.article.vo.req.ArticleUpdateReqVO;
 import com.rosy.virosa.web.controller.article.vo.req.NodeArticleReqVO;
 import com.rosy.virosa.web.controller.article.vo.resp.ArticleRespVO;
 import com.rosy.virosa.web.controller.article.vo.resp.NodeRespVO;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;

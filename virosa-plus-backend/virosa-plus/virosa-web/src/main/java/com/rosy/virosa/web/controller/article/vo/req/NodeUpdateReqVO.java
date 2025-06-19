@@ -16,27 +16,27 @@ public class NodeUpdateReqVO implements Serializable {
     private Long id;
 
     /**
-     * 节点标题
+     * 节点名称
      */
-    private String title;
+    private String name;
 
     /**
-     * 节点内容
+     * 节点类型 (directory: 目录, file: 文章)
      */
-    private String content;
+    private String type;
 
     /**
-     * 父节点ID，如果是顶级节点则为null
+     * 父节点ID，如果是顶级节点则为null或0
      */
     private Long parentId;
 
     /**
-     * 所属文章ID
+     * 所属文章ID（当type=file时使用）
      */
     private Long articleId;
 
     /**
-     * 排序号
+     * 状态（0: 关闭, 1: 开启）
      */
-    private Integer orderNum;
+    private Integer status;
 }

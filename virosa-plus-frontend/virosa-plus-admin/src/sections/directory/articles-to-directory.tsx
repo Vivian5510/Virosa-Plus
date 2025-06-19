@@ -249,7 +249,7 @@ export function ArticlesToDirectory({ post, articleId }: ArticlesToDirectoryProp
                                 overflowY: 'auto',
                                 maxHeight: 400,
                                 minHeight: 200,
-                                border: (theme) => `1px solid ${theme.palette.divider}`,
+                                border: (theme: any) => `1px solid ${theme.palette.divider}`,
                                 borderRadius: 1,
                                 p: 2
                             }}

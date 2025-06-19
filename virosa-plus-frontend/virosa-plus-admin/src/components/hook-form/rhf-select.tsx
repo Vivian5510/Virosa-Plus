@@ -25,12 +25,14 @@ import { HelperText } from './help-text';
 type RHFSelectProps = TextFieldProps & {
   name: string;
   children: React.ReactNode;
+  native?: boolean;
 };
 
 export function RHFSelect({
   name,
   children,
   helperText,
+  native,
   slotProps = {},
   ...other
 }: RHFSelectProps) {
@@ -40,14 +42,15 @@ export function RHFSelect({
 
   const baseSlotProps: TextFieldProps['slotProps'] = {
     select: {
+      native,
       sx: { textTransform: 'capitalize' },
-      MenuProps: {
+      MenuProps: !native ? {
         slotProps: {
           paper: {
             sx: [{ maxHeight: 220 }],
           },
         },
-      },
+      } : undefined,
     },
     htmlInput: { id: labelId },
     inputLabel: { htmlFor: labelId },

@@ -325,16 +325,111 @@ export const postService = {
   },
 };
 
+// 将后端Node转换为前端INodeItem
+export function nodeToNodeItem(node: any): any {
+  if (!node) return null;
+
+  // 确保节点具有所有必需字段
+  return {
+    id: node.id,
+    name: node.name || `未命名节点-${node.id}`, // 默认名称，避免null
+    type: node.type || 'directory', // 默认为目录类型
+    parentId: node.parentId || 0,
+    articleId: node.articleId || null,
+    status: node.status || 1, // 默认启用
+    orderNum: node.orderNum || 0,
+    createTime: node.createTime || new Date().toISOString(),
+    updateTime: node.updateTime || new Date().toISOString(),
+    version: node.version || 1,
+    isDeleted: node.isDeleted || 0,
+    children: Array.isArray(node.children) ? node.children.map(nodeToNodeItem) : [],
+  };
+}
+
 // 节点(目录)服务
 export const nodeService = {
   // 获取节点树
   async getNodeTree() {
     try {
+      console.log('开始获取节点树数据...');
       const response = await axiosInstance.get(apiEndpoints.node.tree);
-      return response.data.data || [];
-    } catch (error) {
-      console.error('Failed to fetch node tree:', error);
+      console.log('成功获取节点树数据:', response.data);
+
+      // 使用转换函数处理数据
+      const nodes = response.data.data || [];
+      return Array.isArray(nodes) ? nodes.map(nodeToNodeItem) : [];
+    } catch (error: any) {
+      console.error('获取节点树失败:', error);
+
+      // 尝试从错误中提取更有用的信息
+      let errorMessage = '获取目录树失败';
+      if (error?.response) {
+        // 服务器响应了，但状态码不是2xx
+        if (error.response.status === 403) {
+          errorMessage = '您没有权限访问目录树，请联系管理员';
+        } else if (error.response.status === 401) {
+          errorMessage = '未授权访问，请重新登录';
+          // 重定向到登录页面
+          window.location.href = '/auth/jwt/sign-in';
+        } else if (error.response.data && error.response.data.msg) {
+          errorMessage = error.response.data.msg;
+        }
+      }
+
+      // 使用空数组作为默认返回值，避免UI错误
       return [];
+    }
+  },
+
+  // 获取节点详情
+  async getNodeById(id: string | number) {
+    try {
+      console.log(`获取节点详情, ID: ${id}`);
+      const response = await axiosInstance.get(apiEndpoints.node.details(id));
+      console.log('节点详情响应:', response.data);
+      return response.data.data || null;
+    } catch (error) {
+      console.error(`获取节点详情失败, ID: ${id}`, error);
+      throw error;
+    }
+  },
+
+  // 获取节点列表
+  async getNodeList(params: any = {}) {
+    try {
+      console.log('获取节点列表, 参数:', params);
+      const response = await axiosInstance.get(apiEndpoints.node.list, { params });
+      console.log('节点列表响应:', response.data);
+
+      // 安全地提取数据
+      const responseData = response.data || {};
+      const dataObject = responseData.data || {};
+
+      // 尝试提取节点列表
+      let nodeList = [];
+      let totalCount = 0;
+
+      if (dataObject.list && Array.isArray(dataObject.list)) {
+        nodeList = dataObject.list;
+        totalCount = dataObject.total || dataObject.list.length;
+      } else if (dataObject.records && Array.isArray(dataObject.records)) {
+        nodeList = dataObject.records;
+        totalCount = dataObject.total || dataObject.records.length;
+      } else if (Array.isArray(dataObject)) {
+        nodeList = dataObject;
+        totalCount = dataObject.length;
+      }
+
+      console.log(`成功获取 ${nodeList.length} 个节点，总数: ${totalCount}`);
+
+      // 使用转换函数处理数据
+      return {
+        nodes: nodeList.map(nodeToNodeItem),
+        total: totalCount,
+      };
+    } catch (error) {
+      console.error('获取节点列表失败:', error);
+      return { nodes: [], total: 0 };
     }
   },
 
@@ -365,12 +460,21 @@ export const nodeService = {
   },
 
   // 更新节点
-  async updateNode(id: string | number, data: any) {
+  async updateNode(updateData: { id: string | number;[key: string]: any }) {
     try {
-      const response = await axiosInstance.put(apiEndpoints.node.update(id), data);
+      console.log('更新节点，数据:', updateData);
+
+      const { id, ...restData } = updateData;
+
+      const response = await axiosInstance.put(
+        apiEndpoints.node.update(id),
+        restData
+      );
+
+      console.log('更新节点响应:', response.data);
       return response.data;
     } catch (error) {
-      console.error(`Failed to update node with id ${id}:`, error);
+      console.error('更新节点失败:', error);
       throw error;
     }
   },
@@ -378,11 +482,18 @@ export const nodeService = {
   // 移动节点
   async moveNode(nodeId: string | number, newParentId: string | number) {
     try {
-      const response = await axiosInstance.put(apiEndpoints.node.move(nodeId, newParentId));
+      console.log(`尝试移动节点 ${nodeId} 到新父节点 ${newParentId}`);
+
+      const response = await axiosInstance.put(apiEndpoints.node.move, {
+        id: nodeId,
+        parentId: newParentId
+      });
+
+      console.log('移动节点响应:', response.data);
       return response.data;
     } catch (error) {
-      console.error(`Failed to move node ${nodeId} to parent ${newParentId}:`, error);
-      throw error;
+      console.error(`移动节点失败, nodeId: ${nodeId}, newParentId: ${newParentId}`, error);
+      throw error; // 将错误向上传递，由调用者处理
     }
   },
 

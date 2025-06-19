@@ -41,6 +41,8 @@ public class SecurityConfig {
                         .requestMatchers("/static/**", "/favicon.ico").permitAll()
                         // 允许健康检查
                         .requestMatchers("/actuator/**").permitAll()
+                        // 允许文章和节点API访问（需要JWT授权）
+                        .requestMatchers("/articles/**", "/nodes/**").authenticated()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -11,7 +11,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import CardHeader from '@mui/material/CardHeader';
@@ -268,10 +267,7 @@ export function PostNewEditForm({ currentPost }: Props) {
 
       <Stack spacing={2} sx={{ p: { xs: 1, sm: 2 } }}>
         <Stack spacing={1} sx={{ width: '100%' }}>
-          <Field.MarkdownEditor
-            name="content"
-            placeholder="请使用Markdown格式编写文章内容..."
-          />
+          <Field.MarkdownEditor name="content" placeholder="请使用Markdown格式编写文章内容..." />
         </Stack>
       </Stack>
     </Card>
@@ -354,12 +350,7 @@ export function PostNewEditForm({ currentPost }: Props) {
         justifyContent: 'flex-end',
       }}
     >
-      <LoadingButton
-        type="submit"
-        variant="contained"
-        size="large"
-        loading={isSubmitting}
-      >
+      <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
         {!currentPost ? '创建文章' : '保存更改'}
       </LoadingButton>
     </Box>
@@ -376,11 +367,14 @@ export function PostNewEditForm({ currentPost }: Props) {
 
   return (
     <Form methods={methods} onSubmit={onSubmit}>
-      <Stack spacing={3} sx={{
-        mx: 'auto',
-        maxWidth: { xs: '100%', sm: '98%', md: '96%', lg: '94%', xl: 1400 },
-        px: { xs: 1, sm: 2 }
-      }}>
+      <Stack
+        spacing={3}
+        sx={{
+          mx: 'auto',
+          maxWidth: { xs: '100%', sm: '98%', md: '96%', lg: '94%', xl: 1400 },
+          px: { xs: 1, sm: 2 },
+        }}
+      >
         {renderProperties()}
         {renderDetails()}
         {renderActions()}

@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig } from 'axios';
 
 import axios from 'axios';
+import { JWT_STORAGE_KEY } from 'src/auth/context/jwt/constant';
 
 // ----------------------------------------------------------------------
 
@@ -9,6 +10,24 @@ const axiosInstance = axios.create({
   baseURL: '/api', // 关键：设置为代理路径前缀
   withCredentials: false,
 });
+
+// 添加请求拦截器
+axiosInstance.interceptors.request.use(
+  (config) => {
+    // 从 sessionStorage 获取 token
+    const token = sessionStorage.getItem(JWT_STORAGE_KEY);
+
+    // 如果存在token，则添加到请求头中
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // 添加响应拦截器
 axiosInstance.interceptors.response.use(
@@ -31,6 +50,21 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
+    // 处理401错误，表示未授权（token无效或过期）
+    if (error.response && error.response.status === 401) {
+      console.error('未授权访问，请重新登录');
+      // 清除token并重定向到登录页
+      sessionStorage.removeItem(JWT_STORAGE_KEY);
+      window.location.href = '/auth/jwt/sign-in';
+      return Promise.reject(new Error('未授权，请重新登录'));
+    }
+
+    // 处理403错误，表示权限不足
+    if (error.response && error.response.status === 403) {
+      console.error('权限不足，无法访问该资源');
+      return Promise.reject(new Error('您没有权限访问此资源'));
+    }
+
     // 增强错误信息
     const errorMessage =
       error.response?.data?.msg ||
@@ -90,12 +124,12 @@ export const endpoints = {
   },
 };
 
-// 后端API端点 - 也不需要 /api 前缀
+// 后端API端点 - 也不需要 /api 前缀，确保不包含admin前缀
 export const apiEndpoints = {
   article: {
     list: '/articles/page',
     details: (id: string | number) => `/articles/${id}`,
-    create: '/articles',
+    create: '/article',
     update: (id: string | number) => `/articles/${id}`,
     delete: (id: string | number) => `/articles/${id}`,
     nodes: (id: string | number) => `/articles/${id}/nodes`,
@@ -103,16 +137,15 @@ export const apiEndpoints = {
     addToDirectory: (id: string | number) => `/articles/${id}/directory`,
   },
   node: {
-    list: '/nodes/page',
     tree: '/nodes/tree',
+    list: '/nodes/page',
     details: (id: string | number) => `/nodes/${id}`,
     create: '/nodes',
     update: (id: string | number) => `/nodes/${id}`,
     delete: (id: string | number) => `/nodes/${id}`,
-    move: (id: string | number, newParentId: string | number) =>
-      `/nodes/${id}/parent/${newParentId}`,
+    move: '/nodes/move',
     addArticle: (directoryId: string | number, articleId: string | number) =>
-      `/nodes/directory/${directoryId}/article/${articleId}`,
+      `/nodes/directory/${directoryId}/articles/${articleId}`,
     removeArticle: (nodeId: string | number) => `/nodes/file/${nodeId}`,
   },
 };
