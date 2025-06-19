@@ -26,6 +26,7 @@ export type OptionsProps = {
   };
   autoHideDuration?: number;
   preventDuplicate?: boolean;
+  sx?: any;
 };
 
 export type ToastFunction = {
@@ -123,7 +124,7 @@ type MessageItem = {
 export function SnackbarProvider({ children }: SnackbarProviderProps) {
   const [messages, setMessages] = useState<MessageItem[]>([]);
 
-  const closeSnackbar = useCallback((key?: SnackbarKey) => {
+  const handleClose = useCallback((key?: SnackbarKey) => {
     if (key) {
       setMessages((prev) => prev.filter((msg) => msg.key !== key));
     } else {
@@ -139,13 +140,13 @@ export function SnackbarProvider({ children }: SnackbarProviderProps) {
       // 自动隐藏
       if (options?.autoHideDuration !== 0) {
         setTimeout(() => {
-          closeSnackbar(key);
+          handleClose(key);
         }, options?.autoHideDuration || 3000);
       }
 
       return key;
     },
-    [closeSnackbar]
+    [handleClose]
   );
 
   const enqueueSnackbar = openSnackbar;
@@ -159,7 +160,7 @@ export function SnackbarProvider({ children }: SnackbarProviderProps) {
     <SnackbarContext.Provider
       value={{
         openSnackbar,
-        closeSnackbar,
+        closeSnackbar: handleClose,
         enqueueSnackbar,
       }}
     >
@@ -182,10 +183,10 @@ export function SnackbarProvider({ children }: SnackbarProviderProps) {
               <Alert
                 key={key}
                 severity={mapVariantToSeverity(options?.variant)}
-                onClose={() => closeSnackbar(key)}
+                onClose={() => handleClose(key)}
                 sx={{
                   boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-                  minWidth: '300px',
+                  ...options?.sx,
                   ...(options?.anchorOrigin?.vertical === 'top' && {
                     top: 16,
                     bottom: 'auto',

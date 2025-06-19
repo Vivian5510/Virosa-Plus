@@ -123,10 +123,9 @@ export const navData: NavSectionProps['data'] = [
       {
         title: '目录管理',
         path: paths.dashboard.directory.root,
-        icon: ICONS.folder,
+        icon: <Iconify icon="mdi:folder-outline" />,
         children: [
           { title: '目录树', path: paths.dashboard.directory.tree },
-          { title: '目录列表', path: paths.dashboard.directory.list },
           { title: '新建目录', path: paths.dashboard.directory.new },
         ],
       },

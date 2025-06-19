@@ -1,32 +1,31 @@
 import type { AxiosRequestConfig } from 'axios';
 
 import axios from 'axios';
+
 import { JWT_STORAGE_KEY } from 'src/auth/context/jwt/constant';
 
 // ----------------------------------------------------------------------
 
-// 创建 axios 实例，baseURL 指向 /api，这样所有请求都是相对于 Vite 服务器的
+// 创建一个新的axios实例
 const axiosInstance = axios.create({
-  baseURL: '/api', // 关键：设置为代理路径前缀
-  withCredentials: false,
+  baseURL: '/api', // 基础URL
+  timeout: 15000, // 请求超时时间
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // 添加请求拦截器
 axiosInstance.interceptors.request.use(
   (config) => {
-    // 从 sessionStorage 获取 token
-    const token = sessionStorage.getItem(JWT_STORAGE_KEY);
-
-    // 如果存在token，则添加到请求头中
+    // 从localStorage获取token并添加到请求头
+    const token = localStorage.getItem(JWT_STORAGE_KEY);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // 添加响应拦截器
@@ -54,7 +53,7 @@ axiosInstance.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       console.error('未授权访问，请重新登录');
       // 清除token并重定向到登录页
-      sessionStorage.removeItem(JWT_STORAGE_KEY);
+      localStorage.removeItem(JWT_STORAGE_KEY);
       window.location.href = '/auth/jwt/sign-in';
       return Promise.reject(new Error('未授权，请重新登录'));
     }

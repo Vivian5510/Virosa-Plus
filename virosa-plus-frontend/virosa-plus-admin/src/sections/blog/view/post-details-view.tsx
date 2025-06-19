@@ -23,7 +23,7 @@ import { PostDetailsSkeleton } from '../post-skeleton';
 import { PostDetailsHero } from '../post-details-hero';
 import { PostDetailsToolbar } from '../post-details-toolbar';
 // 导入目录关联组件
-import { ArticlesToDirectory } from '../../directory/articles-to-directory';
+import ArticlesToDirectory from '../../directory/articles-to-directory';
 
 // ----------------------------------------------------------------------
 

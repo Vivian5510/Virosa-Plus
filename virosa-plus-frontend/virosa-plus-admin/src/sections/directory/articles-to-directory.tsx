@@ -9,6 +9,7 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Skeleton from '@mui/material/Skeleton';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
@@ -20,7 +21,15 @@ import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { EmptyContent } from 'src/components/empty-content';
 
-import { DirectoryItemSkeleton } from './directory-skeleton';
+// 简单的骨架屏组件
+const DirectoryItemSkeleton = () => (
+    <Stack direction="row" alignItems="center" spacing={2}>
+        <Skeleton variant="circular" width={24} height={24} />
+        <Skeleton variant="text" width={120} height={24} />
+        <Box sx={{ flexGrow: 1 }} />
+        <Skeleton variant="rectangular" width={60} height={24} />
+    </Stack>
+);
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +38,7 @@ type ArticlesToDirectoryProps = {
     articleId?: string;
 };
 
-export function ArticlesToDirectory({ post, articleId }: ArticlesToDirectoryProps) {
+export default function ArticlesToDirectory({ post, articleId }: ArticlesToDirectoryProps) {
     const [currentTab, setCurrentTab] = useState('目录树');
     const [nodes, setNodes] = useState<INodeItem[]>([]);
     const [articleNodes, setArticleNodes] = useState<INodeItem[]>([]);

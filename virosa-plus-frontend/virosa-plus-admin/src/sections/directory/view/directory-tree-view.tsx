@@ -15,12 +15,21 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
+import { alpha, useTheme } from '@mui/material/styles';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { alpha, useTheme } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
-import { Paper, Menu, MenuItem, ListItemIcon, ListItemText, Tooltip, IconButton, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  Menu,
+  Paper,
+  MenuItem,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -32,10 +41,10 @@ import { nodeService } from 'src/lib/api-adapter';
 
 import { Iconify } from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
+import { EmptyContent } from 'src/components/empty-content';
 import { useSettingsContext } from 'src/components/settings';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
-import { EmptyContent } from 'src/components/empty-content';
 
 import { NodeType } from 'src/types/node';
 
@@ -262,8 +271,12 @@ export default function DirectoryTreeView() {
           borderRadius: 2,
           position: 'relative',
           transition: 'all 0.2s',
-          bgcolor: selected === String(node.id) ? alpha(theme.palette.primary.lighter, 0.16) : 'background.paper',
-          borderColor: selected === String(node.id) ? theme.palette.primary.main : theme.palette.divider,
+          bgcolor:
+            selected === String(node.id)
+              ? alpha(theme.palette.primary.lighter, 0.16)
+              : 'background.paper',
+          borderColor:
+            selected === String(node.id) ? theme.palette.primary.main : theme.palette.divider,
           '&:hover': {
             bgcolor: alpha(theme.palette.primary.lighter, 0.08),
             boxShadow: theme.shadows[2],
@@ -330,19 +343,20 @@ export default function DirectoryTreeView() {
           {nodes.map((node) => renderNodeCard(node))}
         </Grid>
 
-        {nodes.map((node) =>
-          node.type === NodeType.DIRECTORY && node.children && node.children.length > 0 && (
-            <Box key={`children-${node.id}`} sx={{ mt: 3, ml: level > 0 ? 3 : 0 }}>
-              <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-                <Iconify icon="solar:folder-bold" sx={{ color: 'warning.main' }} />
-                <Typography variant="subtitle1">
-                  {node.name} 下的内容
-                </Typography>
-              </Stack>
-              <Divider sx={{ mb: 2 }} />
-              {renderNodeGridRecursive(node.children, level + 1)}
-            </Box>
-          )
+        {nodes.map(
+          (node) =>
+            node.type === NodeType.DIRECTORY &&
+            node.children &&
+            node.children.length > 0 && (
+              <Box key={`children-${node.id}`} sx={{ mt: 3, ml: level > 0 ? 3 : 0 }}>
+                <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
+                  <Iconify icon="solar:folder-bold" sx={{ color: 'warning.main' }} />
+                  <Typography variant="subtitle1">{node.name} 下的内容</Typography>
+                </Stack>
+                <Divider sx={{ mb: 2 }} />
+                {renderNodeGridRecursive(node.children, level + 1)}
+              </Box>
+            )
         )}
       </>
     );
@@ -551,45 +565,52 @@ export default function DirectoryTreeView() {
         onClose={handleCloseContextMenu}
         anchorReference="anchorPosition"
         anchorPosition={
-          contextMenu
-            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
-            : undefined
+          contextMenu ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
         }
       >
         {selectedNode && selectedNode.type === NodeType.DIRECTORY && (
-          <MenuItem onClick={() => {
-            handleOpenCreateDialog(selectedNode.id);
-            handleCloseContextMenu();
-          }}>
+          <MenuItem
+            onClick={() => {
+              handleOpenCreateDialog(selectedNode.id);
+              handleCloseContextMenu();
+            }}
+          >
             <ListItemIcon>
               <Iconify icon="solar:add-folder-bold" />
             </ListItemIcon>
             <ListItemText>添加子目录</ListItemText>
           </MenuItem>
         )}
-        <MenuItem onClick={() => {
-          handleOpenEditDialog();
-          handleCloseContextMenu();
-        }}>
+        <MenuItem
+          onClick={() => {
+            handleOpenEditDialog();
+            handleCloseContextMenu();
+          }}
+        >
           <ListItemIcon>
             <Iconify icon="solar:pen-bold" />
           </ListItemIcon>
           <ListItemText>重命名</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => {
-          confirm.onTrue();
-          handleCloseContextMenu();
-        }} sx={{ color: 'error.main' }}>
+        <MenuItem
+          onClick={() => {
+            confirm.onTrue();
+            handleCloseContextMenu();
+          }}
+          sx={{ color: 'error.main' }}
+        >
           <ListItemIcon sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
           </ListItemIcon>
           <ListItemText>删除</ListItemText>
         </MenuItem>
         {selectedNode && selectedNode.type === NodeType.FILE && selectedNode.articleId && (
-          <MenuItem onClick={() => {
-            router.push(paths.dashboard.post.details(String(selectedNode.articleId)));
-            handleCloseContextMenu();
-          }}>
+          <MenuItem
+            onClick={() => {
+              router.push(paths.dashboard.post.details(String(selectedNode.articleId)));
+              handleCloseContextMenu();
+            }}
+          >
             <ListItemIcon>
               <Iconify icon="solar:eye-bold" />
             </ListItemIcon>
@@ -600,17 +621,19 @@ export default function DirectoryTreeView() {
 
       {/* 新建目录对话框 */}
       <Dialog open={openCreateDialog} onClose={handleCloseDialog} fullWidth maxWidth="xs">
-        <DialogTitle>{parentId ? '创建子目录' : '创建根目录'}</DialogTitle>
-        <DialogContent dividers>
+        <DialogTitle sx={{ pb: 2 }}>{parentId ? '创建子目录' : '创建根目录'}</DialogTitle>
+        <DialogContent sx={{ pt: 2, pb: 3 }}>
           <TextField
             autoFocus
             fullWidth
             label="目录名称"
             value={newDirName}
             onChange={(e) => setNewDirName(e.target.value)}
+            margin="normal"
+            sx={{ mt: 1 }}
           />
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ px: 3, pb: 3 }}>
           <Button onClick={handleCloseDialog}>取消</Button>
           <Button variant="contained" color="primary" onClick={handleCreateDirectory}>
             创建
@@ -620,17 +643,19 @@ export default function DirectoryTreeView() {
 
       {/* 编辑节点对话框 */}
       <Dialog open={openEditDialog} onClose={handleCloseDialog} fullWidth maxWidth="xs">
-        <DialogTitle>编辑节点</DialogTitle>
-        <DialogContent dividers>
+        <DialogTitle sx={{ pb: 2 }}>编辑节点</DialogTitle>
+        <DialogContent sx={{ pt: 2, pb: 3 }}>
           <TextField
             autoFocus
             fullWidth
             label="节点名称"
             value={newDirName}
             onChange={(e) => setNewDirName(e.target.value)}
+            margin="normal"
+            sx={{ mt: 1 }}
           />
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ px: 3, pb: 3 }}>
           <Button onClick={handleCloseDialog}>取消</Button>
           <Button variant="contained" color="primary" onClick={handleUpdateNode}>
             保存

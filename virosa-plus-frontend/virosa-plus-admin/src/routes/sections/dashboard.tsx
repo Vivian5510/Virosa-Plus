@@ -60,7 +60,6 @@ const BlogNewPostPage = lazy(() => import('src/pages/dashboard/post/new'));
 const BlogEditPostPage = lazy(() => import('src/pages/dashboard/post/edit'));
 // Directory
 const DirectoryTreeView = lazy(() => import('src/sections/directory/view/directory-tree-view'));
-const DirectoryListView = lazy(() => import('src/sections/directory/view/directory-list-view'));
 const DirectoryNewView = lazy(() => import('src/sections/directory/view/directory-new-view'));
 const DirectoryEditView = lazy(() => import('src/sections/directory/view/directory-edit-view'));
 // Job
@@ -186,7 +185,6 @@ export const dashboardRoutes: RouteObject[] = [
         children: [
           { index: true, element: <DirectoryTreeView /> },
           { path: 'tree', element: <DirectoryTreeView /> },
-          { path: 'list', element: <DirectoryListView /> },
           { path: 'new', element: <DirectoryNewView /> },
           { path: ':id/edit', element: <DirectoryEditView /> },
         ],
