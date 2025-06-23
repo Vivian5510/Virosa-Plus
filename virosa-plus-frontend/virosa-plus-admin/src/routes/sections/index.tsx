@@ -1,18 +1,14 @@
 import type { RouteObject } from 'react-router';
 
-import { lazy, Suspense } from 'react';
-import { Navigate } from "react-router";
+import { lazy } from 'react';
+import { Navigate } from 'react-router';
 
-import { MainLayout } from 'src/layouts/main';
-
-import { SplashScreen } from 'src/components/loading-screen';
-
+import { paths } from '../paths';
 import { authRoutes } from './auth';
 import { mainRoutes } from './main';
 import { authDemoRoutes } from './auth-demo';
 import { dashboardRoutes } from './dashboard';
 import { componentsRoutes } from './components';
-import { paths } from '../paths';
 
 // ----------------------------------------------------------------------
 

@@ -35,9 +35,7 @@ const flipCards = [
 </script>
 
 <template>
-	<section
-		class="mb-50 max-w-7xl flex flex-col items-center justify-center"
-	>
+	<section class="mb-50 max-w-7xl flex flex-col items-center justify-center">
 		<div class="mb-10 text-6xl font-semibold">What can you do here?</div>
 
 		<div class="flex items-center justify-center gap-16">

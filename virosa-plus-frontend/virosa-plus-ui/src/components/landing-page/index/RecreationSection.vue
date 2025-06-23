@@ -75,9 +75,7 @@ const imageUrls = slugs.map((slug) => `/svg/${slug}.svg`)
 </script>
 
 <template>
-	<section
-		class="mb-50 max-w-7xl flex flex-col items-center justify-center"
-	>
+	<section class="mb-50 max-w-7xl flex flex-col items-center justify-center">
 		<BlurReveal :delay="0" :duration="1.5">
 			<div class="mb-10 text-center text-4xl font-semibold">
 				Admire some breathtaking landscapes to uplift your mood.
