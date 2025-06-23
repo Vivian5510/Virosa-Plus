@@ -175,19 +175,16 @@
 									:duration="5"
 								>
 									<span class="text-center text-xl font-bold"
-									>Tags for myself 😎</span
+										>Tags for myself 😎</span
 									>
 								</RadiantText>
 							</CardItem>
 
 							<CardItem
 								:translate-z="25"
-								class="mt-3 min-h-28 min-w-60 max-h-100 w-full flex flex-col items-center justify-center"
+								class="mt-3 max-h-100 min-h-28 min-w-60 w-full flex flex-col items-center justify-center"
 							>
-								<ParticleImage
-									image-src="logo.png"
-									:responsive-width="true"
-								/>
+								<ParticleImage image-src="logo.png" :responsive-width="true" />
 							</CardItem>
 						</CardBody>
 					</CardContainer>

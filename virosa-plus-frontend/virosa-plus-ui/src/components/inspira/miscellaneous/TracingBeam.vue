@@ -3,13 +3,13 @@
 		ref="tracingBeamRef"
 		:class="cn('relative w-full max-w-4xl mx-auto h-full', $props.class)"
 	>
-		<div class="absolute top-3 -left-4 md:-left-12">
+		<div class="absolute top-3 z-20 -left-6 sm:-left-7 md:-left-12">
 			<div
 				:style="{
 					boxShadow:
 						scrollYProgress > 0 ? 'none' : 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
 				}"
-				class="border-netural-200 ml-[27px] size-4 flex items-center justify-center border rounded-full shadow-sm"
+				class="border-netural-200 ml-[27px] size-4 flex items-center justify-center border rounded-full bg-white shadow-sm"
 			>
 				<Motion
 					:animate="{
@@ -57,7 +57,7 @@
 				</defs>
 			</svg>
 		</div>
-		<div ref="tracingBeamContentRef">
+		<div ref="tracingBeamContentRef" class="pl-6 sm:pl-9 md:pl-12">
 			<slot />
 		</div>
 	</div>

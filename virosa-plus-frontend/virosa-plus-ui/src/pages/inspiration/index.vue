@@ -25,9 +25,9 @@ definePage({
 		</ScrollIsland>
 
 		<IntroSection id="intro" />
-		<BookSection  id="book" />
-		<FamousSection  id="famous" />
-		<VideoSection  id="video" />
+		<BookSection id="book" />
+		<FamousSection id="famous" />
+		<VideoSection id="video" />
 	</div>
 </template>
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Sparkles from '~/components/inspira/background/Sparkles.vue'
+
 const mode = useColorMode()
 const particlesColor = computed(() =>
 	mode.value === 'dark' ? '#FFFFFF' : '#000000',
@@ -17,7 +18,7 @@ const particlesColor = computed(() =>
 				This place
 			</div>
 			<h1
-				class="text-xl relative z-20 text-center text-black font-bold lg:text-5xl md:text-3xl dark:text-white"
+				class="relative z-20 text-center text-xl text-black font-bold lg:text-5xl md:text-3xl dark:text-white"
 			>
 				For those who have sparked my spirit
 			</h1>

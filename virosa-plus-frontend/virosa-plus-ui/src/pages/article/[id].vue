@@ -81,16 +81,37 @@ onMounted(() => {
 </script>
 
 <template>
-	<div>
-		<div class="flex">
-			<main class="h-fit w-250 flex gap-2 p-4">
-				<TracingBeam class="px-6">
+	<div class="px-4 py-4 md:px-8 md:py-6">
+		<div class="flex justify-center">
+			<main class="max-w-3xl w-full">
+				<TracingBeam class="article-tracing-beam">
 					<div
 						v-if="articleContentHtml"
-						class="bg-background z-[-2] w-180 border border-black/[0.1] rounded-lg bg-gray-50 p-10 dark:border-white/[0.2] dark:bg-[#242222] md:shadow-xl"
+						class="bg-background w-full border border-black/[0.1] rounded-lg bg-gray-50 p-4 shadow-md dark:border-white/[0.2] dark:bg-[#242222] md:p-8 sm:p-6 md:shadow-xl"
 					>
-						<!-- 渲染转换后的 HTML -->
-						<div class="prose font-lxgw" v-html="articleContentHtml"></div>
+						<!-- 文章标题区域 -->
+						<div class="mb-6 flex flex-col items-center">
+							<h1
+								class="mb-3 text-center text-2xl font-bold md:text-4xl sm:text-3xl"
+							>
+								{{ route.query.title || '无标题文章' }}
+							</h1>
+							<div class="flex items-center text-sm text-gray-500">
+								<span>发布于 {{ new Date().toLocaleDateString() }}</span>
+								<span class="mx-2">•</span>
+								<span
+									>阅读时间 约{{
+										Math.max(1, Math.ceil(mdContent.length / 400))
+									}}分钟</span
+								>
+							</div>
+						</div>
+
+						<!-- 文章内容 -->
+						<div
+							class="prose-sm md:prose-lg font-lxgw max-w-none prose sm:prose"
+							v-html="articleContentHtml"
+						></div>
 					</div>
 				</TracingBeam>
 			</main>
@@ -98,4 +119,29 @@ onMounted(() => {
 	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 640px) {
+	:deep(.prose) {
+		font-size: 0.95em;
+	}
+	
+	.article-tracing-beam {
+		margin-left: 14px; /* 微调移动端为追踪线预留的空间 */
+	}
+}
+
+/* 确保在超小屏幕上不会产生横向滚动条 */
+@media (max-width: 380px) {
+	.article-tracing-beam {
+		margin-left: 18px; /* 在超小屏幕上增加左侧间距 */
+		font-size: 0.9em; /* 稍微缩小字体以适应窄屏 */
+	}
+}
+
+/* 宽屏下稍微减少左侧边距 */
+@media (min-width: 1024px) {
+	.article-tracing-beam {
+		margin-left: 0; /* 宽屏下不需要额外边距 */
+	}
+}
+</style>

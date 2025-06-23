@@ -80,7 +80,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { HTMLAttributes } from '@vue/runtime-dom'
+import type { HTMLAttributes } from 'vue'
 import { cn } from '~/lib/utils'
 import {
 	BOOK_RADIUS_MAP as radiusMap,

@@ -62,7 +62,7 @@ const books = ref([
 
 <template>
 	<section>
-		<div class="flex flex-col justify-center items-center">
+		<div class="flex flex-col items-center justify-center">
 			<h1
 				class="relative z-20 text-center text-xl text-black font-bold lg:text-5xl md:text-3xl dark:text-white"
 			>

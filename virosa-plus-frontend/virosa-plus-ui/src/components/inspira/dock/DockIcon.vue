@@ -16,7 +16,6 @@
 </template>
 
 <script setup lang="ts">
-
 const iconRef = ref<HTMLDivElement | null>(null)
 
 const mouseX = inject('mouseX', ref(Infinity))

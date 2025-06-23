@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { HTMLAttributes } from "vue";
-import { cn } from "~/lib/utils";
+import type { HTMLAttributes } from 'vue'
+import { cn } from '~/lib/utils'
 
 interface BookDescriptionProps {
-	class?: HTMLAttributes["class"];
+	class?: HTMLAttributes['class']
 }
 
-defineProps<BookDescriptionProps>();
+defineProps<BookDescriptionProps>()
 </script>

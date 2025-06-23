@@ -29,10 +29,10 @@ const isMobileView = ref(false)
 onMounted(() => {
 	// 初始检查
 	checkMobileView()
-	
+
 	// 添加resize监听
 	window.addEventListener('resize', checkMobileView)
-	
+
 	// 组件卸载时清理
 	onUnmounted(() => {
 		window.removeEventListener('resize', checkMobileView)

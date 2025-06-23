@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import { cn } from '@/lib/utils'
-import type { HTMLAttributes } from '@vue/runtime-dom'
+import type { HTMLAttributes } from 'vue'
 
 interface Props {
 	class?: HTMLAttributes['class']

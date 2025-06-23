@@ -35,7 +35,7 @@
 		<div
 			class="pointer-events-none absolute bottom-0 w-full flex flex-row translate-y-10 transform-gpu items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
 		>
-			<GlassBorderButton as-child class="pointer-events-auto w-37 h-7">
+			<GlassBorderButton as-child class="pointer-events-auto h-7 w-37">
 				<a :href="href" class="text-[12px]"> {{ cta }} → </a>
 			</GlassBorderButton>
 		</div>

@@ -19,7 +19,7 @@
 			<span
 				v-for="ripple in buttonRipples"
 				:key="ripple.key"
-				class="ripple-animation bg-background absolute rounded-full opacity-30"
+				class="bg-background ripple-animation absolute rounded-full opacity-30"
 				:style="{
 					width: ripple.size + 'px',
 					height: ripple.size + 'px',
@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { HTMLAttributes } from '@vue/runtime-dom'
+import type { HTMLAttributes } from 'vue'
 import { cn } from '~/lib/utils'
 
 interface RippleButtonProps {

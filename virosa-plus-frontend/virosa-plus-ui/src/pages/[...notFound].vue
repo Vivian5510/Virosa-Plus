@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { Book, BookDescription, BookHeader, BookTitle } from 'src/components/inspira/miscellaneous/Book'
+import {
+	Book,
+	BookDescription,
+	BookHeader,
+	BookTitle,
+} from 'src/components/inspira/miscellaneous/Book'
 
 const typedRef = useTyped([' is not found!'])
 </script>

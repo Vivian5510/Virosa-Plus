@@ -36,7 +36,7 @@
 						:max="100"
 						:circle-stroke-width="10"
 						class="w-6"
-						:show-percentage='false'
+						:show-percentage="false"
 						:duration="0.3"
 						:gauge-secondary-color="isDark ? '#6b728055' : '#6b728099'"
 						:gauge-primary-color="isDark ? 'black' : 'white'"
