@@ -238,7 +238,7 @@ onMounted(async () => {
 				<div class="relative mt-4 size-fit flex flex-col items-center justify-center rounded-3xl">
 					<CardContainer>
 						<CardBody
-							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]">
+							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black">
 							<CardItem :translate-z="25"
 								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-6 py-6">
 								<TextRevealCard class="mx-auto w-full">
@@ -273,14 +273,14 @@ onMounted(async () => {
 				<div class="relative mt-6 size-fit flex flex-col items-center justify-center rounded-3xl">
 					<CardContainer>
 						<CardBody
-							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]">
+							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black overflow-hidden">
 							<CardItem :translate-z="25"
 								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-40 pb-40 pt-8 md:pb-60">
 								<span
 									class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-8xl text-transparent font-semibold leading-none dark:from-white dark:to-slate-900/10 max-lg:-mt-12">
 									Read
 								</span>
-								<Globe class="top-28" />
+								<Globe class="top-40 rounded-xl overflow-hidden" />
 								<div
 									class="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]"
 								/>
