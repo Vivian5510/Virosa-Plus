@@ -3,7 +3,7 @@
 		:key="name"
 		:class="
 			cn(
-				'group relative col-span-3 flex flex-col justify-end overflow-hidden rounded-xl',
+				'bento-grid-card group relative col-span-3 flex flex-col justify-end overflow-hidden rounded-xl',
 				// light styles
 				'bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]',
 				// dark styles
@@ -35,8 +35,8 @@
 		<div
 			class="pointer-events-none absolute bottom-0 w-full flex flex-row translate-y-10 transform-gpu items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
 		>
-			<GlassBorderButton as-child class="pointer-events-auto h-7 w-37">
-				<a :href="href" class="text-[12px]"> {{ cta }} → </a>
+			<GlassBorderButton as-child class="pointer-events-auto h-8 min-w-40 w-auto">
+				<a :href="href" class="text-[12px] whitespace-nowrap px-2"> {{ cta }} → </a>
 			</GlassBorderButton>
 		</div>
 		<div
@@ -61,3 +61,13 @@ interface Props {
 
 const props = defineProps<Props>()
 </script>
+
+<style scoped>
+/* 确保背景图片完全覆盖卡片 */
+:deep([name="background"] > div) {
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+}
+</style>

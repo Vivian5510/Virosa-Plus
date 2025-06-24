@@ -111,52 +111,37 @@ onMounted(async () => {
 <template>
 	<div>
 		<div class="flex">
-			<aside class="hidden h-screen w-70 p-4 md:block">
-				<div
-					class="relative size-fit flex flex-col items-center justify-center rounded-3xl"
-				>
+			<!-- 左侧边栏 - 文件树目录，所有屏幕都显示 -->
+			<aside class="h-screen w-70 p-4">
+				<div class="relative size-fit flex flex-col items-center justify-center rounded-3xl">
 					<CardSpotlight
 						class="h-fit w-60 flex-col cursor-pointer whitespace-nowrap border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black"
-						:gradient-color="isDark ? '#363636' : '#C9C9C9'"
-					>
-						<Tree
-							class="overflow-hidden rounded-md"
-							:initial-selected-id="'1'"
-							:initial-expanded-items="[]"
-							:elements="elements"
-						>
+						:gradient-color="isDark ? '#363636' : '#C9C9C9'">
+						<Tree class="overflow-hidden rounded-md" :initial-selected-id="'1'" :initial-expanded-items="[]"
+							:elements="elements">
 							<TreeNode :node="elements" />
 						</Tree>
 					</CardSpotlight>
 				</div>
 			</aside>
-			<main class="h-fit w-250 flex flex-col gap-2 p-4">
-				<BentoGrid
-					class="grid auto-rows-[22rem] grid-cols-3 w-full gap-4 lg:grid-rows-3"
-				>
-					<BentoGridCard
-						v-for="(feature, index) in features"
-						:key="index"
-						v-bind="feature"
-						:class="feature.class"
-					>
+			
+			<!-- 主内容区 - 在小屏幕上完全隐藏 -->
+			<main class="h-fit w-250 flex-col gap-2 p-4 !hidden md:!flex">
+				<BentoGrid class="grid auto-rows-[22rem] grid-cols-3 w-full gap-4 lg:grid-rows-3 bento-grid">
+					<BentoGridCard v-for="(feature, index) in features" :key="index" v-bind="feature"
+						:class="feature.class">
 						<template v-if="feature.image" #background>
-							<div
-								class="absolute right-0 top-0 size-full bg-center opacity-60 transition duration-150 ease-in-out group-hover:opacity-20"
-								:style="`background-image: url('${feature.image}')`"
-							></div>
+							<div class="absolute inset-0 size-full bg-cover bg-center opacity-60 transition duration-150 ease-in-out group-hover:opacity-20"
+								:style="`background-image: url('${feature.image}')`"></div>
 						</template>
 					</BentoGridCard>
 				</BentoGrid>
 
 				<div
-					class="bg-background relative z-10 mt-15 h-fit w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black md:shadow-xl"
-				>
+					class="bg-background relative z-10 mt-15 h-fit w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black md:shadow-xl">
 					<div :class="isDark ? 'dark' : ''">
 						<div class="text-center">
-							<h1
-								class="text-3xl text-purple-400 font-bold dark:text-purple-300"
-							>
+							<h1 class="text-3xl text-purple-400 font-bold dark:text-purple-300">
 								阅读激励实验 · 交互站点
 							</h1>
 							<p class="mt-4 text-xl text-gray-800 dark:text-gray-300">
@@ -166,9 +151,7 @@ onMounted(async () => {
 						</div>
 
 						<div class="mt-8">
-							<h2
-								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
-							>
+							<h2 class="text-2xl text-blue-300 font-semibold dark:text-blue-400">
 								🜲 阅读探险者协议
 							</h2>
 							<p class="mt-4 text-gray-800 dark:text-gray-300">
@@ -190,9 +173,7 @@ onMounted(async () => {
 						</div>
 
 						<div class="mt-8">
-							<h2
-								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
-							>
+							<h2 class="text-2xl text-blue-300 font-semibold dark:text-blue-400">
 								🜲 交互式阅读咒语
 							</h2>
 							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
@@ -206,16 +187,14 @@ onMounted(async () => {
 						</div>
 
 						<div class="mt-8">
-							<h2
-								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
-							>
+							<h2 class="text-2xl text-blue-300 font-semibold dark:text-blue-400">
 								🜲 认知拓展彩蛋
 							</h2>
 							<p class="mt-4 text-gray-800 dark:text-gray-300">
 								当你的视线抵达页面底部，你将解锁：
 							</p>
 							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
-								<li>一份作者藏匿的“阅读副作用”清单</li>
+								<li>一份作者藏匿的"阅读副作用"清单</li>
 								<li>某段被删改七次的自我辩解</li>
 								<li>以及一个等待填充的 _______</li>
 							</ul>
@@ -249,29 +228,20 @@ onMounted(async () => {
 
 					<FlickeringGrid
 						class="[mask-image:radial-gradient(450px_circle_at_center,white,transparent)] absolute inset-0 -z-10"
-						:square-size="4"
-						:grid-gap="6"
-						color="#60A5FA"
-						:max-opacity="0.5"
-						:flicker-chance="0.1"
-						:width="1000"
-						:height="800"
-					/>
+						:square-size="4" :grid-gap="6" color="#60A5FA" :max-opacity="0.5" :flicker-chance="0.1"
+						:width="1000" :height="800" />
 				</div>
 			</main>
-			<aside class="hidden h-screen w-80 p-4 md:block">
-				<div
-					class="relative mt-4 size-fit flex flex-col items-center justify-center rounded-3xl"
-				>
+			
+			<!-- 右侧边栏 - 在小屏幕上隐藏 -->
+			<aside class="h-screen w-80 p-4 hidden md:block">
+				<div class="relative mt-4 size-fit flex flex-col items-center justify-center rounded-3xl">
 					<CardContainer>
 						<CardBody
-							class="group/card h-fit w-full gap-2 border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
-						>
-							<CardItem
-								:translate-z="25"
-								class="mb-2 min-w-60 w-full flex flex-col"
-							>
-								<TextRevealCard class="mx-auto">
+							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]">
+							<CardItem :translate-z="25"
+								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-6 py-6">
+								<TextRevealCard class="mx-auto w-full">
 									<template #header>
 										<h2 class="mb-2 text-lg text-white font-semibold">
 											Rosy once said about 📖
@@ -279,18 +249,14 @@ onMounted(async () => {
 									</template>
 									<template #text>
 										<p
-											class="bg-[#d5d0d0] bg-clip-text py-4 text-sm text-transparent font-bold md:py-10 sm:py-6 md:text-xl sm:text-xl"
-										>
-											“翻开书页，灵魂便可徜徉千重世界；然逃避文字者，唯能踽踽独行一途。”
+											class="bg-[#d5d0d0] bg-clip-text py-4 text-sm text-transparent font-bold md:py-10 sm:py-6 md:text-xl sm:text-xl">
+											"翻开书页，灵魂便可徜徉千重世界；然逃避文字者，唯能踽踽独行一途。"
 										</p>
 									</template>
 									<template #revealText>
-										<p
-											:style="{
-												textShadow: '4px 4px 15px rgba(0,0,0,0.5)',
-											}"
-											class="from-white to-neutral-300 bg-gradient-to-b bg-clip-text py-4 text-sm text-white font-bold md:py-10 sm:py-6"
-										>
+										<p :style="{
+											textShadow: '4px 4px 15px rgba(0,0,0,0.5)',
+										}" class="from-white to-neutral-300 bg-gradient-to-b bg-clip-text py-4 text-sm text-white font-bold md:py-10 sm:py-6">
 											"Through the pages of a book, a soul may wander a thousand
 											worlds; but he who shuns the written word walks but a
 											single path."
@@ -300,41 +266,76 @@ onMounted(async () => {
 							</CardItem>
 						</CardBody>
 					</CardContainer>
+
 					<BorderBeam :size="250" :duration="7" :delay="12" :border-width="4" />
 				</div>
 
-				<div
-					class="relative mt-6 size-fit flex flex-col items-center justify-center rounded-3xl"
-				>
+				<div class="relative mt-6 size-fit flex flex-col items-center justify-center rounded-3xl">
 					<CardContainer>
 						<CardBody
-							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
-						>
-							<CardItem
-								:translate-z="25"
-								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-40 pb-40 pt-8 md:pb-60"
-							>
+							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]">
+							<CardItem :translate-z="25"
+								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-40 pb-40 pt-8 md:pb-60">
 								<span
-									class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-8xl text-transparent font-semibold leading-none dark:from-white dark:to-slate-900/10 max-lg:-mt-12"
-								>
+									class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-8xl text-transparent font-semibold leading-none dark:from-white dark:to-slate-900/10 max-lg:-mt-12">
 									Read
 								</span>
-								<Globe class="top-28 mt-20" />
-								<div class="pointer-events-none absolute inset-0 h-full" />
+								<Globe class="top-28" />
+								<div
+									class="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]"
+								/>
 							</CardItem>
 						</CardBody>
 					</CardContainer>
 
-					<BorderBeam
-						:size="250"
-						:duration="12"
-						:delay="17"
-						:border-width="2"
-					/>
+					<BorderBeam :size="250" :duration="12" :delay="17" :border-width="2" />
 				</div>
 			</aside>
 		</div>
 	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* 强制隐藏中间区域在窄屏上 */
+@media (max-width: 767px) {
+  main {
+    display: none !important;
+  }
+}
+
+/* 确保卡片背景图片完全填充 */
+:deep(.bento-grid-card) {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+:deep(.bento-grid-card [name="background"] > div) {
+  background-size: cover !important;
+  background-position: center !important;
+  height: 100% !important;
+  width: 100% !important;
+  position: absolute;
+  inset: 0;
+}
+
+/* 优化网格布局 */
+:deep(.bento-grid) {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 22rem;
+  gap: 1rem;
+}
+
+/* 确保卡片内容正确显示 */
+:deep(.bento-grid-card h3) {
+  position: relative;
+  z-index: 2;
+}
+
+:deep(.bento-grid-card p) {
+  position: relative;
+  z-index: 2;
+}
+</style>

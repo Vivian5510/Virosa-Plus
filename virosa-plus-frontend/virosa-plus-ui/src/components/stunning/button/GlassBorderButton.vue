@@ -2,7 +2,7 @@
 	<div
 		:class="
 			cn(
-				'glass-border-button group bg-white/10 rounded-xl relative h-12 cursor-pointer shadow-sm shadow-black/5',
+				'glass-border-button group bg-white/10 rounded-xl relative cursor-pointer shadow-sm shadow-black/5',
 			)
 		"
 	>
@@ -25,14 +25,14 @@
 		<div
 			:class="
 				cn(
-					'z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl px-8 py-1 fonts-medium',
+					'z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl px-4 py-1 fonts-medium',
 					'bg-gradient-to-t from-neutral-100/90  to-neutral-50 backdrop-blur-2xl',
 					'group-hover:from-neutral-200/90 group-hover:to-neutral-50',
 				)
 			"
 		>
 			<div
-				class="flex items-center justify-center gap-2 text-neutral-950 transition-transform duration-100 ease-in-out group-hover:scale-105"
+				class="flex items-center justify-center gap-2 text-neutral-950 transition-transform duration-100 ease-in-out group-hover:scale-105 whitespace-nowrap w-full"
 			>
 				<slot />
 			</div>

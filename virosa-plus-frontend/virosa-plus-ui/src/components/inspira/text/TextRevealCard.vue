@@ -2,7 +2,7 @@
 	<div
 		ref="cardRef"
 		:class="[
-			'relative w-full max-w-[40rem] overflow-hidden rounded-lg border border-white/[0.08] bg-[#1d1c20] p-4 md:p-8 sm:p-6',
+			'relative w-full max-w-[40rem] overflow-hidden rounded-lg border border-white/[0.08] bg-[#2a2a2d] p-2 md:p-4 sm:p-3',
 			props.class,
 		]"
 		@mouseenter="mouseEnterHandler"
@@ -21,7 +21,7 @@
 					clipPath: `inset(0 ${100 - widthPercentage}% 0 0)`,
 					transition: isMouseOver ? 'none' : 'all 0.4s ease-out',
 				}"
-				class="absolute z-20 bg-[#1d1c20] will-change-transform"
+				class="absolute z-20 bg-[#2a2a2d] will-change-transform"
 			>
 				<slot name="text" />
 			</div>
@@ -33,7 +33,7 @@
 					opacity: widthPercentage > 0 ? 1 : 0,
 					transition: isMouseOver ? 'none' : 'all 0.4s ease-out',
 				}"
-				class="absolute z-50 h-40 w-[8px] from-transparent via-neutral-800 to-transparent bg-gradient-to-b will-change-transform"
+				class="absolute z-50 h-40 w-[8px] from-transparent via-neutral-700 to-transparent bg-gradient-to-b will-change-transform"
 			></div>
 
 			<div
@@ -41,7 +41,7 @@
 			>
 				<slot name="revealText"></slot>
 
-				<TextRevealStars :stars-count :class="starsClass" />
+				<TextRevealStars :stars-count="starsCount" :class="starsClass" />
 			</div>
 		</div>
 	</div>
