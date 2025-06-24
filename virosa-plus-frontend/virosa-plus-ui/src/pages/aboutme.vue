@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<div class="flex">
+		<div class="flex flex-col md:flex-row">
 			<!-- 侧边栏 -->
-			<aside class="hidden h-screen w-80 p-4 md:block">
+			<aside class="h-auto md:h-screen w-full p-4 md:w-80">
 				<div
 					class="relative size-fit flex flex-col items-center justify-center rounded-3xl"
 				>
@@ -161,44 +161,10 @@
 					</CardContainer>
 					<BorderBeam :size="250" :duration="20" :delay="5" :border-width="2" />
 				</div>
-
-				<div
-					class="relative mt-6 size-fit flex flex-col items-center justify-center rounded-3xl"
-				>
-					<CardContainer>
-						<CardBody
-							class="group/card h-fit w-full gap-2 border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
-						>
-							<CardItem :translate-z="25" class="min-w-60 w-full flex">
-								<RadiantText
-									class="inline-flex items-center justify-center transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400"
-									:duration="5"
-								>
-									<span class="text-center text-xl font-bold"
-										>Tags for myself 😎</span
-									>
-								</RadiantText>
-							</CardItem>
-
-							<CardItem
-								:translate-z="25"
-								class="mt-3 max-h-100 min-h-28 min-w-60 w-full flex flex-col items-center justify-center"
-							>
-								<ParticleImage image-src="logo.png" :responsive-width="true" />
-							</CardItem>
-						</CardBody>
-					</CardContainer>
-					<BorderBeam
-						:size="250"
-						:duration="12"
-						:delay="17"
-						:border-width="2"
-					/>
-				</div>
 			</aside>
 
 			<!-- 主内容区域 -->
-			<main class="p-4">
+			<main class="hidden p-4 md:block md:flex-1 overflow-y-auto">
 				<div
 					class="h-56 w-full flex flex-col items-center justify-center gap-2"
 				>
