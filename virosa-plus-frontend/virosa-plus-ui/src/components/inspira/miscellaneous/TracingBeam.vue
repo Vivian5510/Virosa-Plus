@@ -1,7 +1,7 @@
 <template>
 	<div
 		ref="tracingBeamRef"
-		:class="cn('relative w-full max-w-4xl mx-auto h-full', $props.class)"
+		:class="cn('relative w-full mx-auto h-full', $props.class)"
 	>
 		<div class="absolute top-3 z-20 -left-6 sm:-left-7 md:-left-12">
 			<div

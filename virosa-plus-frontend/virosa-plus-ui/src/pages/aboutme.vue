@@ -2,7 +2,7 @@
 	<div>
 		<div class="flex flex-col md:flex-row">
 			<!-- 侧边栏 -->
-			<aside class="h-auto md:h-screen w-full p-4 md:w-80">
+			<aside class="h-auto w-full p-4 md:h-screen md:w-80">
 				<div
 					class="relative size-fit flex flex-col items-center justify-center rounded-3xl"
 				>
@@ -164,7 +164,7 @@
 			</aside>
 
 			<!-- 主内容区域 -->
-			<main class="hidden p-4 md:block md:flex-1 overflow-y-auto">
+			<main class="hidden overflow-y-auto p-4 md:block md:flex-1">
 				<div
 					class="h-56 w-full flex flex-col items-center justify-center gap-2"
 				>

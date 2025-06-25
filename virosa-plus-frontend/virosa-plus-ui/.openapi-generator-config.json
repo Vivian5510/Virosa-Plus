@@ -1,0 +1,15 @@
+{
+  "inputSpec": "http://localhost:9090/api/v3/api-docs",
+  "generatorName": "typescript-axios",
+  "output": "./src/api/generated",
+  "apiPackage": "api",
+  "modelPackage": "models",
+  "additionalProperties": {
+    "supportsES6": true,
+    "withSeparateModelsAndApi": true,
+    "withInterfaces": true,
+    "npmName": "@api/generated",
+    "enumPropertyNaming": "UPPERCASE",
+    "modelPropertyNaming": "camelCase"
+  }
+} 

@@ -1,34 +1,43 @@
 import axios from 'axios'
+import toast from './toast'
+import { AjaxResult } from '../api/types'
+import {
+	ArticleControllerApiFactory,
+	IssueControllerApiFactory,
+	MessageControllerApiFactory,
+	NodeControllerApiFactory,
+	DefaultApiFactory,
+} from '../api/generated'
 
+// 创建axios实例
 export const http = axios.create({
-	baseURL: import.meta.env.VITE_API_BASE_URL,
+	baseURL: '', // 不设置baseURL，使用相对路径，让代理正常工作
 })
 
+// 使用OpenAPI生成的API工厂
 export const articleApi = ArticleControllerApiFactory(
 	undefined,
 	undefined,
 	http,
 )
-export const bookApi = BookControllerApiFactory(undefined, undefined, http)
-
-export const famousApi = FamousControllerApiFactory(undefined, undefined, http)
 export const issueApi = IssueControllerApiFactory(undefined, undefined, http)
 export const messageApi = MessageControllerApiFactory(
 	undefined,
 	undefined,
 	http,
 )
-export const musicApi = MusicControllerApiFactory(undefined, undefined, http)
-export const videoApi = VideoControllerApiFactory(undefined, undefined, http)
 export const nodeApi = NodeControllerApiFactory(undefined, undefined, http)
+export const defaultApi = DefaultApiFactory(undefined, undefined, http)
 
 // 添加请求拦截器
 http.interceptors.request.use(
 	function (config) {
+		console.log('发送请求:', config.method?.toUpperCase(), config.url)
 		// 在发送请求之前做些什么
 		return config
 	},
 	function (error) {
+		console.error('请求错误:', error)
 		toast.warning(error.message ?? '未知请求错误')
 		// 对请求错误做些什么
 		return Promise.reject(error)
@@ -38,6 +47,7 @@ http.interceptors.request.use(
 // 添加响应拦截器
 http.interceptors.response.use(
 	function (response) {
+		console.log('收到响应:', response.config.url)
 		// 2xx 范围内的状态码都会触发该函数。
 		// 对响应数据进行格式化
 		if (response.data) {
@@ -46,11 +56,14 @@ http.interceptors.response.use(
 		return response
 	},
 	function (error) {
+		console.error('响应错误:', error.config?.url, error.message)
+		
 		const status = error.response?.status
-		let { msg, message } = error.response?.data ?? {}
+		const responseData = error.response?.data as AjaxResult | undefined
+		let msg = ''
 
-		if (!msg && message) {
-			msg = message
+		if (responseData && responseData.msg) {
+			msg = responseData.msg
 		}
 
 		if (!msg) {

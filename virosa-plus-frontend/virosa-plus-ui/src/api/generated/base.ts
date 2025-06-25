@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * SpringBoot3.4.x-init
- * Virosa-Plus
+ * Virosa-Plus 博客系统 API
+ * 前后端分离的博客系统，包含前台展示和后台管理功能
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: 2156722358@qq.com
@@ -19,7 +19,8 @@ import type { Configuration } from './configuration';
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import globalAxios from 'axios';
 
-export const BASE_PATH = "http://localhost:8080/api".replace(/\/+$/, "");
+// 确保BASE_PATH为空字符串，让axios实例的baseURL生效
+export const BASE_PATH = "";
 
 /**
  *

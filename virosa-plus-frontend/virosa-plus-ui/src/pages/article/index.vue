@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { File, Folder, Tree } from '~/components/inspira/miscellaneous/FileTree'
+import { NodeService } from '~/composables/apiService'
 
 definePage({
 	alias: ['/article'],
@@ -16,10 +17,11 @@ import CardBody from '~/components/inspira/card/3D-card/CardBody.vue'
 import Globe from '~/components/inspira/miscellaneous/Globe.vue'
 import TextRevealCard from '~/components/inspira/text/TextRevealCard.vue'
 import FlickeringGrid from '~/components/inspira/background/FlickeringGrid.vue'
+import { ref, onMounted, h, defineComponent } from 'vue'
 
 // 递归组件实现
-const TreeNode = defineComponent({
-	name: 'TreeNode',
+const CustomTreeNode = defineComponent({
+	name: 'CustomTreeNode',
 	props: {
 		node: {
 			type: Object,
@@ -46,7 +48,7 @@ const TreeNode = defineComponent({
 				// 递归渲染子节点
 				() =>
 					node.children?.map((child) =>
-						h(TreeNode, { node: child, key: child.id }),
+						h(CustomTreeNode, { node: child, key: child.id }),
 					),
 			)
 		}
@@ -94,18 +96,137 @@ const features = [
 	},
 ]
 
+// 初始化为一个数组，符合Tree组件期望的格式
 const elements = ref([])
 
-onMounted(async () => {
-	try {
-		const res = await http.post('/node/get/file/tree')
+// 处理并转换节点数据，使其符合组件要求
+function processNodeData(data) {
+	if (!data) return null
 
-		// 直接赋值，而不是 push，Vue 能正确追踪变化
-		elements.value = res.data
+	// 创建一个新的节点对象
+	const processedNode = {
+		id: data.id.toString(),
+		name: data.name,
+		// 确保类型映射正确：API返回"directory"，TreeNode组件需要"folder"或"file"
+		type: data.type === 'directory' ? 'folder' : data.type,
+	}
+
+	// 如果节点有文章ID，添加属性
+	if (data.articleId) {
+		processedNode.articleId = data.articleId.toString()
+		// 可以添加链接属性，方便点击跳转
+		processedNode.href = `/article/${data.articleId}`
+	}
+
+	// 递归处理子节点
+	if (
+		data.children &&
+		Array.isArray(data.children) &&
+		data.children.length > 0
+	) {
+		processedNode.children = data.children.map((child) =>
+			processNodeData(child),
+		)
+	} else {
+		// 确保children是数组或undefined，不是null
+		processedNode.children = data.type === 'directory' ? [] : undefined
+	}
+
+	return processedNode
+}
+
+// 直接使用模拟数据进行测试
+const mockData = {
+	id: 1,
+	name: 'root',
+	type: 'directory',
+	parentId: 0,
+	status: 1,
+	createTime: '2025-06-18T09:18:24',
+	updateTime: '2025-06-18T09:18:24',
+	children: [
+		{
+			id: 3,
+			name: '随笔',
+			type: 'directory',
+			parentId: 1,
+			status: 1,
+			createTime: '2025-06-19T10:50:08',
+			updateTime: '2025-06-19T10:50:08',
+			children: [
+				{
+					id: 15,
+					name: 'React 性能优化指南',
+					type: 'file',
+					parentId: 3,
+					articleId: 1003,
+					status: 1,
+					createTime: '2025-06-19T11:13:41',
+					updateTime: '2025-06-19T11:13:41',
+				},
+			],
+		},
+		{
+			id: 4,
+			name: '技术',
+			type: 'directory',
+			parentId: 1,
+			status: 1,
+			createTime: '2025-06-19T10:50:08',
+			updateTime: '2025-06-19T10:50:08',
+			children: [
+				{
+					id: 13,
+					name: 'Java NIO 原理解析',
+					type: 'file',
+					parentId: 4,
+					articleId: 1001,
+					status: 1,
+					createTime: '2025-06-19T11:13:41',
+					updateTime: '2025-06-19T11:13:41',
+				},
+			],
+		},
+	],
+}
+
+onMounted(() => {
+	// 首先应用模拟数据，确保界面正常显示
+	const processedMockData = processNodeData(mockData)
+	console.log('处理后的模拟数据:', processedMockData)
+	// 将处理后的数据放入数组中，符合Tree组件的期望
+	elements.value = [processedMockData]
+
+	// 然后尝试从API获取真实数据
+	fetchFileTree()
+})
+
+// 从API获取文件树数据
+async function fetchFileTree() {
+	try {
+		console.log('开始获取文件树数据...')
+		console.log('API请求URL:', '/nodes/tree') // 记录正确的请求URL
+		const res = await NodeService.getFileTree()
+		console.log('API返回的原始数据:', res)
+
+		if (res?.data && Array.isArray(res.data) && res.data.length > 0) {
+			// 处理第一个根节点数据
+			const rootNode = res.data[0]
+			const processedData = processNodeData(rootNode)
+
+			console.log('处理后的文件树数据:', processedData)
+			// 将处理后的数据放入数组中，符合Tree组件的期望
+			elements.value = [processedData]
+		} else {
+			console.error('获取文件树失败: 返回数据不符合预期', res)
+			// 已经有模拟数据，不需要再设置默认节点
+		}
 	} catch (error) {
 		console.error('获取文件树失败:', error)
+		console.error('错误详情:', error.response || error.message || error)
+		// 已经有模拟数据，不需要再设置默认节点
 	}
-})
+}
 </script>
 
 <template>
@@ -113,13 +234,22 @@ onMounted(async () => {
 		<div class="flex">
 			<!-- 左侧边栏 - 文件树目录，所有屏幕都显示 -->
 			<aside class="h-screen w-70 p-4">
-				<div class="relative size-fit flex flex-col items-center justify-center rounded-3xl">
+				<div
+					class="relative size-fit flex flex-col items-center justify-center rounded-3xl"
+				>
 					<CardSpotlight
 						class="h-fit w-60 flex-col cursor-pointer whitespace-nowrap border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black"
-						:gradient-color="isDark ? '#363636' : '#C9C9C9'">
-						<Tree class="overflow-hidden rounded-md" :initial-selected-id="'1'" :initial-expanded-items="[]"
-							:elements="elements">
-							<TreeNode :node="elements" />
+						:gradient-color="isDark ? '#363636' : '#C9C9C9'"
+					>
+						<Tree
+							class="overflow-hidden rounded-md"
+							:initial-selected-id="'1'"
+							:initial-expanded-items="[]"
+							:elements="elements"
+						>
+							<template v-for="node in elements" :key="node.id">
+								<CustomTreeNode :node="node" />
+							</template>
 						</Tree>
 					</CardSpotlight>
 				</div>
@@ -127,21 +257,32 @@ onMounted(async () => {
 			
 			<!-- 主内容区 - 在小屏幕上完全隐藏 -->
 			<main class="h-fit w-250 flex-col gap-2 p-4 !hidden md:!flex">
-				<BentoGrid class="grid auto-rows-[22rem] grid-cols-3 w-full gap-4 lg:grid-rows-3 bento-grid">
-					<BentoGridCard v-for="(feature, index) in features" :key="index" v-bind="feature"
-						:class="feature.class">
+				<BentoGrid
+					class="bento-grid grid auto-rows-[22rem] grid-cols-3 w-full gap-4 lg:grid-rows-3"
+				>
+					<BentoGridCard
+						v-for="(feature, index) in features"
+						:key="index"
+						v-bind="feature"
+						:class="feature.class"
+					>
 						<template v-if="feature.image" #background>
-							<div class="absolute inset-0 size-full bg-cover bg-center opacity-60 transition duration-150 ease-in-out group-hover:opacity-20"
-								:style="`background-image: url('${feature.image}')`"></div>
+							<div
+								class="absolute inset-0 size-full bg-cover bg-center opacity-60 transition duration-150 ease-in-out group-hover:opacity-20"
+								:style="`background-image: url('${feature.image}')`"
+							></div>
 						</template>
 					</BentoGridCard>
 				</BentoGrid>
 
 				<div
-					class="bg-background relative z-10 mt-15 h-fit w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black md:shadow-xl">
+					class="bg-background relative z-10 mt-15 h-fit w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black md:shadow-xl"
+				>
 					<div :class="isDark ? 'dark' : ''">
 						<div class="text-center">
-							<h1 class="text-3xl text-purple-400 font-bold dark:text-purple-300">
+							<h1
+								class="text-3xl text-purple-400 font-bold dark:text-purple-300"
+							>
 								阅读激励实验 · 交互站点
 							</h1>
 							<p class="mt-4 text-xl text-gray-800 dark:text-gray-300">
@@ -151,7 +292,9 @@ onMounted(async () => {
 						</div>
 
 						<div class="mt-8">
-							<h2 class="text-2xl text-blue-300 font-semibold dark:text-blue-400">
+							<h2
+								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
+							>
 								🜲 阅读探险者协议
 							</h2>
 							<p class="mt-4 text-gray-800 dark:text-gray-300">
@@ -173,7 +316,9 @@ onMounted(async () => {
 						</div>
 
 						<div class="mt-8">
-							<h2 class="text-2xl text-blue-300 font-semibold dark:text-blue-400">
+							<h2
+								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
+							>
 								🜲 交互式阅读咒语
 							</h2>
 							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
@@ -187,7 +332,9 @@ onMounted(async () => {
 						</div>
 
 						<div class="mt-8">
-							<h2 class="text-2xl text-blue-300 font-semibold dark:text-blue-400">
+							<h2
+								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
+							>
 								🜲 认知拓展彩蛋
 							</h2>
 							<p class="mt-4 text-gray-800 dark:text-gray-300">
@@ -228,19 +375,30 @@ onMounted(async () => {
 
 					<FlickeringGrid
 						class="[mask-image:radial-gradient(450px_circle_at_center,white,transparent)] absolute inset-0 -z-10"
-						:square-size="4" :grid-gap="6" color="#60A5FA" :max-opacity="0.5" :flicker-chance="0.1"
-						:width="1000" :height="800" />
+						:square-size="4"
+						:grid-gap="6"
+						color="#60A5FA"
+						:max-opacity="0.5"
+						:flicker-chance="0.1"
+						:width="1000"
+						:height="800"
+					/>
 				</div>
 			</main>
 			
 			<!-- 右侧边栏 - 在小屏幕上隐藏 -->
-			<aside class="h-screen w-80 p-4 hidden md:block">
-				<div class="relative mt-4 size-fit flex flex-col items-center justify-center rounded-3xl">
+			<aside class="hidden h-screen w-80 p-4 md:block">
+				<div
+					class="relative mt-4 size-fit flex flex-col items-center justify-center rounded-3xl"
+				>
 					<CardContainer>
 						<CardBody
-							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black">
-							<CardItem :translate-z="25"
-								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-6 py-6">
+							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black"
+						>
+							<CardItem
+								:translate-z="25"
+								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-6 py-6"
+							>
 								<TextRevealCard class="mx-auto w-full">
 									<template #header>
 										<h2 class="mb-2 text-lg text-white font-semibold">
@@ -249,14 +407,18 @@ onMounted(async () => {
 									</template>
 									<template #text>
 										<p
-											class="bg-[#d5d0d0] bg-clip-text py-4 text-sm text-transparent font-bold md:py-10 sm:py-6 md:text-xl sm:text-xl">
+											class="bg-[#d5d0d0] bg-clip-text py-4 text-sm text-transparent font-bold md:py-10 sm:py-6 md:text-xl sm:text-xl"
+										>
 											"翻开书页，灵魂便可徜徉千重世界；然逃避文字者，唯能踽踽独行一途。"
 										</p>
 									</template>
 									<template #revealText>
-										<p :style="{
+										<p
+											:style="{
 											textShadow: '4px 4px 15px rgba(0,0,0,0.5)',
-										}" class="from-white to-neutral-300 bg-gradient-to-b bg-clip-text py-4 text-sm text-white font-bold md:py-10 sm:py-6">
+											}"
+											class="from-white to-neutral-300 bg-gradient-to-b bg-clip-text py-4 text-sm text-white font-bold md:py-10 sm:py-6"
+										>
 											"Through the pages of a book, a soul may wander a thousand
 											worlds; but he who shuns the written word walks but a
 											single path."
@@ -270,17 +432,23 @@ onMounted(async () => {
 					<BorderBeam :size="250" :duration="7" :delay="12" :border-width="4" />
 				</div>
 
-				<div class="relative mt-6 size-fit flex flex-col items-center justify-center rounded-3xl">
+				<div
+					class="relative mt-6 size-fit flex flex-col items-center justify-center rounded-3xl"
+				>
 					<CardContainer>
 						<CardBody
-							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black overflow-hidden">
-							<CardItem :translate-z="25"
-								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-40 pb-40 pt-8 md:pb-60">
+							class="overflow-hidden border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black"
+						>
+							<CardItem
+								:translate-z="25"
+								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-40 pb-40 pt-8 md:pb-60"
+							>
 								<span
-									class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-8xl text-transparent font-semibold leading-none dark:from-white dark:to-slate-900/10 max-lg:-mt-12">
+									class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-8xl text-transparent font-semibold leading-none dark:from-white dark:to-slate-900/10 max-lg:-mt-12"
+								>
 									Read
 								</span>
-								<Globe class="top-40 rounded-xl overflow-hidden" />
+								<Globe class="top-40 overflow-hidden rounded-xl" />
 								<div
 									class="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]"
 								/>
@@ -288,7 +456,12 @@ onMounted(async () => {
 						</CardBody>
 					</CardContainer>
 
-					<BorderBeam :size="250" :duration="12" :delay="17" :border-width="2" />
+					<BorderBeam
+						:size="250"
+						:duration="12"
+						:delay="17"
+						:border-width="2"
+					/>
 				</div>
 			</aside>
 		</div>
@@ -311,7 +484,7 @@ onMounted(async () => {
   overflow: hidden;
 }
 
-:deep(.bento-grid-card [name="background"] > div) {
+:deep(.bento-grid-card [name='background'] > div) {
   background-size: cover !important;
   background-position: center !important;
   height: 100% !important;
