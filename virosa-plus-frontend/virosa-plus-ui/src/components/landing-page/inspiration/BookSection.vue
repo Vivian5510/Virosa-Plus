@@ -62,36 +62,37 @@ const books = reactive([
 </script>
 
 <template>
-	<section class="py-8 sm:py-12 px-4">
-		<div class="flex flex-col items-center justify-center max-w-7xl mx-auto">
-			<div class="w-full text-center mb-6 sm:mb-10 md:mb-12 lg:mb-16">
-				<h1
-					class="relative z-20 text-black font-bold dark:text-white"
-				>
+	<section class="px-4 py-8 sm:py-12">
+		<div class="mx-auto max-w-7xl flex flex-col items-center justify-center">
+			<div class="mb-6 w-full text-center lg:mb-16 md:mb-12 sm:mb-10">
+				<h1 class="relative z-20 text-black font-bold dark:text-white">
 					<SparklesText
 						text="Top in my Reading List"
 						:colors="{ first: '#9E7AFF', second: '#FE8BBB' }"
 						:sparkles-count="10"
-						class="my-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
+						class="my-4 text-xl lg:text-4xl md:text-3xl sm:text-2xl xl:text-5xl"
 					/>
 				</h1>
 			</div>
 
 			<div
-				class="relative z-10 grid w-full mt-4 sm:mt-6 md:mt-8 p-4 md:p-6 lg:p-8 place-items-center"
+				class="relative z-10 grid mt-4 w-full place-items-center p-4 md:mt-8 sm:mt-6 lg:p-8 md:p-6"
 				:class="{
 					'grid-cols-1 gap-8': true,
 					'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4': true,
-					'sm:gap-6 md:gap-6 lg:gap-8': true
+					'sm:gap-6 md:gap-6 lg:gap-8': true,
 				}"
 			>
-				<div 
-					v-for="(book, index) in books" 
-					:key="index" 
-					class="flex justify-center w-full transform transition-all duration-300 hover:scale-105"
+				<div
+					v-for="(book, index) in books"
+					:key="index"
+					class="w-full flex transform justify-center transition-all duration-300 hover:scale-105"
 				>
-					<a :href="book.url" class="w-full max-w-xs">
-						<Book :color="book.color ?? 'rose'" class="shadow-lg hover:shadow-2xl transition-shadow duration-300 mx-auto">
+					<a :href="book.url" class="max-w-xs w-full">
+						<Book
+							:color="book.color ?? 'rose'"
+							class="mx-auto shadow-lg transition-shadow duration-300 hover:shadow-2xl"
+						>
 							<BookHeader>
 								<FontAwesomeIcon :icon="['fas', 'book-open']" class="h-6 w-6" />
 							</BookHeader>
@@ -113,8 +114,8 @@ const books = reactive([
 
 <style scoped>
 @media (max-width: 640px) {
-  .grid {
-    row-gap: 2rem;
-  }
+	.grid {
+		row-gap: 2rem;
+	}
 }
 </style>

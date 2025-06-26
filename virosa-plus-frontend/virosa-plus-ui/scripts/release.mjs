@@ -1,15 +1,24 @@
-const { createConsola } = require('consola')
-const { execSync } = require('child_process')
-const { repository } = require('../package.json')
-const { gray } = require('kolorist')
-const { simpleGit } = require('simple-git')
+import { createConsola } from 'consola'
+import { execSync } from 'child_process'
+import { simpleGit } from 'simple-git'
+import { gray } from 'kolorist'
+// 需要使用动态导入获取 package.json 的内容
+import { readFileSync } from 'fs'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const packageJson = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'))
+const { repository } = packageJson
+
 const logger = createConsola().withTag('release')
 
 /**
  * 自动发版
  * @param {import('plop').NodePlopAPI} plop
  */
-async function release(plop) {
+export default async function release(plop) {
 	const git = simpleGit()
 
 	const remotes = await git.getRemotes(true)
@@ -60,6 +69,4 @@ async function release(plop) {
 			},
 		})
 	}
-}
-
-module.exports = release
+} 

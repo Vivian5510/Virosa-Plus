@@ -46,11 +46,11 @@ const items = ref([
 						text="Draw inspiration from these great minds"
 						:colors="{ first: '#9E7AFF', second: '#FE8BBB' }"
 						:sparkles-count="10"
-						class="my-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
+						class="my-4 text-xl lg:text-4xl md:text-3xl sm:text-2xl xl:text-5xl"
 					/>
 				</h1>
 
-				<div class="grid grid-cols-2 mt-8 sm:mt-12 md:mt-16 lg:mt-20">
+				<div class="grid grid-cols-2 mt-8 lg:mt-20 md:mt-16 sm:mt-12">
 					<DirectionAwareHover
 						v-for="(item, index) in items"
 						:key="index"

@@ -57,7 +57,7 @@ http.interceptors.response.use(
 	},
 	function (error) {
 		console.error('响应错误:', error.config?.url, error.message)
-		
+
 		const status = error.response?.status
 		const responseData = error.response?.data as AjaxResult | undefined
 		let msg = ''

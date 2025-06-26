@@ -1,8 +1,13 @@
-const { resolve } = require('path')
-const { gray, green } = require('kolorist')
-const { createConsola } = require('consola')
-const { existsSync, lstatSync } = require('fs')
-const { removeSync, emptyDirSync } = require('fs-extra')
+import { resolve } from 'path'
+import { gray, green } from 'kolorist'
+import { createConsola } from 'consola'
+import { existsSync, lstatSync } from 'fs'
+import { removeSync, emptyDirSync } from 'fs-extra'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 function slash(path) {
 	return path.replace(/\\/g, '/')
@@ -33,7 +38,7 @@ const resolvedEntrys = entrys.map((entry) => r(entry))
  * 安全初始化
  * @param {import('plop').NodePlopAPI} plop
  */
-function safeInit(plop) {
+export default function safeInit(plop) {
 	const logger = createConsola().withTag('safe:init')
 
 	logger.warn('实验性功能')
@@ -110,6 +115,4 @@ function safeInit(plop) {
 
 function logClean(path) {
 	console.log(`${green('√ clean')} ${gray(path)}`)
-}
-
-module.exports = safeInit
+} 

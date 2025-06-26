@@ -1,13 +1,13 @@
-const { unlinkSync } = require('fs')
-const { readdir } = require('fs/promises')
-const { basename } = require('path')
-const { showDir, moduleTypes } = require('./shared/base.cjs')
+import { unlinkSync } from 'fs'
+import { readdir } from 'fs/promises'
+import { basename } from 'path'
+import { showDir, moduleTypes } from './shared/base.mjs'
 
 /**
  * 自动删除
  * @param {import('plop').NodePlopAPI} plop
  */
-function remove(plop) {
+export default function remove(plop) {
 	plop.setActionType('remove', (answers) => {
 		const { name, type, shouldRemove } = answers
 		const dir = showDir(type)
@@ -70,6 +70,4 @@ function remove(plop) {
 			},
 		],
 	})
-}
-
-module.exports = remove
+} 

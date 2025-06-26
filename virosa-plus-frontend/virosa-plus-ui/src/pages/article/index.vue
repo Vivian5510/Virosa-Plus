@@ -254,7 +254,7 @@ async function fetchFileTree() {
 					</CardSpotlight>
 				</div>
 			</aside>
-			
+
 			<!-- 主内容区 - 在小屏幕上完全隐藏 -->
 			<main class="h-fit w-250 flex-col gap-2 p-4 !hidden md:!flex">
 				<BentoGrid
@@ -385,7 +385,7 @@ async function fetchFileTree() {
 					/>
 				</div>
 			</main>
-			
+
 			<!-- 右侧边栏 - 在小屏幕上隐藏 -->
 			<aside class="hidden h-screen w-80 p-4 md:block">
 				<div
@@ -415,7 +415,7 @@ async function fetchFileTree() {
 									<template #revealText>
 										<p
 											:style="{
-											textShadow: '4px 4px 15px rgba(0,0,0,0.5)',
+												textShadow: '4px 4px 15px rgba(0,0,0,0.5)',
 											}"
 											class="from-white to-neutral-300 bg-gradient-to-b bg-clip-text py-4 text-sm text-white font-bold md:py-10 sm:py-6"
 										>
@@ -471,44 +471,44 @@ async function fetchFileTree() {
 <style scoped>
 /* 强制隐藏中间区域在窄屏上 */
 @media (max-width: 767px) {
-  main {
-    display: none !important;
-  }
+	main {
+		display: none !important;
+	}
 }
 
 /* 确保卡片背景图片完全填充 */
 :deep(.bento-grid-card) {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+	position: relative;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
 }
 
 :deep(.bento-grid-card [name='background'] > div) {
-  background-size: cover !important;
-  background-position: center !important;
-  height: 100% !important;
-  width: 100% !important;
-  position: absolute;
-  inset: 0;
+	background-size: cover !important;
+	background-position: center !important;
+	height: 100% !important;
+	width: 100% !important;
+	position: absolute;
+	inset: 0;
 }
 
 /* 优化网格布局 */
 :deep(.bento-grid) {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 22rem;
-  gap: 1rem;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 22rem;
+	gap: 1rem;
 }
 
 /* 确保卡片内容正确显示 */
 :deep(.bento-grid-card h3) {
-  position: relative;
-  z-index: 2;
+	position: relative;
+	z-index: 2;
 }
 
 :deep(.bento-grid-card p) {
-  position: relative;
-  z-index: 2;
+	position: relative;
+	z-index: 2;
 }
 </style>

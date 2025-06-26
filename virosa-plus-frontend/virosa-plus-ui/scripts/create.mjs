@@ -1,12 +1,12 @@
-const { existsSync } = require('fs')
+import { existsSync } from 'fs'
 
-const { showDir, showExt, moduleTypes } = require('./shared/base.cjs')
+import { showDir, showExt, moduleTypes } from './shared/base.mjs'
 
 /**
  * 自动创建
  * @param {import('plop').NodePlopAPI} plop
  */
-function create(plop) {
+export default function create(plop) {
 	let exist = null
 	let modulePath = null
 
@@ -71,6 +71,4 @@ function create(plop) {
 			]
 		},
 	})
-}
-
-module.exports = create
+} 

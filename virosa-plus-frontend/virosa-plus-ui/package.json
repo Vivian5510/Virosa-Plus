@@ -17,12 +17,12 @@
     "preview:host": "vite preview --host",
     "preview:open": "vite preview --open",
     "lint": "eslint --ext .ts,.js,.jsx,.vue .",
-    "release": "plop --plopfile scripts/release.cjs",
-    "auto:remove": "plop --plopfile scripts/remove.cjs",
-    "auto:create": "plop --plopfile scripts/create.cjs",
+    "release": "plop --plopfile scripts/release.mjs",
+    "auto:remove": "plop --plopfile scripts/remove.mjs",
+    "auto:create": "plop --plopfile scripts/create.mjs",
     "build:debug": "cross-env NODE_ENV=debug vite build",
-    "safe:init": "plop --plopfile scripts/safe-init.cjs",
-    "deps:fresh": "plop --plopfile scripts/deps-fresh.cjs",
+    "safe:init": "plop --plopfile scripts/safe-init.mjs",
+    "deps:fresh": "plop --plopfile scripts/deps-fresh.mjs",
     "lint:fix": "eslint --fix --ext .ts,.js,.jsx,.vue,.cjs ."
   },
   "engines": {

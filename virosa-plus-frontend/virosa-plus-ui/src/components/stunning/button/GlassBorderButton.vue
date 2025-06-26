@@ -32,7 +32,7 @@
 			"
 		>
 			<div
-				class="flex items-center justify-center gap-2 text-neutral-950 transition-transform duration-100 ease-in-out group-hover:scale-105 whitespace-nowrap w-full"
+				class="w-full flex items-center justify-center gap-2 whitespace-nowrap text-neutral-950 transition-transform duration-100 ease-in-out group-hover:scale-105"
 			>
 				<slot />
 			</div>

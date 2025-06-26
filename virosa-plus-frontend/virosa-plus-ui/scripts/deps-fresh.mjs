@@ -1,10 +1,10 @@
-const { execSync } = require('child_process')
+import { execSync } from 'child_process'
 
 /**
  * 自动更新依赖
  * @param {import('plop').NodePlopAPI} plop
  */
-function depsFresh(plop) {
+export default function depsFresh(plop) {
 	plop.setGenerator('controller', {
 		description: '自动更新依赖',
 		prompts: [
@@ -31,6 +31,4 @@ function depsFresh(plop) {
 			return []
 		},
 	})
-}
-
-module.exports = depsFresh
+} 

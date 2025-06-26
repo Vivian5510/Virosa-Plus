@@ -35,8 +35,13 @@
 		<div
 			class="pointer-events-none absolute bottom-0 w-full flex flex-row translate-y-10 transform-gpu items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
 		>
-			<GlassBorderButton as-child class="pointer-events-auto h-8 min-w-40 w-auto">
-				<a :href="href" class="text-[12px] whitespace-nowrap px-2"> {{ cta }} → </a>
+			<GlassBorderButton
+				as-child
+				class="pointer-events-auto h-8 min-w-40 w-auto"
+			>
+				<a :href="href" class="whitespace-nowrap px-2 text-[12px]">
+					{{ cta }} →
+				</a>
 			</GlassBorderButton>
 		</div>
 		<div
@@ -64,10 +69,10 @@ const props = defineProps<Props>()
 
 <style scoped>
 /* 确保背景图片完全覆盖卡片 */
-:deep([name="background"] > div) {
-  background-size: cover;
-  background-position: center;
-  height: 100%;
-  width: 100%;
+:deep([name='background'] > div) {
+	background-size: cover;
+	background-position: center;
+	height: 100%;
+	width: 100%;
 }
 </style>

@@ -3,7 +3,7 @@
 		ref="tracingBeamRef"
 		:class="cn('relative w-full mx-auto h-full', $props.class)"
 	>
-		<div class="absolute top-3 z-20 -left-6 sm:-left-7 md:-left-12">
+		<div class="absolute top-3 z-20 -left-6 md:-left-12 sm:-left-7">
 			<div
 				:style="{
 					boxShadow:
@@ -57,7 +57,7 @@
 				</defs>
 			</svg>
 		</div>
-		<div ref="tracingBeamContentRef" class="pl-6 sm:pl-9 md:pl-12">
+		<div ref="tracingBeamContentRef" class="pl-6 md:pl-12 sm:pl-9">
 			<slot />
 		</div>
 	</div>

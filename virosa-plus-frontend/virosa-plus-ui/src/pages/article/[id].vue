@@ -88,7 +88,7 @@ const formatDate = (dateString: string) => {
 	return date.toLocaleDateString('zh-CN', {
 		year: 'numeric',
 		month: 'long',
-		day: 'numeric'
+		day: 'numeric',
 	})
 }
 
@@ -99,7 +99,7 @@ const getMagicalDate = () => {
 	const yearOffset = Math.floor(Math.random() * 100) + 1
 	// 随机加上1-1000年
 	const futureYearOffset = Math.floor(Math.random() * 1000) + 1
-	
+
 	// 50%概率是过去，50%概率是未来
 	if (Math.random() > 0.5) {
 		now.setFullYear(now.getFullYear() - yearOffset)
@@ -138,7 +138,7 @@ onMounted(() => {
 			// 适应后端API的实际响应格式
 			if ((res.code === 0 || res.code === 200) && res.data) {
 				console.log('获取文章成功:', res.data)
-				
+
 				// 更新文章内容
 				if (res.data.content) {
 					try {
@@ -164,16 +164,16 @@ onMounted(() => {
 					mdContent.value = defaultContent
 					convertMarkdownToHtml()
 				}
-				
+
 				// 更新页面标题
 				document.title = res.data.title || '时空扰动'
-				
+
 				// 保存文章数据到响应式变量，用于模板显示
 				articleData.value = {
 					...res.data,
 					author: res.data.author || 'Rosy',
 					type: res.data.type || '未知',
-					extraInfo: res.data.extraInfo || '此文本来自另一个维度'
+					extraInfo: res.data.extraInfo || '此文本来自另一个维度',
 				}
 			} else {
 				console.error('获取文章失败:', res.msg || '未知错误')
@@ -185,29 +185,35 @@ onMounted(() => {
 			console.error('获取文章详情失败:', error)
 			mdContent.value = defaultContent
 			convertMarkdownToHtml()
-	})
+		})
 })
 </script>
 
 <template>
-	<div class="px-0 py-4 sm:px-4 md:px-6">
+	<div class="px-0 py-4 md:px-6 sm:px-4">
 		<div class="flex justify-center">
-			<main class="w-full max-w-full sm:max-w-5xl">
+			<main class="max-w-full w-full sm:max-w-5xl">
 				<TracingBeam class="article-tracing-beam">
 					<div
 						v-if="articleContentHtml"
-						class="bg-background w-full border border-black/[0.1] rounded-lg bg-gray-50 p-2 shadow-md dark:border-white/[0.2] dark:bg-[#242222] sm:p-4 md:p-8 md:shadow-xl"
+						class="bg-background w-full border border-black/[0.1] rounded-lg bg-gray-50 p-2 shadow-md dark:border-white/[0.2] dark:bg-[#242222] md:p-8 sm:p-4 md:shadow-xl"
 					>
 						<!-- 文章标题区域 -->
-						<div class="mb-4 sm:mb-6 flex flex-col items-center">
+						<div class="mb-4 flex flex-col items-center sm:mb-6">
 							<h1
-								class="mb-2 sm:mb-3 text-center text-xl font-bold sm:text-2xl md:text-4xl break-words"
+								class="mb-2 break-words text-center text-xl font-bold sm:mb-3 md:text-4xl sm:text-2xl"
 							>
 								{{ articleData.title || '时空扰动' }}
 							</h1>
-							<div class="flex flex-wrap justify-center items-center text-sm text-gray-500">
+							<div
+								class="flex flex-wrap items-center justify-center text-sm text-gray-500"
+							>
 								<span>
-									{{ articleData.updateTime ? formatDate(articleData.updateTime) : magicalDate }}
+									{{
+										articleData.updateTime
+											? formatDate(articleData.updateTime)
+											: magicalDate
+									}}
 								</span>
 								<span class="mx-2">•</span>
 								<span>作者：{{ articleData.author }}</span>
@@ -216,13 +222,13 @@ onMounted(() => {
 
 						<!-- 文章内容 -->
 						<div
-							class="font-lxgw prose-sm sm:prose md:prose-lg max-w-none break-words overflow-hidden"
+							class="font-lxgw prose-sm md:prose-lg max-w-none overflow-hidden break-words sm:prose"
 							v-html="articleContentHtml"
 						></div>
 
 						<!-- 文章信息 -->
 						<div
-							class="mt-6 sm:mt-8 border-t border-gray-200 pt-4 text-sm text-gray-500 dark:border-gray-700"
+							class="mt-6 border-t border-gray-200 pt-4 text-sm text-gray-500 sm:mt-8 dark:border-gray-700"
 						>
 							<div class="mb-2">
 								<span class="font-medium">类型：</span>{{ articleData.type }}
@@ -236,7 +242,7 @@ onMounted(() => {
 								<a
 									:href="articleData.externalLink"
 									target="_blank"
-									class="text-blue-500 hover:underline break-all"
+									class="break-all text-blue-500 hover:underline"
 									>{{ articleData.externalLink }}</a
 								>
 							</div>
@@ -253,23 +259,23 @@ onMounted(() => {
 	:deep(.prose) {
 		font-size: 0.95em;
 	}
-	
+
 	:deep(pre) {
 		max-width: 100%;
 		overflow-x: auto;
 	}
-	
+
 	:deep(img) {
 		max-width: 100%;
 		height: auto;
 	}
-	
+
 	:deep(table) {
 		display: block;
 		width: 100%;
 		overflow-x: auto;
 	}
-	
+
 	.article-tracing-beam {
 		margin-left: 14px; /* 微调移动端为追踪线预留的空间 */
 	}
@@ -281,7 +287,7 @@ onMounted(() => {
 		margin-left: 18px; /* 在超小屏幕上增加左侧间距 */
 		font-size: 0.9em; /* 稍微缩小字体以适应窄屏 */
 	}
-	
+
 	:deep(pre) {
 		font-size: 0.8em;
 	}

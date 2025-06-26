@@ -67,21 +67,21 @@ const cards = ref([
 </script>
 
 <template>
-	<section class="py-8 sm:py-12 px-4">
-		<div class="max-w-7xl mx-auto">
+	<section class="px-4 py-8 sm:py-12">
+		<div class="mx-auto max-w-7xl">
 			<h1
-				class="relative z-20 mt-16 sm:mt-24 md:mt-32 text-center text-black font-bold dark:text-white"
+				class="relative z-20 mt-16 text-center text-black font-bold md:mt-32 sm:mt-24 dark:text-white"
 			>
 				<SparklesText
 					text="Moments I find worthy of lingering upon"
 					:colors="{ first: '#9E7AFF', second: '#FE8BBB' }"
 					:sparkles-count="10"
-					class="my-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
+					class="my-4 text-xl lg:text-4xl md:text-3xl sm:text-2xl xl:text-5xl"
 				/>
 			</h1>
 
 			<div
-				class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 mt-8 sm:mt-12 md:mt-16 place-items-center"
+				class="grid grid-cols-1 mt-8 place-items-center gap-6 md:grid-cols-3 sm:grid-cols-2 md:mt-16 sm:mt-12 md:gap-10 sm:gap-8"
 			>
 				<CardContainer
 					v-for="(card, index) in cards"
@@ -89,18 +89,18 @@ const cards = ref([
 					class="w-full"
 				>
 					<CardBody
-						class="group/card relative size-auto border border-black/[0.1] rounded-xl bg-gray-50 p-4 sm:p-6 mx-auto w-full max-w-sm sm:max-w-md dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
+						class="group/card relative mx-auto size-auto max-w-sm w-full border border-black/[0.1] rounded-xl bg-gray-50 p-4 sm:max-w-md dark:border-white/[0.2] dark:bg-black sm:p-6 dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
 					>
 						<CardItem
 							:translate-z="50"
-							class="text-lg sm:text-xl text-neutral-600 font-bold dark:text-white"
+							class="text-lg text-neutral-600 font-bold sm:text-xl dark:text-white"
 						>
 							{{ card.title }}
 						</CardItem>
 						<CardItem
 							as="p"
 							translate-z="60"
-							class="mt-2 max-w-sm text-xs sm:text-sm text-neutral-500 dark:text-neutral-300"
+							class="mt-2 max-w-sm text-xs text-neutral-500 sm:text-sm dark:text-neutral-300"
 						>
 							{{ card.description }}
 						</CardItem>
@@ -114,12 +114,12 @@ const cards = ref([
 								:src="card.image"
 								height="1000"
 								width="1000"
-								class="h-40 sm:h-52 md:h-60 w-full rounded-xl object-cover group-hover/card:shadow-xl"
+								class="h-40 w-full rounded-xl object-cover md:h-60 sm:h-52 group-hover/card:shadow-xl"
 								alt="thumbnail"
 							/>
 						</CardItem>
 						<div
-							class="mt-10 sm:mt-16 md:mt-20 flex items-center justify-between"
+							class="mt-10 flex items-center justify-between md:mt-20 sm:mt-16"
 						>
 							<CardItem
 								:translate-z="20"
