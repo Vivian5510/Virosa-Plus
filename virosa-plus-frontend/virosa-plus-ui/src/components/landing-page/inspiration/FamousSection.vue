@@ -1,33 +1,34 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import DirectionAwareHover from '~/components/inspira/card/DirectionAwareHover.vue'
 import SparklesText from '~/components/inspira/text/SparklesText.vue'
 
 const items = ref([
 	{
 		title: 'Faker',
-		description: '“代表着对极致的追求和对不断超越自我挑战的精神。”',
+		description: '"代表着对极致的追求和对不断超越自我挑战的精神。"',
 		imageUrl: 'picture/photo-gallery/Faker.png',
 		href: 'article/136',
 		buttonText: 'Learn More',
 	},
 	{
 		title: '列宁',
-		description: '“专制政权的奠基者，无产阶级的捍卫者。”',
+		description: '"专制政权的奠基者，无产阶级的捍卫者。"',
 		imageUrl: 'picture/photo-gallery/列宁1.jpg',
 		href: 'article/137',
 		buttonText: 'Learn More',
 	},
 	{
 		title: '尼采',
-		description: '“凝视深渊者。”',
+		description: '"凝视深渊者。"',
 		imageUrl: 'picture/photo-gallery/尼采.jpg',
 		href: 'article/138',
 		buttonText: 'Learn More',
 	},
 	{
 		title: '苏格拉底',
-		description: '“以诘问为剑。”',
-		imageUrl: 'public/picture/photo-gallery/苏格拉底之死.jpg',
+		description: '"以诘问为剑。"',
+		imageUrl: 'picture/photo-gallery/苏格拉底之死.jpg',
 		href: 'article/139',
 		buttonText: 'Learn More',
 	},
@@ -39,17 +40,17 @@ const items = ref([
 		<div>
 			<div class="flex flex-col items-center justify-center">
 				<h1
-					class="relative z-20 mt-36 text-center text-xl text-black font-bold lg:text-5xl md:text-3xl dark:text-white"
+					class="relative z-20 mt-36 text-center text-black font-bold dark:text-white"
 				>
 					<SparklesText
 						text="Draw inspiration from these great minds"
 						:colors="{ first: '#9E7AFF', second: '#FE8BBB' }"
 						:sparkles-count="10"
-						class="my-8"
+						class="my-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
 					/>
 				</h1>
 
-				<div class="grid grid-cols-2 mt-20">
+				<div class="grid grid-cols-2 mt-8 sm:mt-12 md:mt-16 lg:mt-20">
 					<DirectionAwareHover
 						v-for="(item, index) in items"
 						:key="index"
