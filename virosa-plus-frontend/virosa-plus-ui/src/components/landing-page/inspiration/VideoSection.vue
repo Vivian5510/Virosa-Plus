@@ -1,32 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { ref } from 'vue'
 import CardContainer from '~/components/inspira/card/3D-card/CardContainer.vue'
 import CardItem from '~/components/inspira/card/3D-card/CardItem.vue'
 import CardBody from '~/components/inspira/card/3D-card/CardBody.vue'
 import SparklesText from '~/components/inspira/text/SparklesText.vue'
-
-const { width } = useWindowSize()
-
-const titleText = computed(() => {
-	if (width.value < 640) {
-		return "Memorable Moments"
-	} else {
-		return "These are the moments I find worthy of lingering upon"
-	}
-})
-
-const titleSize = computed(() => {
-	if (width.value < 640) {
-		return "text-lg"
-	} else if (width.value < 768) {
-		return "text-xl" 
-	} else if (width.value < 1024) {
-		return "text-2xl"
-	} else {
-		return "text-3xl"
-	}
-})
 
 const cards = ref([
 	{
@@ -95,18 +72,22 @@ const cards = ref([
 			<h1
 				class="relative z-20 mt-16 sm:mt-24 md:mt-32 text-center text-black font-bold dark:text-white"
 			>
-				<div :class="titleSize">
-					<SparklesText
-						:text="titleText"
-						:colors="{ first: '#9E7AFF', second: '#FE8BBB' }"
-						:sparkles-count="10"
-						class="my-4 sm:my-6 md:my-8"
-					/>
-				</div>
+				<SparklesText
+					text="Moments I find worthy of lingering upon"
+					:colors="{ first: '#9E7AFF', second: '#FE8BBB' }"
+					:sparkles-count="10"
+					class="my-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
+				/>
 			</h1>
 
-			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 mt-8 sm:mt-12 md:mt-16 place-items-center">
-				<CardContainer v-for="(card, index) in cards" :key="index" class="w-full">
+			<div
+				class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 mt-8 sm:mt-12 md:mt-16 place-items-center"
+			>
+				<CardContainer
+					v-for="(card, index) in cards"
+					:key="index"
+					class="w-full"
+				>
 					<CardBody
 						class="group/card relative size-auto border border-black/[0.1] rounded-xl bg-gray-50 p-4 sm:p-6 mx-auto w-full max-w-sm sm:max-w-md dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
 					>
@@ -137,7 +118,9 @@ const cards = ref([
 								alt="thumbnail"
 							/>
 						</CardItem>
-						<div class="mt-10 sm:mt-16 md:mt-20 flex items-center justify-between">
+						<div
+							class="mt-10 sm:mt-16 md:mt-20 flex items-center justify-between"
+						>
 							<CardItem
 								:translate-z="20"
 								:translate-x="-40"

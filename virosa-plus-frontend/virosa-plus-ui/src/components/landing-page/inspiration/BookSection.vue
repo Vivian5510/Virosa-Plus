@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { reactive, ref } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
 	Book,
@@ -9,28 +8,6 @@ import {
 	BookTitle,
 } from '~/components/inspira/miscellaneous/Book'
 import SparklesText from '~/components/inspira/text/SparklesText.vue'
-
-const { width } = useWindowSize()
-
-const titleText = computed(() => {
-	if (width.value < 640) {
-		return "My Reading List"
-	} else {
-		return "Top in my Reading List"
-	}
-})
-
-const titleSize = computed(() => {
-	if (width.value < 640) {
-		return "text-lg"
-	} else if (width.value < 768) {
-		return "text-xl" 
-	} else if (width.value < 1024) {
-		return "text-2xl"
-	} else {
-		return "text-3xl"
-	}
-})
 
 const books = reactive([
 	{
@@ -89,16 +66,14 @@ const books = reactive([
 		<div class="flex flex-col items-center justify-center max-w-7xl mx-auto">
 			<div class="w-full text-center mb-6 sm:mb-10 md:mb-12 lg:mb-16">
 				<h1
-					class="relative z-20 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-black font-bold dark:text-white"
+					class="relative z-20 text-black font-bold dark:text-white"
 				>
-					<div :class="titleSize">
-						<SparklesText
-							:text="titleText"
-							:colors="{ first: '#9E7AFF', second: '#FE8BBB' }"
-							:sparkles-count="10"
-							class="my-4 sm:my-6 md:my-8"
-						/>
-					</div>
+					<SparklesText
+						text="Top in my Reading List"
+						:colors="{ first: '#9E7AFF', second: '#FE8BBB' }"
+						:sparkles-count="10"
+						class="my-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
+					/>
 				</h1>
 			</div>
 
