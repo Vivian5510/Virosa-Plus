@@ -5,7 +5,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default defineConfig({
 	plugins: [Tov(), vueJsx()],
 	server: {
-		port: 5174,
+		port: 3000,
 		proxy: {
 			'/api': {
 				target: 'http://localhost:9090',

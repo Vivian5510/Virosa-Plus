@@ -108,4 +108,5 @@ rebel.xml
 # Application specific
 application-dev.yml
 application-prod.yml
-application-test.yml 
+application-test.yml
+/.cursor/**

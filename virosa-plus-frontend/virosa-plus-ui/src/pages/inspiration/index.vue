@@ -26,8 +26,8 @@ definePage({
 
 		<IntroSection id="intro" />
 		<BookSection id="book" />
-		<FamousSection id="famous" />
-		<VideoSection id="video" />
+		<!--		<FamousSection id="famous" />-->
+		<!--		<VideoSection id="video" />-->
 	</div>
 </template>
 
