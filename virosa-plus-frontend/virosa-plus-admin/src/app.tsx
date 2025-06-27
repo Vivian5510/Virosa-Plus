@@ -14,22 +14,12 @@ import { SnackbarProvider } from 'src/components/snackbar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/components/settings';
 
-import { CheckoutProvider } from 'src/sections/checkout/context';
-
-import { AuthProvider as JwtAuthProvider } from 'src/auth/context/jwt';
-import { AuthProvider as Auth0AuthProvider } from 'src/auth/context/auth0';
-import { AuthProvider as AmplifyAuthProvider } from 'src/auth/context/amplify';
-import { AuthProvider as SupabaseAuthProvider } from 'src/auth/context/supabase';
-import { AuthProvider as FirebaseAuthProvider } from 'src/auth/context/firebase';
+// 认证提供者
+import { AuthProvider } from 'src/auth/context/jwt';
 
 // ----------------------------------------------------------------------
 
-const AuthProvider =
-  (CONFIG.auth.method === 'amplify' && AmplifyAuthProvider) ||
-  (CONFIG.auth.method === 'firebase' && FirebaseAuthProvider) ||
-  (CONFIG.auth.method === 'supabase' && SupabaseAuthProvider) ||
-  (CONFIG.auth.method === 'auth0' && Auth0AuthProvider) ||
-  JwtAuthProvider;
+// 注意：已删除其他认证方式，只保留JWT
 
 // ----------------------------------------------------------------------
 
@@ -51,17 +41,15 @@ export default function App({ children }: AppProps) {
               modeStorageKey={themeConfig.modeStorageKey}
             >
               <MotionLazy>
-                <CheckoutProvider>
-                  <SnackbarProvider
-                    maxSnack={3}
-                    autoHideDuration={3000}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                  >
-                    <ProgressBar />
-                    <SettingsDrawer defaultSettings={defaultSettings} />
-                    {children}
-                  </SnackbarProvider>
-                </CheckoutProvider>
+                <SnackbarProvider
+                  maxSnack={3}
+                  autoHideDuration={3000}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <ProgressBar />
+                  <SettingsDrawer defaultSettings={defaultSettings} />
+                  {children}
+                </SnackbarProvider>
               </MotionLazy>
             </ThemeProvider>
           </LocalizationProvider>

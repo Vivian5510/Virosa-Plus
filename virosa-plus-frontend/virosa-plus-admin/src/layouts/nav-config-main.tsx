@@ -23,39 +23,23 @@ export const navData: NavMainProps['data'] = [
       {
         subheader: 'Other',
         items: [
-          { title: 'About us', path: paths.about },
-          { title: 'Contact us', path: paths.contact },
-          { title: 'FAQs', path: paths.faqs },
-          { title: 'Pricing', path: paths.pricing },
-          { title: 'Payment', path: paths.payment },
-          { title: 'Maintenance', path: paths.maintenance },
-          { title: 'Coming soon', path: paths.comingSoon },
+          // { title: 'About us', path: paths.about },
+          // { title: 'Contact us', path: paths.contact },
+          // { title: 'FAQs', path: paths.faqs },
+          // { title: 'Maintenance', path: paths.maintenance },
+          // { title: 'Coming soon', path: paths.comingSoon },
         ],
       },
       {
         subheader: 'Concepts',
         items: [
-          { title: 'Shop', path: paths.product.root },
-          { title: 'Product', path: paths.product.demo.details },
-          { title: 'Checkout', path: paths.product.checkout },
+          // 产品相关页面已移除
+          // { title: 'Shop', path: paths.product.root },
+          // { title: 'Product', path: paths.product.demo.details },
+          // { title: 'Checkout', path: paths.product.checkout },
           // 博客前台页面已移除
           // { title: 'Posts', path: paths.dashboard.post.root },
           // { title: 'Post', path: paths.dashboard.post.details('demo') },
-        ],
-      },
-      {
-        subheader: 'Auth Demo',
-        items: [
-          { title: 'Sign in', path: paths.authDemo.split.signIn },
-          { title: 'Sign up', path: paths.authDemo.split.signUp },
-          { title: 'Reset password', path: paths.authDemo.split.resetPassword },
-          { title: 'Update password', path: paths.authDemo.split.updatePassword },
-          { title: 'Verify', path: paths.authDemo.split.verify },
-          { title: 'Sign in (centered)', path: paths.authDemo.centered.signIn },
-          { title: 'Sign up (centered)', path: paths.authDemo.centered.signUp },
-          { title: 'Reset password (centered)', path: paths.authDemo.centered.resetPassword },
-          { title: 'Update password (centered)', path: paths.authDemo.centered.updatePassword },
-          { title: 'Verify (centered)', path: paths.authDemo.centered.verify },
         ],
       },
       {

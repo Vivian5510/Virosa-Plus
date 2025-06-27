@@ -4,7 +4,6 @@ import { paths } from 'src/routes/paths';
 
 import { CONFIG } from 'src/global-config';
 
-import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 
@@ -28,9 +27,7 @@ export const navData: NavSectionProps['data'] = [
    */
   {
     subheader: 'Overview',
-    items: [
-      { title: 'App', path: paths.dashboard.root, icon: ICONS.dashboard },
-    ],
+    items: [{ title: 'App', path: paths.dashboard.root, icon: ICONS.dashboard }],
   },
   /**
    * Management
@@ -62,8 +59,8 @@ export const navData: NavSectionProps['data'] = [
     subheader: 'External',
     items: [
       {
-        title: 'External link',
-        path: 'https://www.google.com/',
+        title: 'GitHub',
+        path: 'https://github.com/Vivian5510/Virosa-Plus',
         icon: ICONS.external,
         info: <Iconify width={18} icon="prime:external-link" />,
       },

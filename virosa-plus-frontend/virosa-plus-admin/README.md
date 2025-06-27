@@ -1,3 +1,5 @@
+# Virosa Plus Admin
+
 ## Prerequisites
 
 - Node.js 20.x (Recommended)
@@ -25,6 +27,10 @@ yarn build
 # or
 npm run build
 ```
+
+## Project Documentation
+
+- **清理指南:** 查看 [docs/cleanup-guide.md](docs/cleanup-guide.md) 了解项目代码清理说明。
 
 ## Mock server
 

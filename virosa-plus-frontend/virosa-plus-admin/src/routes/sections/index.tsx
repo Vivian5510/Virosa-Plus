@@ -6,13 +6,10 @@ import { Navigate } from 'react-router';
 import { paths } from '../paths';
 import { authRoutes } from './auth';
 import { mainRoutes } from './main';
-import { authDemoRoutes } from './auth-demo';
 import { dashboardRoutes } from './dashboard';
-import { componentsRoutes } from './components';
 
 // ----------------------------------------------------------------------
 
-const HomePage = lazy(() => import('src/pages/home'));
 const Page404 = lazy(() => import('src/pages/error/404'));
 
 export const routesSection: RouteObject[] = [
@@ -26,16 +23,12 @@ export const routesSection: RouteObject[] = [
 
   // Auth
   ...authRoutes,
-  ...authDemoRoutes,
 
   // Dashboard
   ...dashboardRoutes,
 
   // Main
   ...mainRoutes,
-
-  // Components
-  ...componentsRoutes,
 
   // No match
   { path: '*', element: <Page404 /> },

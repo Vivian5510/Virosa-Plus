@@ -8,7 +8,7 @@ import { OverviewAppView } from 'src/sections/overview/app/view';
 
 const metadata = { title: `Dashboard - ${CONFIG.appName}` };
 
-export default function OverviewAppPage() {
+export default function DashboardPage() {
   return (
     <>
       <Helmet>

@@ -10,17 +10,18 @@ import { SplashScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-const FaqsPage = lazy(() => import('src/pages/faqs'));
-const AboutPage = lazy(() => import('src/pages/about-us'));
-const ContactPage = lazy(() => import('src/pages/contact-us'));
-const PricingPage = lazy(() => import('src/pages/pricing'));
-const PaymentPage = lazy(() => import('src/pages/payment'));
-const ComingSoonPage = lazy(() => import('src/pages/coming-soon'));
-const MaintenancePage = lazy(() => import('src/pages/maintenance'));
-// Product
-const ProductListPage = lazy(() => import('src/pages/product/list'));
-const ProductDetailsPage = lazy(() => import('src/pages/product/details'));
-const ProductCheckoutPage = lazy(() => import('src/pages/product/checkout'));
+// 已删除的页面
+// const AboutPage = lazy(() => import('src/pages/about-us'));
+// const FaqsPage = lazy(() => import('src/pages/faqs'));
+// const ContactPage = lazy(() => import('src/pages/contact-us'));
+// const PricingPage = lazy(() => import('src/pages/pricing'));
+// const PaymentPage = lazy(() => import('src/pages/payment'));
+// const ComingSoonPage = lazy(() => import('src/pages/coming-soon'));
+// const MaintenancePage = lazy(() => import('src/pages/maintenance'));
+// Product页面已删除
+// const ProductListPage = lazy(() => import('src/pages/product/list'));
+// const ProductDetailsPage = lazy(() => import('src/pages/product/details'));
+// const ProductCheckoutPage = lazy(() => import('src/pages/product/checkout'));
 // Blog 页面已删除
 // 注意：这里不再导入不存在的博客页面
 // const PostListPage = lazy(() => import('src/pages/post/list'));
@@ -30,7 +31,7 @@ const Page500 = lazy(() => import('src/pages/error/500'));
 const Page403 = lazy(() => import('src/pages/error/403'));
 const Page404 = lazy(() => import('src/pages/error/404'));
 // Blank
-const BlankPage = lazy(() => import('src/pages/blank'));
+// const BlankPage = lazy(() => import('src/pages/blank'));
 
 // ----------------------------------------------------------------------
 
@@ -49,54 +50,56 @@ export const mainRoutes: RouteObject[] = [
           </MainLayout>
         ),
         children: [
-          { path: 'about-us', element: <AboutPage /> },
-          { path: 'contact-us', element: <ContactPage /> },
-          { path: 'faqs', element: <FaqsPage /> },
-          { path: 'blank', element: <BlankPage /> },
-          {
-            path: 'product',
-            children: [
-              { index: true, element: <ProductListPage /> },
-              { path: 'list', element: <ProductListPage /> },
-              { path: ':id', element: <ProductDetailsPage /> },
-              { path: 'checkout', element: <ProductCheckoutPage /> },
-            ],
-          },
+          // { path: 'about-us', element: <AboutPage /> },
+          // { path: 'contact-us', element: <ContactPage /> },
+          // { path: 'faqs', element: <FaqsPage /> },
+          // { path: 'blank', element: <BlankPage /> },
+          // 产品相关路由已移除
+          // {
+          //   path: 'product',
+          //   children: [
+          //     { index: true, element: <ProductListPage /> },
+          //     { path: 'list', element: <ProductListPage /> },
+          //     { path: ':id', element: <ProductDetailsPage /> },
+          //     { path: 'checkout', element: <ProductCheckoutPage /> },
+          //   ],
+          // },
           // 博客前台路由已移除
         ],
       },
-      {
-        path: 'pricing',
-        element: (
-          <SimpleLayout>
-            <PricingPage />
-          </SimpleLayout>
-        ),
-      },
-      {
-        path: 'payment',
-        element: (
-          <SimpleLayout>
-            <PaymentPage />
-          </SimpleLayout>
-        ),
-      },
-      {
-        path: 'coming-soon',
-        element: (
-          <SimpleLayout slotProps={{ content: { compact: true } }}>
-            <ComingSoonPage />
-          </SimpleLayout>
-        ),
-      },
-      {
-        path: 'maintenance',
-        element: (
-          <SimpleLayout slotProps={{ content: { compact: true } }}>
-            <MaintenancePage />
-          </SimpleLayout>
-        ),
-      },
+      // 已删除的路由
+      // {
+      //   path: 'pricing',
+      //   element: (
+      //     <SimpleLayout>
+      //       <PricingPage />
+      //     </SimpleLayout>
+      //   ),
+      // },
+      // {
+      //   path: 'payment',
+      //   element: (
+      //     <SimpleLayout>
+      //       <PaymentPage />
+      //     </SimpleLayout>
+      //   ),
+      // },
+      // {
+      //   path: 'coming-soon',
+      //   element: (
+      //     <SimpleLayout slotProps={{ content: { compact: true } }}>
+      //       <ComingSoonPage />
+      //     </SimpleLayout>
+      //   ),
+      // },
+      // {
+      //   path: 'maintenance',
+      //   element: (
+      //     <SimpleLayout slotProps={{ content: { compact: true } }}>
+      //       <MaintenancePage />
+      //     </SimpleLayout>
+      //   ),
+      // },
       {
         path: 'error',
         children: [

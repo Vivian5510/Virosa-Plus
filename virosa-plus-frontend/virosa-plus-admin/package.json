@@ -1,8 +1,8 @@
 {
   "name": "@minimal-kit/vite-ts",
-  "author": "Minimals",
+  "author": "Rosy",
   "version": "6.3.0",
-  "description": "Vite & TypeScript",
+  "description": "Virosa-Plus-Frontend-Admin",
   "private": true,
   "type": "module",
   "scripts": {
