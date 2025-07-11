@@ -110,3 +110,5 @@ application-dev.yml
 application-prod.yml
 application-test.yml
 /.cursor/**
+/CLAUDE.md
+/GEMINI.md

@@ -190,64 +190,132 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="px-0 py-4 md:px-6 sm:px-4">
-		<div class="flex justify-center">
+	<div class="px-0 py-8 md:px-6 sm:px-4">
+
+		<div class="relative flex justify-center">
 			<main class="max-w-full w-full sm:max-w-5xl">
 				<TracingBeam class="article-tracing-beam">
-					<div
+					<article
 						v-if="articleContentHtml"
-						class="bg-background w-full border border-black/[0.1] rounded-lg bg-gray-50 p-2 shadow-md dark:border-white/[0.2] dark:bg-[#242222] md:p-8 sm:p-4 md:shadow-xl"
+						class="relative overflow-hidden backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border border-white/20 dark:border-slate-700/30 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-700 ease-out"
 					>
+						<!-- 文章顶部装饰渐变 -->
+						<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-slate-400 via-gray-500 to-slate-600"></div>
+						
 						<!-- 文章标题区域 -->
-						<div class="mb-4 flex flex-col items-center sm:mb-6">
-							<h1
-								class="mb-2 break-words text-center text-xl font-bold sm:mb-3 md:text-4xl sm:text-2xl"
-							>
-								{{ articleData.title || '时空扰动' }}
-							</h1>
-							<div
-								class="flex flex-wrap items-center justify-center text-sm text-gray-500"
-							>
-								<span>
-									{{
-										articleData.updateTime
-											? formatDate(articleData.updateTime)
-											: magicalDate
-									}}
-								</span>
-								<span class="mx-2">•</span>
-								<span>作者：{{ articleData.author }}</span>
+						<header class="relative px-6 py-12 md:px-12 md:py-16 text-center">
+							<!-- 标题背景装饰 -->
+							<div class="absolute inset-0 bg-gradient-to-br from-slate-500/3 via-gray-500/3 to-slate-600/3 rounded-t-3xl"></div>
+							
+							<div class="relative">
+								<!-- 文章类型标签 -->
+								<div class="mb-6 flex justify-center">
+									<span class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-gray-500/10 to-slate-500/10 border border-gray-200/30 rounded-full text-sm font-medium text-gray-600 dark:text-gray-400 backdrop-blur-sm">
+										📝
+										<span class="ml-2">{{ articleData.type }}</span>
+									</span>
+								</div>
+
+								<!-- 文章标题 -->
+								<h1 class="mb-8 break-words text-3xl md:text-5xl lg:text-6xl font-black leading-tight">
+									<span class="bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
+										{{ articleData.title || '时空扰动' }}
+									</span>
+								</h1>
+
+								<!-- 文章元信息 -->
+								<div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-slate-600 dark:text-slate-300">
+									<!-- 发布时间 -->
+									<div class="flex items-center space-x-3">
+										<span class="text-xl">📅</span>
+										<span class="font-medium">
+											{{
+												articleData.updateTime
+													? formatDate(articleData.updateTime)
+													: magicalDate
+											}}
+										</span>
+									</div>
+
+									<!-- 作者信息 -->
+									<div class="flex items-center space-x-3">
+										<span class="text-xl">👤</span>
+										<span class="font-medium">{{ articleData.author }}</span>
+									</div>
+
+									<!-- 阅读时间估算 -->
+									<div class="flex items-center space-x-3">
+										<span class="text-xl">⏱️</span>
+										<span class="font-medium">{{ Math.ceil(mdContent.length / 300) }} 分钟阅读</span>
+									</div>
+								</div>
+							</div>
+						</header>
+
+						<!-- 分割线装饰 -->
+						<div class="relative mx-6 md:mx-12">
+							<div class="absolute inset-0 flex items-center">
+								<div class="w-full border-t border-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-slate-600"></div>
+							</div>
+							<div class="relative flex justify-center">
+								<div class="bg-white dark:bg-slate-900 px-4">
+									<div class="w-3 h-3 bg-gradient-to-r from-slate-400 to-gray-500 rounded-full"></div>
+								</div>
 							</div>
 						</div>
 
 						<!-- 文章内容 -->
-						<div
-							class="font-lxgw prose-sm md:prose-lg max-w-none overflow-hidden break-words sm:prose"
-							v-html="articleContentHtml"
-						></div>
+						<main class="relative px-6 py-12 md:px-12 md:py-16">
+							<div
+								class="article-content font-lxgw prose prose-lg md:prose-xl max-w-none prose-slate dark:prose-invert prose-headings:scroll-mt-20 prose-headings:font-black prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:leading-relaxed prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50/50 dark:prose-blockquote:bg-blue-900/20 prose-blockquote:rounded-r-lg prose-blockquote:py-4 prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:rounded prose-code:px-2 prose-code:py-1"
+								v-html="articleContentHtml"
+							></div>
+						</main>
 
-						<!-- 文章信息 -->
-						<div
-							class="mt-6 border-t border-gray-200 pt-4 text-sm text-gray-500 sm:mt-8 dark:border-gray-700"
-						>
-							<div class="mb-2">
-								<span class="font-medium">类型：</span>{{ articleData.type }}
+						<!-- 文章底部信息 -->
+						<footer class="relative px-6 py-8 md:px-12 border-t border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-br from-slate-50/50 to-blue-50/30 dark:from-slate-800/50 dark:to-slate-700/30 rounded-b-3xl">
+							<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+								<!-- 文章类型 -->
+								<div class="flex items-center space-x-3 p-4 bg-white/60 dark:bg-slate-800/60 rounded-xl backdrop-blur-sm border border-white/20 dark:border-slate-700/30 hover:shadow-lg transition-all duration-300">
+									<div class="w-10 h-10 bg-gradient-to-br from-slate-500 to-gray-600 rounded-lg flex items-center justify-center text-xl">
+										📂
+									</div>
+									<div>
+										<div class="text-sm text-slate-500 dark:text-slate-400">文章类型</div>
+										<div class="font-semibold text-slate-900 dark:text-slate-100">{{ articleData.type }}</div>
+									</div>
+								</div>
+
+								<!-- 附加信息 -->
+								<div class="flex items-center space-x-3 p-4 bg-white/60 dark:bg-slate-800/60 rounded-xl backdrop-blur-sm border border-white/20 dark:border-slate-700/30 hover:shadow-lg transition-all duration-300">
+									<div class="w-10 h-10 bg-gradient-to-br from-slate-500 to-gray-600 rounded-lg flex items-center justify-center text-xl">
+										💡
+									</div>
+									<div>
+										<div class="text-sm text-slate-500 dark:text-slate-400">附加信息</div>
+										<div class="font-semibold text-slate-900 dark:text-slate-100">{{ articleData.extraInfo }}</div>
+									</div>
+								</div>
+
+								<!-- 外部链接 -->
+								<div v-if="articleData.externalLink" class="flex items-center space-x-3 p-4 bg-white/60 dark:bg-slate-800/60 rounded-xl backdrop-blur-sm border border-white/20 dark:border-slate-700/30 hover:shadow-lg transition-all duration-300">
+									<div class="w-10 h-10 bg-gradient-to-br from-slate-500 to-gray-600 rounded-lg flex items-center justify-center text-xl">
+										🔗
+									</div>
+									<div class="flex-1 min-w-0">
+										<div class="text-sm text-slate-500 dark:text-slate-400">外部链接</div>
+										<a
+											:href="articleData.externalLink"
+											target="_blank"
+											class="font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors duration-200 truncate block"
+										>
+											{{ articleData.externalLink }}
+										</a>
+									</div>
+								</div>
 							</div>
-							<div class="mb-2">
-								<span class="font-medium">附加信息：</span
-								>{{ articleData.extraInfo }}
-							</div>
-							<div v-if="articleData.externalLink" class="mb-2">
-								<span class="font-medium">外部链接：</span>
-								<a
-									:href="articleData.externalLink"
-									target="_blank"
-									class="break-all text-blue-500 hover:underline"
-									>{{ articleData.externalLink }}</a
-								>
-							</div>
-						</div>
-					</div>
+						</footer>
+					</article>
 				</TracingBeam>
 			</main>
 		</div>
@@ -255,52 +323,395 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* 自定义动画 */
+@keyframes float {
+	0%, 100% { transform: translateY(0px) rotate(0deg); }
+	33% { transform: translateY(-10px) rotate(-1deg); }
+	66% { transform: translateY(-5px) rotate(1deg); }
+}
+
+@keyframes gradient-shift {
+	0%, 100% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+	0% { transform: translateX(-100%); }
+	100% { transform: translateX(100%); }
+}
+
+/* 文章内容美化 */
+.article-content :deep(h1),
+.article-content :deep(h2),
+.article-content :deep(h3) {
+	position: relative;
+	background: linear-gradient(-45deg, #4a5568, #718096, #a0aec0, #cbd5e0);
+	background-size: 400% 400%;
+	animation: gradient-shift 8s ease infinite;
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	font-weight: 900;
+	letter-spacing: -0.02em;
+}
+
+.article-content :deep(h1::after),
+.article-content :deep(h2::after),
+.article-content :deep(h3::after) {
+	content: '';
+	position: absolute;
+	bottom: -8px;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, transparent, #718096, #a0aec0, transparent);
+	border-radius: 2px;
+	opacity: 0.6;
+}
+
+/* 段落增强 */
+.article-content :deep(p) {
+	position: relative;
+	line-height: 1.8;
+	text-align: justify;
+	hyphens: auto;
+	margin: 1.5em 0;
+}
+
+/* 首字母装饰 - 暂时禁用以避免emoji显示问题 */
+/* 
+.article-content :deep(p:first-of-type::first-letter) {
+	float: left;
+	font-size: 2.2em;
+	line-height: 1;
+	margin: 0.1em 0.3em 0.1em 0;
+	background: linear-gradient(135deg, #667eea, #764ba2);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	font-weight: 900;
+	padding-top: 0.1em;
+}
+*/
+
+/* 列表美化 */
+.article-content :deep(ul),
+.article-content :deep(ol) {
+	position: relative;
+	padding-left: 2em;
+	margin: 1.5em 0;
+}
+
+.article-content :deep(li) {
+	position: relative;
+	margin: 0.75em 0;
+	padding-left: 0.5em;
+}
+
+.article-content :deep(ul li::marker) {
+	content: "▶";
+	color: #4a5568;
+	font-weight: bold;
+}
+
+/* 引用块极致美化 */
+.article-content :deep(blockquote) {
+	position: relative;
+	margin: 2em 0;
+	padding: 2em 2.5em;
+	background: linear-gradient(135deg, 
+		rgba(74, 85, 104, 0.05) 0%, 
+		rgba(113, 128, 150, 0.08) 50%, 
+		rgba(160, 174, 192, 0.05) 100%);
+	border: none;
+	border-radius: 20px;
+	box-shadow: 
+		0 10px 30px rgba(74, 85, 104, 0.1),
+		inset 0 1px 0 rgba(255, 255, 255, 0.6);
+	backdrop-filter: blur(10px);
+	font-style: italic;
+	color: #4a5568;
+}
+
+.article-content :deep(blockquote::before) {
+	content: """;
+	position: absolute;
+	top: -10px;
+	left: 20px;
+	font-size: 4em;
+	color: #4a5568;
+	opacity: 0.3;
+	font-family: Georgia, serif;
+	line-height: 1;
+}
+
+.article-content :deep(blockquote::after) {
+	content: """;
+	position: absolute;
+	bottom: -30px;
+	right: 20px;
+	font-size: 4em;
+	color: #4a5568;
+	opacity: 0.3;
+	font-family: Georgia, serif;
+	line-height: 1;
+}
+
+/* 代码块极致美化 */
+.article-content :deep(pre) {
+	position: relative;
+	margin: 2em 0;
+	padding: 2em;
+	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
+	border-radius: 20px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	box-shadow: 
+		0 20px 40px rgba(0, 0, 0, 0.4),
+		inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	overflow-x: auto;
+	font-family: 'JetBrains Mono', 'Fira Code', Monaco, 'Courier New', monospace;
+	font-size: 0.9em;
+	line-height: 1.6;
+	color: #e2e8f0;
+}
+
+.article-content :deep(pre::before) {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 40px;
+	background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+	border-radius: 20px 20px 0 0;
+	opacity: 0.1;
+}
+
+.article-content :deep(pre code) {
+	background: transparent;
+	color: inherit;
+	padding: 0;
+	border-radius: 0;
+	font-size: inherit;
+}
+
+/* 内联代码美化 */
+.article-content :deep(code) {
+	background: linear-gradient(135deg, rgba(74, 85, 104, 0.1), rgba(113, 128, 150, 0.1));
+	color: #4a5568;
+	padding: 0.2em 0.5em;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 0.9em;
+	border: 1px solid rgba(74, 85, 104, 0.2);
+	font-family: 'JetBrains Mono', 'Fira Code', Monaco, 'Courier New', monospace;
+}
+
+/* 链接极致美化 */
+.article-content :deep(a) {
+	position: relative;
+	color: #4a5568;
+	text-decoration: none;
+	font-weight: 600;
+	background: linear-gradient(120deg, transparent 0%, transparent 50%, #4a5568 50%);
+	background-size: 240% 100%;
+	background-position: 100% 0;
+	transition: all 0.3s ease;
+	padding: 0.1em 0.2em;
+	border-radius: 4px;
+}
+
+.article-content :deep(a:hover) {
+	background-position: 0 0;
+	color: white;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(74, 85, 104, 0.3);
+}
+
+/* 表格极致美化 */
+.article-content :deep(table) {
+	margin: 2em 0;
+	border-collapse: separate;
+	border-spacing: 0;
+	background: white;
+	border-radius: 20px;
+	overflow: hidden;
+	box-shadow: 
+		0 20px 40px rgba(0, 0, 0, 0.1),
+		0 1px 3px rgba(0, 0, 0, 0.1);
+	width: 100%;
+}
+
+.article-content :deep(table th) {
+	background: linear-gradient(135deg, #4a5568, #718096);
+	color: white;
+	padding: 1.5em 1em;
+	font-weight: 700;
+	text-align: left;
+	position: relative;
+	border: none;
+}
+
+.article-content :deep(table th::after) {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+}
+
+.article-content :deep(table td) {
+	padding: 1.2em 1em;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+	transition: background-color 0.2s ease;
+}
+
+.article-content :deep(table tbody tr:hover td) {
+	background: linear-gradient(135deg, rgba(74, 85, 104, 0.02), rgba(113, 128, 150, 0.02));
+}
+
+.article-content :deep(table tbody tr:nth-child(even) td) {
+	background: rgba(74, 85, 104, 0.02);
+}
+
+/* 图片美化 */
+.article-content :deep(img) {
+	border-radius: 16px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	margin: 2em auto;
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+.article-content :deep(img:hover) {
+	transform: scale(1.02) translateY(-5px);
+	box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* 水平分割线美化 */
+.article-content :deep(hr) {
+	border: none;
+	height: 3px;
+	background: linear-gradient(90deg, transparent, #4a5568, #718096, #a0aec0, transparent);
+	margin: 3em 0;
+	border-radius: 2px;
+	position: relative;
+}
+
+.article-content :deep(hr::after) {
+	content: '✦';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: white;
+	color: #4a5568;
+	padding: 0 1em;
+	font-size: 1.2em;
+}
+
+/* 响应式设计优化 */
 @media (max-width: 640px) {
-	:deep(.prose) {
+	.article-content :deep(.prose) {
 		font-size: 0.95em;
 	}
 
-	:deep(pre) {
-		max-width: 100%;
+	.article-content :deep(h1),
+	.article-content :deep(h2),
+	.article-content :deep(h3) {
+		font-size: 1.5em;
+	}
+
+	.article-content :deep(pre) {
+		padding: 1em;
+		margin: 1em 0;
+		font-size: 0.8em;
 		overflow-x: auto;
 	}
 
-	:deep(img) {
-		max-width: 100%;
-		height: auto;
+	.article-content :deep(blockquote) {
+		padding: 1.5em;
+		margin: 1.5em 0;
 	}
 
-	:deep(table) {
-		display: block;
-		width: 100%;
-		overflow-x: auto;
+	.article-content :deep(table) {
+		font-size: 0.85em;
+	}
+
+	.article-content :deep(table th),
+	.article-content :deep(table td) {
+		padding: 0.8em 0.6em;
 	}
 
 	.article-tracing-beam {
-		margin-left: 14px; /* 微调移动端为追踪线预留的空间 */
+		margin-left: 14px;
 	}
 }
 
-/* 确保在超小屏幕上不会产生横向滚动条 */
+/* 超小屏幕优化 */
 @media (max-width: 380px) {
 	.article-tracing-beam {
-		margin-left: 18px; /* 在超小屏幕上增加左侧间距 */
-		font-size: 0.9em; /* 稍微缩小字体以适应窄屏 */
+		margin-left: 18px;
+		font-size: 0.9em;
 	}
 
-	:deep(pre) {
-		font-size: 0.8em;
+	.article-content :deep(pre) {
+		font-size: 0.75em;
+		padding: 0.8em;
 	}
+
 }
 
-/* 宽屏下稍微减少左侧边距 */
+/* 宽屏优化 */
 @media (min-width: 1024px) {
 	.article-tracing-beam {
-		margin-left: 0; /* 宽屏下不需要额外边距 */
+		margin-left: 0;
+	}
+
+	.article-content :deep(h1) {
+		font-size: 3.5em;
+	}
+
+	.article-content :deep(h2) {
+		font-size: 2.5em;
+	}
+
+	.article-content :deep(h3) {
+		font-size: 2em;
 	}
 }
 
-/* 增加文章内容宽度 */
+/* 滚动条美化 */
+.article-content :deep(*::-webkit-scrollbar) {
+	width: 8px;
+	height: 8px;
+}
+
+.article-content :deep(*::-webkit-scrollbar-track) {
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+}
+
+.article-content :deep(*::-webkit-scrollbar-thumb) {
+	background: linear-gradient(135deg, #4a5568, #718096);
+	border-radius: 4px;
+}
+
+.article-content :deep(*::-webkit-scrollbar-thumb:hover) {
+	background: linear-gradient(135deg, #2d3748, #4a5568);
+}
+
+/* 选中文本美化 */
+.article-content :deep(::selection) {
+	background: linear-gradient(135deg, rgba(74, 85, 104, 0.3), rgba(113, 128, 150, 0.3));
+	color: #1a202c;
+}
+
+/* 整体布局和通用样式 */
 :deep(.prose) {
 	max-width: 100%;
 }
@@ -319,25 +730,75 @@ onMounted(() => {
 	word-break: break-word;
 }
 
-/* 确保代码块不会溢出 */
-:deep(pre) {
-	white-space: pre-wrap;
-	word-wrap: break-word;
-	max-width: 100%;
-	overflow-x: auto;
-}
-
-/* 修复窄屏下的内容溢出问题 */
+/* 确保多媒体内容响应式 */
 :deep(iframe),
 :deep(video),
 :deep(embed),
 :deep(object) {
 	max-width: 100%;
+	border-radius: 16px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* 确保内联代码不会导致水平滚动 */
-:deep(code) {
-	word-break: break-all;
-	white-space: pre-wrap;
+/* 添加页面加载动画 */
+article {
+	animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 标题区域动画 */
+header {
+	animation: slideInDown 0.6s ease-out;
+}
+
+@keyframes slideInDown {
+	from {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 内容区域动画 */
+main {
+	animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* 底部信息区域动画 */
+footer {
+	animation: slideInUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes slideInUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 </style>
