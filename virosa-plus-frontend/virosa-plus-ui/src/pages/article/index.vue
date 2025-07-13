@@ -390,16 +390,13 @@ async function fetchFileTree() {
 				>
 					<!-- 标题区域 -->
 					<div
-						class="border-b border-gray-200 pb-6 text-center dark:border-gray-700"
+						class="border-b border-gray-200 pb-2 text-center dark:border-gray-700"
 					>
 						<h1
 							class="mb-2 text-3xl text-gray-800 font-bold sm:text-4xl dark:text-gray-100"
 						>
 							阅读激励实验 · 交互站点
 						</h1>
-						<p class="text-lg text-gray-600 font-medium dark:text-gray-400">
-							文字远征者的数字巴别塔
-						</p>
 					</div>
 
 					<!-- 实验协议区域 -->
@@ -461,9 +458,7 @@ async function fetchFileTree() {
 							<div class="text-gray-700 space-y-3 dark:text-gray-300">
 								<div class="flex items-start space-x-3">
 									<span class="mt-1 text-gray-400">•</span>
-									<p>
-										<strong>点击</strong> = 点燃文字火种，激活潜在意义链
-									</p>
+									<p><strong>点击</strong> = 点燃文字火种，激活潜在意义链</p>
 								</div>
 								<div class="flex items-start space-x-3">
 									<span class="mt-1 text-gray-400">•</span>
@@ -493,7 +488,7 @@ async function fetchFileTree() {
 
 					<!-- 认知拓展区域 -->
 					<div
-						class="border-y border-gray-200 py-6 text-center dark:border-gray-700"
+						class="border-y border-gray-200 py-2 text-center dark:border-gray-700"
 					>
 						<p class="text-lg text-gray-700 dark:text-gray-300">
 							📌 阅读不是单向吸收，而是一次<strong
@@ -562,10 +557,6 @@ async function fetchFileTree() {
 								class="rounded bg-yellow-100 px-2 py-0.5 text-yellow-700 font-medium dark:bg-yellow-900/30 dark:text-yellow-300"
 								>意义的创造者</span
 							>。
-						</p>
-						<p class="text-gray-600 dark:text-gray-400">
-							P.S. 如果在阅读过程中遇到逻辑死循环，请投喂
-							<strong>🍫 巧克力</strong> 或 <strong>😂 冷笑话</strong>
 						</p>
 					</div>
 
