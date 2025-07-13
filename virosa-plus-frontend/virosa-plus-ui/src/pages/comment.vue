@@ -9,7 +9,7 @@
 				class="px-4 py-6 lg:px-12 lg:py-16 md:px-8 md:py-12 sm:px-6 sm:py-8"
 			>
 				<div
-					class="relative mt-20 max-w-full min-h-screen flex flex-col items-center justify-center gap-4 lg:mt-80 md:mt-40 sm:mt-32 md:gap-8 sm:gap-6"
+					class="relative mt-8 max-w-full min-h-screen flex flex-col items-center justify-center gap-4 lg:mt-16 md:mt-12 sm:mt-10 md:gap-8 sm:gap-6"
 				>
 					<div
 						class="flex flex-row items-center justify-center gap-2 text-center text-lg font-bold font-sans 2xl:text-7xl lg:text-5xl md:text-4xl sm:text-2xl xl:text-6xl"
@@ -26,12 +26,12 @@
 							container-class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
 						></IInput>
 						<ShimmerButton
-							class="min-w-16 w-full shadow-2xl sm:min-w-20 sm:w-auto"
+							class="min-w-16 h-10 px-4 shadow-2xl sm:min-w-20 sm:h-12 sm:px-6"
 							shimmer-size="2px"
 							@click="send"
 						>
 							<span
-								class="whitespace-pre-wrap px-4 py-1 text-center text-sm text-white font-medium leading-none tracking-tight dark:from-white dark:to-slate-900/10 lg:text-lg sm:text-base"
+								class="whitespace-pre-wrap text-center text-sm text-white font-medium leading-none tracking-tight dark:from-white dark:to-slate-900/10 sm:text-base"
 							>
 								Send
 							</span>
@@ -104,6 +104,15 @@
 				</div>
 			</main>
 		</div>
+
+		<!-- MultiStepLoader 组件 -->
+		<MultiStepLoader
+			:steps="commentSteps"
+			:loading="isLoading"
+			:prevent-close="true"
+			@complete="handleLoadingComplete"
+			@close="handleLoaderClose"
+		/>
 	</section>
 </template>
 
@@ -113,7 +122,16 @@ import ReviewCard from '~/components/inspira/card/marquee/ReviewCard.vue'
 import IInput from '~/components/inspira/miscellaneous/IInput.vue'
 import ColourfulText from '~/components/inspira/text/ColourfulText.vue'
 import ShimmerButton from '~/components/inspira/button/ShimmerButton.vue'
+import MultiStepLoader from '~/components/inspira/miscellaneous/MultiStepLoader.vue'
 import { MessageAddRequest } from '~/api'
+
+interface Step {
+	text: string
+	afterText?: string
+	async?: boolean
+	duration?: number
+	action?: () => void
+}
 
 const reviews = ref([])
 
@@ -124,27 +142,105 @@ const comment = ref<MessageAddRequest>({
 	content: '',
 })
 
-const send = () => {
+// 多步加载器状态管理
+const isLoading = ref(false)
+const loaderStates = reactive({
+	isValidating: false,
+	isSending: false,
+	isUpdating: false,
+})
+
+// 留言发送步骤配置
+const commentSteps = computed<Step[]>(() => [
+	{
+		text: '验证留言内容',
+		duration: 800,
+		action: () => {
+			loaderStates.isValidating = true
+		}
+	},
+	{
+		text: '发送留言到服务器',
+		async: loaderStates.isSending,
+		afterText: '留言发送成功',
+		action: () => {
+			loaderStates.isSending = true
+		}
+	},
+	{
+		text: '更新留言列表',
+		async: loaderStates.isUpdating,
+		afterText: '列表更新完成',
+		action: () => {
+			loaderStates.isUpdating = true
+		}
+	},
+	{
+		text: '完成',
+		duration: 500,
+		action: () => {
+			// 完成后的清理工作
+			handleLoadingComplete()
+		}
+	},
+])
+
+const send = async () => {
 	if (!comment.value.content?.trim()) {
 		toast.info('请不要发送空留言哦')
 		return
 	}
 
-	messageApi.addMessage(comment.value).then(async (res) => {
+	// 重置加载器状态
+	loaderStates.isValidating = false
+	loaderStates.isSending = true
+	loaderStates.isUpdating = true
+	isLoading.value = true
+
+	try {
+		// 模拟验证阶段的延迟
+		await new Promise(resolve => setTimeout(resolve, 800))
+
+		// 发送留言
+		await messageApi.addMessage(comment.value)
+		loaderStates.isSending = false
+
+		// 更新留言列表
+		const response = await http.post('/message/list/all')
+		reviews.value = response.data
+		loaderStates.isUpdating = false
+		
 		// 发送后清空输入框
 		comment.value.content = ''
-		toast.success('收到你的留言啦！😊')
+		
+	} catch (error) {
+		console.error('发送留言失败:', error)
+		toast.error('发送失败，请重试')
+		isLoading.value = false
+		// 重置状态
+		loaderStates.isValidating = false
+		loaderStates.isSending = false
+		loaderStates.isUpdating = false
+	}
+}
 
-		// 发送完留言后立即请求数据更新评论列表
-		try {
-			const response = await http.post('/message/list/all')
-			// 直接赋值，而不是 push，Vue 能正确追踪变化
-			console.log(response)
-			reviews.value = response.data
-		} catch (error) {
-			console.error('获取留言失败:', error)
-		}
-	})
+// 处理加载完成
+const handleLoadingComplete = () => {
+	isLoading.value = false
+	toast.success('收到你的留言啦！😊')
+	// 重置所有状态
+	loaderStates.isValidating = false
+	loaderStates.isSending = false
+	loaderStates.isUpdating = false
+}
+
+// 处理加载器关闭
+const handleLoaderClose = () => {
+	isLoading.value = false
+	// 重置状态
+	loaderStates.isValidating = false
+	loaderStates.isSending = false
+	loaderStates.isUpdating = false
 }
 
 onMounted(async () => {

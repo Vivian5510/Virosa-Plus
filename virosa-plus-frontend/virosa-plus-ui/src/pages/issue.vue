@@ -3,6 +3,15 @@ import AnimatedList from '~/components/inspira/miscellaneous/AnimatedList/Animat
 import Notification from '~/components/inspira/miscellaneous/AnimatedList/Notification.vue'
 import BoxReveal from '~/components/inspira/text/BoxReveal.vue'
 import VanishingInput from '~/components/inspira/miscellaneous/VanishingInput.vue'
+import MultiStepLoader from '~/components/inspira/miscellaneous/MultiStepLoader.vue'
+
+interface Step {
+	text: string
+	afterText?: string
+	async?: boolean
+	duration?: number
+	action?: () => void
+}
 
 const notifications = [
 	{
@@ -85,6 +94,108 @@ const placeholders = [
 	'Do loops ever get dizzy?',
 ]
 const text = ref('')
+
+// 多步加载器状态管理
+const isLoading = ref(false)
+const loaderStates = reactive({
+	isValidating: false,
+	isCreatingIssue: false,
+	isNotifying: false,
+})
+
+// Issue提交步骤配置
+const issueSteps = computed<Step[]>(() => [
+	{
+		text: '验证问题内容',
+		duration: 1000,
+		action: () => {
+			loaderStates.isValidating = true
+		}
+	},
+	{
+		text: '创建Issue',
+		async: loaderStates.isCreatingIssue,
+		afterText: 'Issue创建成功',
+		action: () => {
+			loaderStates.isCreatingIssue = true
+		}
+	},
+	{
+		text: '发送通知',
+		async: loaderStates.isNotifying,
+		afterText: '通知发送完成',
+		action: () => {
+			loaderStates.isNotifying = true
+		}
+	},
+	{
+		text: '提交完成',
+		duration: 800,
+		afterText: '感谢您的反馈，我们会尽快处理',
+		action: () => {
+			handleIssueSubmitComplete()
+		}
+	},
+])
+
+// Issue提交处理函数
+const submitIssue = async (submittedText: string) => {
+	if (!submittedText?.trim()) {
+		toast.info('请描述您遇到的问题')
+		return
+	}
+
+	// 重置加载器状态
+	loaderStates.isValidating = false
+	loaderStates.isCreatingIssue = true
+	loaderStates.isNotifying = true
+	isLoading.value = true
+
+	try {
+		// 模拟验证阶段的延迟
+		await new Promise(resolve => setTimeout(resolve, 1000))
+
+		// 模拟创建Issue
+		await new Promise(resolve => setTimeout(resolve, 2000))
+		loaderStates.isCreatingIssue = false
+
+		// 模拟发送通知
+		await new Promise(resolve => setTimeout(resolve, 1500))
+		loaderStates.isNotifying = false
+		
+	} catch (error) {
+		console.error('提交Issue失败:', error)
+		toast.error('提交失败，请重试')
+		isLoading.value = false
+		// 重置状态
+		loaderStates.isValidating = false
+		loaderStates.isCreatingIssue = false
+		loaderStates.isNotifying = false
+	}
+}
+
+// 处理Issue提交完成
+const handleIssueSubmitComplete = () => {
+	isLoading.value = false
+	toast.success('提交成功！我们已收到您的反馈，会尽快处理并回复您。')
+	
+	// 重置所有状态
+	loaderStates.isValidating = false
+	loaderStates.isCreatingIssue = false
+	loaderStates.isNotifying = false
+	
+	// 清空输入框
+	text.value = ''
+}
+
+// 处理加载器关闭
+const handleLoaderClose = () => {
+	isLoading.value = false
+	// 重置状态
+	loaderStates.isValidating = false
+	loaderStates.isCreatingIssue = false
+	loaderStates.isNotifying = false
+}
 </script>
 
 <template>
@@ -147,6 +258,7 @@ const text = ref('')
 				v-model="text"
 				:placeholders="placeholders"
 				class="mt-4 md:mt-8 sm:mt-6"
+				@submit="submitIssue"
 			/>
 
 			<!-- 移动端 AnimatedList -->
@@ -197,6 +309,15 @@ const text = ref('')
 				</AnimatedList>
 			</div>
 		</aside>
+
+		<!-- MultiStepLoader 组件 -->
+		<MultiStepLoader
+			:steps="issueSteps"
+			:loading="isLoading"
+			:prevent-close="true"
+			@complete="handleIssueSubmitComplete"
+			@close="handleLoaderClose"
+		/>
 	</div>
 </template>
 
