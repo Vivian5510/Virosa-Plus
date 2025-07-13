@@ -1,5 +1,6 @@
 @import './md.css';
 @import './tailwind.css';
+@import '../assets/styles/responsive.css';
 
 html.dark {
 	background: #100c2a !important;

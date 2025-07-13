@@ -112,3 +112,4 @@ application-test.yml
 /.cursor/**
 /CLAUDE.md
 /GEMINI.md
+/.claude/settings.local.json
