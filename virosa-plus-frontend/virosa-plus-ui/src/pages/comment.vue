@@ -5,25 +5,33 @@
 			<!-- Closing tag added correctly here -->
 
 			<!-- 主内容区域 -->
-			<main class="p-8">
+			<main
+				class="px-4 py-6 lg:px-12 lg:py-16 md:px-8 md:py-12 sm:px-6 sm:py-8"
+			>
 				<div
-					class="mt-80 h-56 w-200 flex flex-col items-center justify-center gap-2"
+					class="relative mt-20 max-w-full min-h-screen flex flex-col items-center justify-center gap-4 lg:mt-80 md:mt-40 sm:mt-32 md:gap-8 sm:gap-6"
 				>
 					<div
-						class="flex flex-row items-center justify-center gap-2 text-center text-2xl font-bold font-sans lg:text-7xl md:text-5xl"
+						class="flex flex-row items-center justify-center gap-2 text-center text-lg font-bold font-sans 2xl:text-7xl lg:text-5xl md:text-4xl sm:text-2xl xl:text-6xl"
 					>
 						<ColourfulText text="Leave Your Message" />
 					</div>
-					<div class="w-full flex flex-row items-center justify-center gap-2">
+					<div
+						class="w-full flex flex-col items-center justify-center gap-3 px-4 sm:flex-row sm:gap-4 md:px-8 sm:px-6"
+					>
 						<IInput
 							id="inputDemo"
 							v-model="comment.content"
 							placeholder="Just Say"
-							container-class="w-full max-w-sm"
+							container-class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
 						></IInput>
-						<ShimmerButton class="shadow-2xl" shimmer-size="2px" @click="send">
+						<ShimmerButton
+							class="min-w-16 w-full shadow-2xl sm:min-w-20 sm:w-auto"
+							shimmer-size="2px"
+							@click="send"
+						>
 							<span
-								class="whitespace-pre-wrap text-center text-sm text-white font-medium leading-none tracking-tight dark:from-white dark:to-slate-900/10 lg:text-lg"
+								class="whitespace-pre-wrap px-4 py-1 text-center text-sm text-white font-medium leading-none tracking-tight dark:from-white dark:to-slate-900/10 lg:text-lg sm:text-base"
 							>
 								Send
 							</span>
@@ -34,12 +42,8 @@
 				<!-- Tilted Marquees -->
 				<div class="absolute inset-0 overflow-hidden -z-2">
 					<!-- 上部分 -->
-					<div class="space-y-6">
-						<Marquee
-							:style="{ transform: 'translateY(-11.5rem) rotate(-16deg)' }"
-							class="marquee"
-							:pause-on-hover="false"
-						>
+					<div class="space-y-3 md:space-y-6 sm:space-y-4">
+						<Marquee class="marquee marquee-top-1" :pause-on-hover="false">
 							<ReviewCard
 								v-for="review in firstRow"
 								:key="review.id"
@@ -51,9 +55,8 @@
 						</Marquee>
 
 						<Marquee
-							:style="{ transform: 'translateY(1rem) rotate(-16deg)' }"
 							reverse
-							class="marquee"
+							class="marquee marquee-top-2"
 							:pause-on-hover="false"
 						>
 							<ReviewCard
@@ -68,15 +71,11 @@
 					</div>
 
 					<!-- 中间空隙 -->
-					<div class="h-50"></div>
+					<div class="h-20 lg:h-50 md:h-40 sm:h-32"></div>
 
 					<!-- 下部分 -->
-					<div class="space-y-6">
-						<Marquee
-							:style="{ transform: 'translateY(13.5rem) rotate(-16deg)' }"
-							class="marquee"
-							:pause-on-hover="false"
-						>
+					<div class="space-y-3 md:space-y-6 sm:space-y-4">
+						<Marquee class="marquee marquee-bottom-1" :pause-on-hover="false">
 							<ReviewCard
 								v-for="review in firstRow"
 								:key="review.id"
@@ -88,9 +87,8 @@
 						</Marquee>
 
 						<Marquee
-							:style="{ transform: 'translateY(26rem) rotate(-16deg)' }"
 							reverse
-							class="marquee"
+							class="marquee marquee-bottom-2"
 							:pause-on-hover="false"
 						>
 							<ReviewCard
@@ -161,3 +159,98 @@ onMounted(async () => {
 	}
 })
 </script>
+
+<style scoped>
+/* 响应式 Marquee 定位 */
+.marquee-top-1 {
+	transform: translateY(-6rem) rotate(-16deg);
+}
+
+.marquee-top-2 {
+	transform: translateY(-3rem) rotate(-16deg);
+}
+
+.marquee-bottom-1 {
+	transform: translateY(6rem) rotate(-16deg);
+}
+
+.marquee-bottom-2 {
+	transform: translateY(12rem) rotate(-16deg);
+}
+
+/* 小屏幕优化 */
+@media (min-width: 640px) {
+	.marquee-top-1 {
+		transform: translateY(-8rem) rotate(-16deg);
+	}
+
+	.marquee-top-2 {
+		transform: translateY(-2rem) rotate(-16deg);
+	}
+
+	.marquee-bottom-1 {
+		transform: translateY(8rem) rotate(-16deg);
+	}
+
+	.marquee-bottom-2 {
+		transform: translateY(16rem) rotate(-16deg);
+	}
+}
+
+/* 中等屏幕优化 */
+@media (min-width: 768px) {
+	.marquee-top-1 {
+		transform: translateY(-10rem) rotate(-16deg);
+	}
+
+	.marquee-top-2 {
+		transform: translateY(-1rem) rotate(-16deg);
+	}
+
+	.marquee-bottom-1 {
+		transform: translateY(10rem) rotate(-16deg);
+	}
+
+	.marquee-bottom-2 {
+		transform: translateY(20rem) rotate(-16deg);
+	}
+}
+
+/* 大屏幕优化 */
+@media (min-width: 1024px) {
+	.marquee-top-1 {
+		transform: translateY(-11.5rem) rotate(-16deg);
+	}
+
+	.marquee-top-2 {
+		transform: translateY(1rem) rotate(-16deg);
+	}
+
+	.marquee-bottom-1 {
+		transform: translateY(13.5rem) rotate(-16deg);
+	}
+
+	.marquee-bottom-2 {
+		transform: translateY(26rem) rotate(-16deg);
+	}
+}
+
+/* 超大屏幕优化 */
+@media (min-width: 1280px) {
+	.marquee-top-1 {
+		transform: translateY(-13rem) rotate(-16deg);
+	}
+
+	.marquee-top-2 {
+		transform: translateY(2rem) rotate(-16deg);
+	}
+
+	.marquee-bottom-1 {
+		transform: translateY(15rem) rotate(-16deg);
+	}
+
+	.marquee-bottom-2 {
+		transform: translateY(30rem) rotate(-16deg);
+	}
+}
+</style>
