@@ -39,20 +39,69 @@
 				'bg-transparent': isHomeRoute || isAboutRoute,
 			}"
 		></div>
+
+		<div class="flex items-center justify-center text-xl">
+			<span class="hidden md:block">Move your mouse around</span>
+			<span class="block md:hidden">Tap anywhere to see the cursor</span>
+			<div>
+				<SmoothCursor />
+			</div>
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 // 使用异步组件实现懒加载，只有真正需要时才加载
 const ParticlesBg = defineAsyncComponent(
-	() => import('~/components/inspira/background/ParticlesBg.vue')
+	() => import('~/components/inspira/background/ParticlesBg.vue'),
 )
 const SnowfallBg = defineAsyncComponent(
-	() => import('~/components/inspira/background/SnowfallBg.vue')
+	() => import('~/components/inspira/background/SnowfallBg.vue'),
+)
+const SmoothCursor = defineAsyncComponent(
+	() => import('~/components/inspira/miscellaneous/SmoothCursor.vue'),
 )
 
 const colorMode = useColorMode()
 const route = useRoute()
+
+// 响应式检测 - 仅在桌面端显示平滑光标
+const isDesktop = ref(false)
+
+// 检测设备类型
+const checkDeviceType = () => {
+	if (typeof window !== 'undefined') {
+		const width = window.innerWidth
+		const isTouchDevice =
+			'ontouchstart' in window || navigator.maxTouchPoints > 0
+		// 桌面端条件：屏幕宽度大于1024px且非触摸设备
+		const newIsDesktop = width >= 1024 && !isTouchDevice
+
+		// 调试信息（生产环境中可移除）
+		// console.log('🖱️ Device check:', { width, isTouchDevice, isDesktop: newIsDesktop })
+
+		isDesktop.value = newIsDesktop
+	}
+}
+
+// 初始化和窗口大小变化时检测
+onMounted(() => {
+	// 立即检测一次
+	nextTick(() => {
+		checkDeviceType()
+	})
+
+	// 监听窗口大小变化
+	if (typeof window !== 'undefined') {
+		window.addEventListener('resize', checkDeviceType)
+	}
+})
+
+onUnmounted(() => {
+	if (typeof window !== 'undefined') {
+		window.removeEventListener('resize', checkDeviceType)
+	}
+})
 
 const isDark = computed(() => colorMode.value === 'dark')
 
