@@ -88,25 +88,31 @@ const text = ref('')
 </script>
 
 <template>
-	<div class="flex">
-		<main class="w-165 flex flex-col p-4">
-			<div class="w-full items-center justify-center overflow-hidden p-8">
+	<div class="min-h-screen flex flex-col md:flex-row">
+		<main
+			class="max-w-full flex-1 px-4 py-6 lg:max-w-none lg:px-12 md:px-8 md:py-12 sm:px-6 sm:py-8"
+		>
+			<div
+				class="w-full items-center justify-center overflow-hidden px-2 py-6 lg:px-8 lg:py-12 md:px-6 md:py-10 sm:px-4 sm:py-8"
+			>
 				<BoxReveal color="#E1251B">
-					<p class="text-[3.5rem] font-semibold">
+					<p
+						class="text-2xl font-semibold lg:text-5xl md:text-4xl sm:text-3xl xl:text-6xl"
+					>
 						Ask Anything Silly
 						<span class="text-[#E1251B]">。</span>
 					</p>
 				</BoxReveal>
 
 				<BoxReveal color="#E1251B" :duration="0.8">
-					<h2 class="mt-[.5rem] text-[1rem]">
+					<h2 class="mt-2 text-sm lg:text-xl md:text-lg sm:text-base">
 						有关于我或者网站的问题？告诉我！
 					</h2>
 				</BoxReveal>
 
 				<BoxReveal color="#E1251B" :duration="1">
-					<div class="mt-6">
-						<p>
+					<div class="mt-4 sm:mt-6">
+						<p class="text-sm leading-relaxed sm:text-base">
 							<span class="text-[#E1251B] font-semibold"> → </span>
 							如果是关于网站的问题，请
 							<span class="text-[#E1251B] font-semibold">
@@ -140,12 +146,42 @@ const text = ref('')
 			<VanishingInput
 				v-model="text"
 				:placeholders="placeholders"
-				class="mt-5"
+				class="mt-4 md:mt-8 sm:mt-6"
 			/>
+
+			<!-- 移动端 AnimatedList -->
+			<div class="mt-8 md:hidden">
+				<h3
+					class="mb-4 text-center text-lg text-gray-800 font-semibold dark:text-gray-200"
+				>
+					实时问题类型
+				</h3>
+				<div
+					class="relative h-[400px] w-full flex flex-col overflow-hidden px-2"
+				>
+					<AnimatedList>
+						<template #default>
+							<Notification
+								v-for="(item, idx) in notifications"
+								:key="idx"
+								:name="item.name"
+								:description="item.description"
+								:icon="item.icon"
+								:color="item.color"
+								:time="item.time"
+							/>
+						</template>
+					</AnimatedList>
+				</div>
+			</div>
 		</main>
 
-		<aside class="hidden h-screen w-150 p-4 md:block">
-			<div class="relative h-[720px] w-full flex flex-col overflow-hidden p-6">
+		<aside
+			class="hidden px-4 py-6 md:block lg:w-80 md:w-64 xl:w-96 lg:flex lg:flex-col lg:px-6 lg:py-8"
+		>
+			<div
+				class="relative h-[500px] w-full flex flex-col overflow-hidden px-3 py-4 lg:h-[720px] md:h-[600px] lg:px-6 lg:py-6"
+			>
 				<AnimatedList>
 					<template #default>
 						<Notification
