@@ -2,6 +2,9 @@
 import { ref } from 'vue'
 import DirectionAwareHover from '~/components/inspira/card/DirectionAwareHover.vue'
 import SparklesText from '~/components/inspira/text/SparklesText.vue'
+import { useResponsive } from '~/composables/useResponsive'
+
+const { isMobile, isTablet, isDesktop } = useResponsive()
 
 const items = ref([
 	{
@@ -33,6 +36,25 @@ const items = ref([
 		buttonText: 'Learn More',
 	},
 ])
+
+// 响应式配置 - 保持原始贴合布局
+const responsiveConfig = computed(() => {
+	if (isMobile.value) {
+		return {
+			titleMarginTop: 'mt-20',
+			gridMarginTop: 'mt-6',
+			gridClass: 'grid-cols-1',
+			cardClass: 'mx-auto w-full max-w-sm',
+		}
+	} else {
+		return {
+			titleMarginTop: 'mt-36',
+			gridMarginTop: 'mt-8 lg:mt-20 md:mt-16 sm:mt-12',
+			gridClass: 'grid-cols-2',
+			cardClass: 'w-full',
+		}
+	}
+})
 </script>
 
 <template>
@@ -40,7 +62,10 @@ const items = ref([
 		<div>
 			<div class="flex flex-col items-center justify-center">
 				<h1
-					class="relative z-20 mt-36 text-center text-black font-bold dark:text-white"
+					:class="[
+						'relative z-20 text-center text-black font-bold dark:text-white',
+						responsiveConfig.titleMarginTop,
+					]"
 				>
 					<SparklesText
 						text="Draw inspiration from these great minds"
@@ -50,12 +75,12 @@ const items = ref([
 					/>
 				</h1>
 
-				<div class="grid grid-cols-2 mt-8 lg:mt-20 md:mt-16 sm:mt-12">
+				<div :class="['grid grid-cols-2', responsiveConfig.gridMarginTop]">
 					<DirectionAwareHover
 						v-for="(item, index) in items"
 						:key="index"
 						:image-url="item.imageUrl"
-						class="border-primary border-2 border-gray-800 shadow-lg dark:border-gray-400"
+						class="border-primary border-2 border-gray-800 dark:border-gray-400"
 					>
 						<h2 class="text-xl font-semibold">{{ item.title }}</h2>
 						<p class="mt-2">{{ item.description }}</p>

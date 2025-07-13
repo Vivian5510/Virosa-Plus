@@ -1,33 +1,64 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import ContainerScroll from '~/components/inspira/container-scroll/ContainerScroll.vue'
+import { computed } from 'vue'
+import { useResponsive } from '~/composables/useResponsive'
 import TextHighlight from '~/components/inspira/text/TextHighlight.vue'
 import FlipWords from '~/components/inspira/text/FlipWords.vue'
 
-// 控制容器的宽高比
-const aspectRatio = ref('16/9')
+// 使用统一的响应式管理
+const { isMobile, isTablet, isDesktop, windowWidth } = useResponsive()
 
-// 检测设备宽度调整布局
-onMounted(() => {
-	const updateAspectRatio = () => {
-		if (window.innerWidth < 640) {
-			// 移动设备使用更紧凑的比例
-			aspectRatio.value = '3/4'
-		} else if (window.innerWidth < 1024) {
-			// 平板设备
-			aspectRatio.value = '4/3'
-		} else {
-			// 桌面设备保持原比例
-			aspectRatio.value = '16/9'
-		}
+// 响应式容器高度计算
+const containerHeight = computed(() => {
+	if (isMobile.value) {
+		return 'h-[20rem]' // 移动端较小
+	} else if (isTablet.value) {
+		return 'h-[25rem]' // 平板端中等
+	} else {
+		return 'h-[30rem]' // 桌面端较大
 	}
+})
 
-	updateAspectRatio()
-	window.addEventListener('resize', updateAspectRatio)
+// 响应式外层容器高度
+const sectionHeight = computed(() => {
+	if (isMobile.value) {
+		return 'h-[30rem]' // 移动端
+	} else if (isTablet.value) {
+		return 'h-[40rem]' // 平板端
+	} else {
+		return 'h-[50rem]' // 桌面端
+	}
+})
 
-	onUnmounted(() => {
-		window.removeEventListener('resize', updateAspectRatio)
-	})
+// 响应式文字大小类
+const mainTitleClasses = computed(() => {
+	if (isMobile.value) {
+		return 'text-2xl'
+	} else if (isTablet.value) {
+		return 'text-3xl'
+	} else {
+		return 'text-4xl'
+	}
+})
+
+const bigTitleClasses = computed(() => {
+	if (isMobile.value) {
+		return 'text-3xl'
+	} else if (isTablet.value) {
+		return 'text-4xl'
+	} else {
+		return 'text-6xl'
+	}
+})
+
+// 响应式内边距
+const highlightPadding = computed(() => {
+	if (isMobile.value) {
+		return 'px-1 py-0.5'
+	} else if (isTablet.value) {
+		return 'px-2 py-1'
+	} else {
+		return 'px-4 py-1'
+	}
 })
 </script>
 
@@ -36,27 +67,39 @@ onMounted(() => {
 		class="mx-auto max-w-7xl px-4 py-8 lg:px-8 lg:py-16 sm:px-6 sm:py-12"
 	>
 		<div class="flex flex-col overflow-hidden">
-			<!-- 自定义ContainerScroll尺寸 -->
+			<!-- 响应式容器 -->
 			<div
-				class="relative h-[30rem] flex items-center justify-center md:h-[50rem] sm:h-[40rem]"
+				:class="['relative flex items-center justify-center', sectionHeight]"
 				:style="{ perspective: '1000px' }"
 			>
-				<div class="relative w-full py-10 md:w-3/4 md:py-20">
-					<div class="mb-8 text-center">
+				<div
+					:class="[
+						'relative w-full',
+						isMobile ? 'py-6' : isTablet ? 'py-12 w-5/6' : 'py-20 w-3/4',
+					]"
+				>
+					<!-- 响应式标题区 -->
+					<div :class="['text-center', isMobile ? 'mb-6' : 'mb-8']">
 						<h1
-							class="mx-auto max-w-4xl text-2xl text-black font-semibold md:text-4xl sm:text-3xl dark:text-white"
+							:class="[
+								'mx-auto max-w-4xl font-semibold text-black dark:text-white',
+								mainTitleClasses,
+							]"
 						>
 							"Welcome, wanderer, to Virosa's light,<span
-								class="hidden sm:inline"
+								:class="{ hidden: isMobile }"
 							>
 								Where inspira awaken and dreams take flight.</span
 							>" <br />
 							<span
-								class="mt-1 block text-4xl font-bold leading-none md:text-[6rem] md:text-6xl sm:text-5xl"
+								:class="['mt-1 block font-bold leading-none', bigTitleClasses]"
 							>
 								This's
 								<TextHighlight
-									class="rounded-xl from-pink-500 to-violet-500 bg-gradient-to-r px-2 py-1 md:px-4 sm:px-3"
+									:class="[
+										'rounded-xl from-pink-500 to-violet-500 bg-gradient-to-r',
+										highlightPadding,
+									]"
 									text-end-color="hsl(var(--accent))"
 								>
 									<FlipWords :words="[' rosy ', 'virosa']" :duration="3000" />
@@ -67,8 +110,14 @@ onMounted(() => {
 							</span>
 						</h1>
 					</div>
+
+					<!-- 响应式设备展示区 -->
 					<div
-						class="mx-auto h-[20rem] w-full border-4 border-[#6C6C6C] rounded-[30px] bg-[#222222] p-2 md:h-[30rem] sm:h-[25rem] md:p-6"
+						:class="[
+							'mx-auto w-full border-4 border-[#6C6C6C] rounded-[30px] bg-[#222222]',
+							containerHeight,
+							isMobile ? 'p-2' : isTablet ? 'p-4' : 'p-6',
+						]"
 					>
 						<div
 							class="size-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"

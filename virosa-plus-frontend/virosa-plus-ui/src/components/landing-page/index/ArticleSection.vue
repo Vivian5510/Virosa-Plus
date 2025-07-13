@@ -91,38 +91,19 @@
 </template>
 
 <script setup lang="ts">
+import { useResponsive } from '~/composables/useResponsive'
 import Marquee from '~/components/inspira/card/marquee/Marquee.vue'
 import ReviewCard from '~/components/inspira/card/marquee/ReviewCard.vue'
 import InteractiveHoverButton from '~/components/inspira/button/InteractiveHoverButton.vue'
 import BorderBeam from '~/components/inspira/special-effects/BorderBeam.vue'
 import BlurReveal from '~/components/inspira/special-effects/BlurReveal.vue'
 
-// 使用 ref 替代 useColorMode
-const colorMode = ref('light') // 默认浅色模式
-const isDark = computed(() => colorMode.value === 'dark')
-const isMobileScreen = ref(false)
+// 使用统一的响应式和颜色模式管理
+const { isDark } = useColorMode()
+const { isMobile } = useResponsive()
 
-// 定义评论列表类型
-// 检测设备是否为移动端
-onMounted(() => {
-	// 检查当前颜色模式
-	const htmlEl = document.documentElement
-	if (htmlEl.classList.contains('dark')) {
-		colorMode.value = 'dark'
-	}
-
-	// 移动设备检测
-	const checkIsMobile = () => {
-		isMobileScreen.value = window.innerWidth < 640
-	}
-
-	checkIsMobile()
-	window.addEventListener('resize', checkIsMobile)
-
-	onUnmounted(() => {
-		window.removeEventListener('resize', checkIsMobile)
-	})
-})
+// 为了保持兼容性，创建别名
+const isMobileScreen = isMobile
 
 const reviewList = [
 	{

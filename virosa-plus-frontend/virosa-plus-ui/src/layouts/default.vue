@@ -1,18 +1,32 @@
 <template>
-	<div>
+	<div class="relative min-h-screen transition-colors duration-300">
 		<Navigation />
-		<div
-			class="font-heading flex flex-col items-center justify-center px-4 py-6 md:px-8"
+		<main
+			class="font-heading relative z-10 flex flex-col items-center justify-center transition-all duration-300"
+			:class="{
+				'px-4 py-6 md:px-8': true,
+				'pt-8': true, // 为sticky导航留出空间
+			}"
 		>
 			<router-view v-slot="{ Component }">
-				<transition name="fade" mode="out-in">
+				<transition
+					name="page"
+					mode="out-in"
+					enter-active-class="transition-all duration-300 ease-out"
+					enter-from-class="opacity-0 scale-95 translate-y-4"
+					enter-to-class="opacity-100 scale-100 translate-y-0"
+					leave-active-class="transition-all duration-200 ease-in"
+					leave-from-class="opacity-100 scale-100 translate-y-0"
+					leave-to-class="opacity-0 scale-95 -translate-y-4"
+				>
 					<component :is="Component" />
 				</transition>
 			</router-view>
-		</div>
+		</main>
+		<!-- 背景动画层 -->
 		<ParticlesBg
 			v-if="isHomeRoute || isAboutRoute"
-			class="fixed inset-0 z-[-3]"
+			class="fixed inset-0 z-0"
 			:quantity="500"
 			:ease="100"
 			:color="isDark ? '#FFF' : '#000'"
@@ -21,7 +35,7 @@
 		/>
 		<SnowfallBg
 			v-if="isOtherRoute"
-			class="fixed inset-0 z-[-3]"
+			class="fixed inset-0 z-0"
 			:color="'ADD8E6'"
 			:quantity="250"
 			:min-radius="0.2"
@@ -29,6 +43,15 @@
 			:speed="0.5"
 			refresh
 		/>
+
+		<!-- 页面背景色（在动画之上，内容之下） -->
+		<div
+			class="pointer-events-none fixed inset-0 z-5"
+			:class="{
+				'bg-gray-50/80 dark:bg-gray-900/80': isOtherRoute,
+				'bg-transparent': isHomeRoute || isAboutRoute,
+			}"
+		></div>
 	</div>
 </template>
 

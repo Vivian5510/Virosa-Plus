@@ -1,5 +1,46 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useResponsive } from '~/composables/useResponsive'
 import FlipCard from '~/components/inspira/card/FlipCard.vue'
+
+// 使用统一的响应式管理
+const { isMobile, isTablet, isDesktop } = useResponsive()
+
+// 控制组件显示隐藏
+const shouldShow = computed(() => !isMobile.value)
+
+// 响应式标题大小
+const titleClasses = computed(() => {
+	if (isMobile.value) {
+		return 'text-3xl'
+	} else if (isTablet.value) {
+		return 'text-4xl'
+	} else {
+		return 'text-6xl'
+	}
+})
+
+// 响应式容器样式
+const containerClasses = computed(() => {
+	if (isMobile.value) {
+		return 'flex flex-col items-center justify-center gap-8'
+	} else if (isTablet.value) {
+		return 'grid grid-cols-2 gap-8 items-center justify-center'
+	} else {
+		return 'flex items-center justify-center gap-16'
+	}
+})
+
+// 响应式显示的卡片数量
+const visibleCards = computed(() => {
+	if (isMobile.value) {
+		return flipCards.slice(0, 2) // 移动端只显示2张
+	} else if (isTablet.value) {
+		return flipCards.slice(0, 4) // 平板端显示4张
+	} else {
+		return flipCards // 桌面端显示全部
+	}
+})
 
 const flipCards = [
 	{
@@ -35,19 +76,46 @@ const flipCards = [
 </script>
 
 <template>
-	<section class="mb-50 max-w-7xl flex flex-col items-center justify-center">
-		<div class="mb-10 text-6xl font-semibold">What can you do here?</div>
+	<section
+		v-if="shouldShow"
+		:class="[
+			'w-full max-w-7xl flex flex-col items-center justify-center mx-auto',
+			isMobile ? 'mb-20 px-4' : isTablet ? 'mb-32 px-6' : 'mb-50 px-8',
+		]"
+	>
+		<!-- 响应式标题 -->
+		<div
+			:class="[
+				'font-semibold text-center',
+				titleClasses,
+				isMobile ? 'mb-8' : 'mb-10',
+			]"
+		>
+			What can you do here?
+		</div>
 
-		<div class="flex items-center justify-center gap-16">
+		<!-- 响应式卡片布局 -->
+		<div :class="containerClasses">
 			<FlipCard
-				v-for="(card, index) in flipCards"
+				v-for="(card, index) in visibleCards"
 				:key="index"
 				:title="card.title"
 				:subtitle="card.subtitle"
 				:description="card.description"
 				:image="card.image"
 				:rotate="card.rotate"
+				:class="[
+					isMobile ? 'w-64 h-80' : isTablet ? 'w-48 h-64' : 'w-56 h-110',
+				]"
 			/>
+		</div>
+
+		<!-- 移动端提示 -->
+		<div
+			v-if="isMobile"
+			class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400"
+		>
+			👆 Showing 2 of 4 cards • Switch to desktop for full experience
 		</div>
 	</section>
 </template>

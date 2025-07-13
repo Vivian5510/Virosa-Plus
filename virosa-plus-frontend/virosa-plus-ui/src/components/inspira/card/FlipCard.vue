@@ -1,5 +1,5 @@
 <template>
-	<div :class="cn('group h-110 w-56 [perspective:1000px]', props.class)">
+	<div :class="cn('group [perspective:1000px]', props.class)">
 		<div
 			:class="
 				cn(

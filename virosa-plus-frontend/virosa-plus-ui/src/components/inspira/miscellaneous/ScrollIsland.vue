@@ -9,7 +9,7 @@
 		<div
 			:class="
 				cn(
-					'fixed left-1/2 top-24 z-[999] -translate-x-1/2 bg-primary/90 backdrop-blur-lg',
+					'fixed left-1/2 bottom-6 z-[60] -translate-x-1/2 bg-primary/90 backdrop-blur-lg',
 					open && isSlotAvailable ? 'rounded-lg' : 'rounded-full',
 					$props.class,
 				)

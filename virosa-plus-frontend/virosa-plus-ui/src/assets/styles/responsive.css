@@ -1,0 +1,46 @@
+/* ========================================
+   优雅的响应式设计全局样式
+   ======================================== */
+
+/* 响应式页面布局 */
+.responsive-sections {
+  /* 移动端：较小间距 */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* space-y-6 */
+}
+
+/* 平板端：中等间距 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .responsive-sections {
+    gap: 2.5rem; /* space-y-10 */
+  }
+}
+
+/* 中屏及以上：较大间距 */
+@media (min-width: 768px) {
+  .responsive-sections {
+    gap: 3rem; /* space-y-12 */
+  }
+}
+
+/* 大屏：更大间距 */
+@media (min-width: 1024px) {
+  .responsive-sections {
+    gap: 4rem; /* space-y-16 */
+  }
+}
+
+/* 渐进增强的过渡效果 */
+.responsive-sections > * {
+  transition: all 0.3s ease-in-out;
+}
+
+/* 已移除自定义.hidden类，使用Tailwind原生hidden类 */
+
+/* 可访问性：减少动画的用户偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .responsive-sections > * {
+    transition: none;
+  }
+}

@@ -1,9 +1,13 @@
 <template>
-	<div :class="cn('flex flex-col items-center gap-4', $props.class)">
+	<div
+		:class="
+			cn('flex flex-col items-center gap-2 md:gap-3 lg:gap-4', $props.class)
+		"
+	>
 		<transition-group
 			name="list"
 			tag="div"
-			class="flex flex-col-reverse items-center gap-3"
+			class="flex flex-col-reverse items-center gap-2 md:gap-3"
 			move-class="move"
 		>
 			<!-- Only render the items up to the current index -->

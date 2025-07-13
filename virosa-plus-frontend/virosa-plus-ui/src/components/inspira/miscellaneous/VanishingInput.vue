@@ -1,7 +1,7 @@
 <template>
 	<form
 		:class="[
-			'relative mx-auto h-12 w-full max-w-xl overflow-hidden rounded-full bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 dark:bg-zinc-800',
+			'relative mx-auto h-10 sm:h-12 w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl overflow-hidden rounded-full bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 dark:bg-zinc-800',
 			vanishingText && 'bg-gray-50',
 		]"
 		@submit.prevent="handleSubmit"
@@ -10,7 +10,7 @@
 		<canvas
 			ref="canvasRef"
 			:class="[
-				'pointer-events-none absolute left-2 top-[20%] origin-top-left scale-50 pr-20 text-base invert sm:left-8 dark:invert-0',
+				'pointer-events-none absolute left-2 top-[20%] origin-top-left scale-50 pr-12 sm:pr-20 text-sm sm:text-base invert sm:left-8 dark:invert-0',
 				animating ? 'opacity-100' : 'opacity-0',
 			]"
 		/>
@@ -21,7 +21,7 @@
 			v-model="vanishingText"
 			:disabled="animating"
 			type="text"
-			class="relative z-50 size-full rounded-full border-none bg-transparent pl-4 pr-20 text-sm text-black sm:pl-10 sm:text-base dark:text-white focus:outline-none focus:ring-0"
+			class="relative z-50 size-full rounded-full border-none bg-transparent pl-3 pr-12 text-xs text-black md:pl-10 sm:pl-4 sm:pr-20 md:text-base sm:text-sm dark:text-white focus:outline-none focus:ring-0"
 			:class="{ 'text-transparent dark:text-transparent': animating }"
 			@keydown.enter="handleKeyDown"
 		/>
@@ -30,7 +30,7 @@
 		<button
 			:disabled="!vanishingText"
 			type="submit"
-			class="absolute right-2 top-1/2 z-50 size-8 flex items-center justify-center rounded-full bg-black transition duration-200 -translate-y-1/2 dark:bg-zinc-900 disabled:bg-gray-100 dark:disabled:bg-zinc-700"
+			class="absolute right-1 top-1/2 z-50 size-6 flex items-center justify-center rounded-full bg-black transition duration-200 sm:right-2 sm:size-8 -translate-y-1/2 dark:bg-zinc-900 disabled:bg-gray-100 dark:disabled:bg-zinc-700"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@
 				stroke-width="2"
 				stroke-linecap="round"
 				stroke-linejoin="round"
-				class="size-4 text-gray-300"
+				class="size-3 text-gray-300 sm:size-4"
 			>
 				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 				<path
@@ -74,7 +74,7 @@
 			>
 				<p
 					:key="currentPlaceholder"
-					class="w-[calc(100%-2rem)] truncate pl-4 text-left text-sm text-neutral-500 font-normal sm:pl-10 sm:text-base dark:text-zinc-500"
+					class="w-[calc(100%-1.5rem)] truncate pl-3 text-left text-xs text-neutral-500 font-normal sm:w-[calc(100%-2rem)] md:pl-10 sm:pl-4 md:text-base sm:text-sm dark:text-zinc-500"
 				>
 					{{ placeholders[currentPlaceholder] }}
 				</p>

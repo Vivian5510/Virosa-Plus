@@ -20,10 +20,14 @@ const props = withDefaults(
 		color?: string
 		count?: number
 		class?: string
+		minSpeed?: number
+		maxSpeed?: number
 	}>(),
 	{
 		color: '#FFF',
 		count: 200,
+		minSpeed: 2,
+		maxSpeed: 7,
 	},
 )
 
@@ -48,7 +52,7 @@ onMounted(() => {
 			x: (Math.random() - 0.5) * 2 * canvas.width,
 			y: (Math.random() - 0.5) * 2 * canvas.height,
 			z: Math.random() * canvas.width,
-			speed: Math.random() * 5 + 2, // Speed for falling effect
+			speed: Math.random() * (props.maxSpeed - props.minSpeed) + props.minSpeed,
 		})
 	}
 

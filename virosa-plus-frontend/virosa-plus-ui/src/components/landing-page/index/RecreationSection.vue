@@ -7,6 +7,39 @@ import { isDark } from 'vue-dark-switch'
 import BorderBeam from '~/components/inspira/special-effects/BorderBeam.vue'
 import IconCloud from '~/components/inspira/miscellaneous/IconCloud/IconCloud.vue'
 import Orbit from '@/components/inspira/miscellaneous/Orbit/Orbit.vue'
+import { useResponsive } from '~/composables/useResponsive'
+
+// 使用响应式组合式函数
+const { isMobile, isTablet } = useResponsive()
+
+// 响应式粒子效果配置
+const particleCount = computed(() => {
+	if (isMobile.value) return 50
+	if (isTablet.value) return 100
+	return 200
+})
+
+const particleMinSpeed = computed(() => {
+	if (isMobile.value) return 1
+	if (isTablet.value) return 1.5
+	return 2
+})
+
+const particleMaxSpeed = computed(() => {
+	if (isMobile.value) return 3
+	if (isTablet.value) return 4
+	return 7
+})
+
+// 响应式容器高度（保持比例）
+const containerHeight = computed(() => {
+	if (isMobile.value) return 'h-[400px]'
+	if (isTablet.value) return 'h-[600px]'
+	return 'h-[800px]'
+})
+
+// 控制组件显示隐藏
+const shouldShow = computed(() => !isMobile.value)
 
 const galleryItems = [
 	{
@@ -75,7 +108,10 @@ const imageUrls = slugs.map((slug) => `/svg/${slug}.svg`)
 </script>
 
 <template>
-	<section class="mb-50 max-w-7xl flex flex-col items-center justify-center">
+	<section
+		v-if="shouldShow"
+		class="mb-50 max-w-7xl flex flex-col items-center justify-center"
+	>
 		<BlurReveal :delay="0" :duration="1.5">
 			<div class="mb-10 text-center text-4xl font-semibold">
 				Admire some breathtaking landscapes to uplift your mood.
@@ -86,11 +122,17 @@ const imageUrls = slugs.map((slug) => `/svg/${slug}.svg`)
 		</BlurReveal>
 
 		<div
-			class="bg-background relative z-10 mt-36 h-[800px] w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black md:shadow-xl"
+			:class="[
+				'bg-background relative z-10 mt-36 w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black md:shadow-xl',
+				containerHeight,
+			]"
 		>
 			<FallingStarsBg
 				class="bg-white -z-1 dark:bg-black"
 				:color="isDark ? '#FFF' : '#555'"
+				:count="particleCount"
+				:min-speed="particleMinSpeed"
+				:max-speed="particleMaxSpeed"
 			/>
 
 			<BlurReveal :delay="0" :duration="1.5">

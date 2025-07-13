@@ -19,21 +19,10 @@ import { useWindowSize, useScroll, useElementBounding } from '@vueuse/core'
 import ContainerScrollTitle from '~/components/inspira/container-scroll/ContainerScrollTitle.vue'
 import ContainerScrollCard from '~/components/inspira/container-scroll/ContainerScrollCard.vue'
 
+import { useResponsive } from '~/composables/useResponsive'
+
 const containerRef = ref(null)
-const isMobile = ref(false)
-
-function updateIsMobile() {
-	isMobile.value = window.innerWidth <= 768
-}
-
-onMounted(() => {
-	updateIsMobile()
-	window.addEventListener('resize', updateIsMobile)
-})
-
-onUnmounted(() => {
-	window.removeEventListener('resize', updateIsMobile)
-})
+const { isMobile } = useResponsive()
 
 const { height } = useWindowSize()
 const { y: scrollY } = useScroll(window)
