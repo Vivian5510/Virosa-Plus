@@ -48,6 +48,9 @@ const flipCards = [
 		subtitle: '思维宇宙的星轨',
 		description: '穿梭意识荒原，捕捉灵光碎羽，在理性与感性的交界处聆听心弦共振',
 		image: 'picture/photo-gallery/塔罗牌-BLANK.jpg',
+		category: 'Mind Space',
+		features: ['内观冥想', '意识流写作', '直觉感知'],
+		meta: 'Since 2024',
 		rotate: 'y',
 	},
 	{
@@ -55,6 +58,9 @@ const flipCards = [
 		subtitle: '灵魂碎片的陈列室',
 		description: '琥珀封存时光絮语，琉璃折射记忆棱角，每一帧都是生命诗篇的批注',
 		image: 'picture/photo-gallery/塔罗牌-BLANK.jpg',
+		category: 'Memory Archive',
+		features: ['时光收集', '记忆编织', '情感标本'],
+		meta: 'Always Growing',
 		rotate: 'x',
 	},
 	{
@@ -62,6 +68,9 @@ const flipCards = [
 		subtitle: '美学信仰的朝圣路',
 		description: '在色彩经纬间编织世界观，让形态韵律化作信仰，构筑视觉的巴别塔',
 		image: 'picture/photo-gallery/塔罗牌-BLANK.jpg',
+		category: 'Visual Quest',
+		features: ['色彩理论', '形态探索', '美学哲学'],
+		meta: 'Art & Design',
 		rotate: 'x',
 	},
 	{
@@ -70,6 +79,9 @@ const flipCards = [
 		description:
 			'当量子蝴蝶掠过认知的弦，某个平行宇宙的星光正在你的瞳孔里坍缩成诗',
 		image: 'picture/photo-gallery/塔罗牌-BLANK.jpg',
+		category: 'Inspiration Lab',
+		features: ['偶然连结', '创意触发', '思维跃迁'],
+		meta: 'Random Magic',
 		rotate: 'y',
 	},
 ]
@@ -103,6 +115,9 @@ const flipCards = [
 				:subtitle="card.subtitle"
 				:description="card.description"
 				:image="card.image"
+				:category="card.category"
+				:features="card.features"
+				:meta="card.meta"
 				:rotate="card.rotate"
 				:class="[
 					isMobile ? 'w-64 h-80' : isTablet ? 'w-48 h-64' : 'w-56 h-110',
