@@ -23,25 +23,12 @@
 				</transition>
 			</router-view>
 		</main>
-		<!-- 背景动画层 -->
-		<ParticlesBg
-			v-if="isHomeRoute || isAboutRoute"
+		<!-- 背景动画层 - 使用动态组件实现真正的按需加载 -->
+		<component
+			:is="backgroundComponent"
+			v-if="backgroundComponent"
 			class="fixed inset-0 z-0"
-			:quantity="500"
-			:ease="100"
-			:color="isDark ? '#FFF' : '#000'"
-			:staticity="10"
-			refresh
-		/>
-		<SnowfallBg
-			v-if="isOtherRoute"
-			class="fixed inset-0 z-0"
-			:color="'ADD8E6'"
-			:quantity="250"
-			:min-radius="0.2"
-			:max-radius="5"
-			:speed="0.5"
-			refresh
+			v-bind="backgroundProps"
 		/>
 
 		<!-- 页面背景色（在动画之上，内容之下） -->
@@ -56,8 +43,13 @@
 </template>
 
 <script setup lang="ts">
-import ParticlesBg from '~/components/inspira/background/ParticlesBg.vue'
-import SnowfallBg from '~/components/inspira/background/SnowfallBg.vue'
+// 使用异步组件实现懒加载，只有真正需要时才加载
+const ParticlesBg = defineAsyncComponent(
+	() => import('~/components/inspira/background/ParticlesBg.vue')
+)
+const SnowfallBg = defineAsyncComponent(
+	() => import('~/components/inspira/background/SnowfallBg.vue')
+)
 
 const colorMode = useColorMode()
 const route = useRoute()
@@ -72,6 +64,39 @@ const isAboutRoute = computed(() => route.path === '/aboutme')
 
 // 判断其他路由
 const isOtherRoute = computed(() => !isHomeRoute.value && !isAboutRoute.value)
+
+// 动态背景组件 - 只会实例化当前需要的组件
+const backgroundComponent = computed(() => {
+	if (isHomeRoute.value || isAboutRoute.value) {
+		return ParticlesBg
+	} else if (isOtherRoute.value) {
+		return SnowfallBg
+	}
+	return null
+})
+
+// 动态背景属性 - 根据当前路由返回对应的props
+const backgroundProps = computed(() => {
+	if (isHomeRoute.value || isAboutRoute.value) {
+		return {
+			quantity: 500,
+			ease: 100,
+			color: isDark.value ? '#FFF' : '#000',
+			staticity: 10,
+			refresh: true,
+		}
+	} else if (isOtherRoute.value) {
+		return {
+			color: 'ADD8E6',
+			quantity: 250,
+			minRadius: 0.2,
+			maxRadius: 5,
+			speed: 0.5,
+			refresh: true,
+		}
+	}
+	return {}
+})
 </script>
 
 <style></style>
