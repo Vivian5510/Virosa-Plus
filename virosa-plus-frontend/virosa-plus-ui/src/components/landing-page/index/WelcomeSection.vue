@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useResponsive } from '~/composables/useResponsive'
 import TextHighlight from '~/components/inspira/text/TextHighlight.vue'
 import FlipWords from '~/components/inspira/text/FlipWords.vue'
+import Lens from '~/components/inspira/miscellaneous/lens/Lens.vue'
+import Rays from '~/components/inspira/miscellaneous/lens/Rays.vue'
+import Beams from '~/components/inspira/miscellaneous/lens/Beams.vue'
 
 // 使用统一的响应式管理
 const { isMobile, isTablet, isDesktop, windowWidth } = useResponsive()
@@ -60,6 +63,13 @@ const highlightPadding = computed(() => {
 		return 'px-4 py-1'
 	}
 })
+
+// Lens组件状态管理
+const hovering = ref(false)
+
+function setHovering(value: boolean) {
+	hovering.value = value
+}
 </script>
 
 <template>
@@ -79,7 +89,10 @@ const highlightPadding = computed(() => {
 					]"
 				>
 					<!-- 响应式标题区 -->
-					<div :class="['text-center', isMobile ? 'mb-6' : 'mb-8']">
+					<div 
+						:class="['text-center transition-all duration-300', isMobile ? 'mb-6' : 'mb-8']"
+						:style="{ filter: hovering ? 'blur(2px)' : 'blur(0px)' }"
+					>
 						<h1
 							:class="[
 								'mx-auto max-w-4xl font-semibold text-black dark:text-white',
@@ -114,20 +127,31 @@ const highlightPadding = computed(() => {
 					<!-- 响应式设备展示区 -->
 					<div
 						:class="[
-							'mx-auto w-full border-4 border-[#6C6C6C] rounded-[30px] bg-[#222222]',
+							'relative mx-auto w-full border-4 border-[#6C6C6C] rounded-[30px] bg-[#222222] overflow-hidden',
 							containerHeight,
 							isMobile ? 'p-2' : isTablet ? 'p-4' : 'p-6',
 						]"
 					>
-						<div
-							class="size-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"
-						>
-							<img
-								src="/picture/miscellaneous/photo-vision-pro.avif"
-								class="h-full w-full rounded-2xl object-cover"
-								alt="hero"
-								loading="lazy"
-							/>
+						<!-- 背景特效 - 限制在容器内 -->
+						<div class="absolute inset-0 overflow-hidden rounded-2xl">
+							<Rays class="scale-75 opacity-60" />
+							<Beams class="scale-75 opacity-60" />
+						</div>
+						
+						<!-- 带Lens效果的图片 -->
+						<div class="relative z-10 size-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900">
+							<Lens
+								:hovering="hovering"
+								@hover-update="setHovering"
+								class="!rounded-2xl"
+							>
+								<img
+									src="/picture/miscellaneous/photo-vision-pro.avif"
+									class="h-full w-full object-cover"
+									alt="Apple Vision Pro"
+									loading="lazy"
+								/>
+							</Lens>
 						</div>
 					</div>
 				</div>
