@@ -185,6 +185,7 @@
 									class="mt-3 min-h-20 w-full flex sm:min-h-28"
 								>
 									<ScratchToReveal
+										:key="`scratch-${scratchWidth}-${scratchHeight}`"
 										:gradient-colors="['#A97CF8', '#F38CB8', '#FDCC92']"
 										:height="scratchHeight"
 										:min-scratch-percentage="50"
@@ -526,7 +527,7 @@ import LetterPullup from '~/components/inspira/text/LetterPullup.vue'
 const shadowColor = computed(() => (isDark.value ? 'white' : 'black'))
 
 // 响应式窗口尺寸
-const windowWidth = ref(250) // 默认值
+const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 768) // 获取真实窗口宽度或默认值
 
 // 刮刮乐组件响应式尺寸
 const scratchWidth = computed(() => {
