@@ -41,15 +41,15 @@ export default function App({ children }: AppProps) {
               modeStorageKey={themeConfig.modeStorageKey}
             >
               <MotionLazy>
-                <SnackbarProvider
-                  maxSnack={3}
-                  autoHideDuration={3000}
-                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                >
-                  <ProgressBar />
-                  <SettingsDrawer defaultSettings={defaultSettings} />
-                  {children}
-                </SnackbarProvider>
+                  <SnackbarProvider
+                    maxSnack={3}
+                    autoHideDuration={3000}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  >
+                    <ProgressBar />
+                    <SettingsDrawer defaultSettings={defaultSettings} />
+                    {children}
+                  </SnackbarProvider>
               </MotionLazy>
             </ThemeProvider>
           </LocalizationProvider>

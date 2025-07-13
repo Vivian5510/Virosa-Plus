@@ -19,11 +19,11 @@ const dummyPath = (id: string) => '#';
 export const paths = {
   comingSoon: '/coming-soon',
   // 以下路径已删除对应页面，但保留定义以防引用
-  maintenance: '/maintenance', 
+  maintenance: '/maintenance',
   pricing: '/pricing',
   payment: '/payment',
   about: '/about-us',
-  contact: '/contact-us', 
+  contact: '/contact-us',
   faqs: '/faqs',
   page403: '/error/403',
   page404: '/error/404',
