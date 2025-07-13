@@ -213,6 +213,9 @@ const send = async () => {
 		// 发送后清空输入框
 		comment.value.content = ''
 		
+		// 如果messageApi没有提示，在这里添加
+		// toast.success('收到你的留言啦！😊')
+		
 	} catch (error) {
 		console.error('发送留言失败:', error)
 		toast.error('发送失败，请重试')
@@ -227,7 +230,6 @@ const send = async () => {
 // 处理加载完成
 const handleLoadingComplete = () => {
 	isLoading.value = false
-	toast.success('收到你的留言啦！😊')
 	// 重置所有状态
 	loaderStates.isValidating = false
 	loaderStates.isSending = false

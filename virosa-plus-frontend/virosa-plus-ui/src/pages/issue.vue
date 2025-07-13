@@ -110,7 +110,7 @@ const issueSteps = computed<Step[]>(() => [
 		duration: 1000,
 		action: () => {
 			loaderStates.isValidating = true
-		}
+		},
 	},
 	{
 		text: '创建Issue',
@@ -118,7 +118,7 @@ const issueSteps = computed<Step[]>(() => [
 		afterText: 'Issue创建成功',
 		action: () => {
 			loaderStates.isCreatingIssue = true
-		}
+		},
 	},
 	{
 		text: '发送通知',
@@ -126,15 +126,12 @@ const issueSteps = computed<Step[]>(() => [
 		afterText: '通知发送完成',
 		action: () => {
 			loaderStates.isNotifying = true
-		}
+		},
 	},
 	{
 		text: '提交完成',
 		duration: 800,
 		afterText: '感谢您的反馈，我们会尽快处理',
-		action: () => {
-			handleIssueSubmitComplete()
-		}
 	},
 ])
 
@@ -153,16 +150,15 @@ const submitIssue = async (submittedText: string) => {
 
 	try {
 		// 模拟验证阶段的延迟
-		await new Promise(resolve => setTimeout(resolve, 1000))
+		await new Promise((resolve) => setTimeout(resolve, 1000))
 
 		// 模拟创建Issue
-		await new Promise(resolve => setTimeout(resolve, 2000))
+		await new Promise((resolve) => setTimeout(resolve, 2000))
 		loaderStates.isCreatingIssue = false
 
 		// 模拟发送通知
-		await new Promise(resolve => setTimeout(resolve, 1500))
+		await new Promise((resolve) => setTimeout(resolve, 1500))
 		loaderStates.isNotifying = false
-		
 	} catch (error) {
 		console.error('提交Issue失败:', error)
 		toast.error('提交失败，请重试')
@@ -178,12 +174,12 @@ const submitIssue = async (submittedText: string) => {
 const handleIssueSubmitComplete = () => {
 	isLoading.value = false
 	toast.success('提交成功！我们已收到您的反馈，会尽快处理并回复您。')
-	
+
 	// 重置所有状态
 	loaderStates.isValidating = false
 	loaderStates.isCreatingIssue = false
 	loaderStates.isNotifying = false
-	
+
 	// 清空输入框
 	text.value = ''
 }
