@@ -386,117 +386,187 @@ async function fetchFileTree() {
 				<!-- 桌面端和平板端显示长文字卡片 -->
 				<div
 					v-if="!isMobile"
-					class="bg-background relative z-10 mt-6 h-fit w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black"
+					class="mx-auto mt-8 max-w-4xl border border-gray-200/50 rounded-2xl bg-white/80 p-8 shadow-lg backdrop-blur-sm sm:mt-12 space-y-8 dark:border-gray-700/50 dark:bg-gray-900/80"
 				>
-					<div :class="isDark ? 'dark' : ''">
-						<div class="text-center">
-							<h1
-								:class="[
-									'font-bold text-purple-400 dark:text-purple-300',
-									cardConfig.titleClass,
-								]"
-							>
-								阅读激励实验 · 交互站点
-							</h1>
-							<p
-								:class="[
-									'mt-4 text-gray-800 dark:text-gray-300',
-									cardConfig.textClass,
-								]"
-							>
-								📖 你正接近一片未标记的文本领域 ——
-								此处的字句尚未被完全解读，它们仍在寻找宿主。
-							</p>
-						</div>
+					<!-- 标题区域 -->
+					<div
+						class="border-b border-gray-200 pb-6 text-center dark:border-gray-700"
+					>
+						<h1
+							class="mb-2 text-3xl text-gray-800 font-bold sm:text-4xl dark:text-gray-100"
+						>
+							阅读激励实验 · 交互站点
+						</h1>
+						<p class="text-lg text-gray-600 font-medium dark:text-gray-400">
+							文字远征者的数字巴别塔
+						</p>
+					</div>
 
-						<div class="mt-8">
+					<!-- 实验协议区域 -->
+					<div class="grid gap-6 md:grid-cols-2">
+						<!-- 左侧：进入协议 -->
+						<div class="space-y-4">
 							<h2
-								:class="[
-									'font-semibold text-blue-300 dark:text-blue-400',
-									isMobile ? 'text-lg' : isTablet ? 'text-xl' : 'text-2xl',
-								]"
+								class="mb-4 text-xl text-gray-800 font-semibold dark:text-gray-200"
 							>
 								🜲 阅读探险者协议
 							</h2>
-							<p
-								:class="[
-									'mt-4 text-gray-800 dark:text-gray-300',
-									isMobile ? 'text-sm' : 'text-base',
-								]"
-							>
-								「欢迎加入这场文字远征，进入前请确认装备：」
-							</p>
-							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
-								<li>信息耐受力 —— 防止被过量思考淹没</li>
-								<li>逻辑弹性装置 —— 应对突如其来的意义偏折</li>
-								<li>幽默感缓冲层 —— 用于吸收文本中的高能隐喻</li>
-							</ul>
-							<p class="mt-4 text-gray-800 dark:text-gray-300">
-								⚠ 注意：阅读过程中，可能触发以下状态变换
-							</p>
-							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
-								<li>突然对某个旧概念产生全新理解</li>
-								<li>误入作者未设防的思维巷道</li>
-								<li>发现一行文字比你先看穿了自己</li>
-							</ul>
+							<div class="text-gray-700 space-y-3 dark:text-gray-300">
+								<div class="flex items-start space-x-3">
+									<span class="mt-1 text-green-500">✓</span>
+									<p>
+										装备<strong>信息耐受力</strong>——防止被过量思考淹没（推荐使用
+										<span
+											class="rounded bg-blue-100 px-2 py-0.5 text-sm text-blue-700 font-medium dark:bg-blue-900/30 dark:text-blue-300"
+											>咖啡因</span
+										>
+										增强）
+									</p>
+								</div>
+								<div class="flex items-start space-x-3">
+									<span class="mt-1 text-green-500">✓</span>
+									<p>
+										启用<strong>逻辑弹性装置</strong>——应对突如其来的意义偏折和概念反转
+									</p>
+								</div>
+								<div class="flex items-start space-x-3">
+									<span class="mt-1 text-green-500">✓</span>
+									<p>
+										配置<strong>幽默感缓冲层</strong>——用于吸收文本中的高能隐喻和
+										<span
+											class="rounded bg-red-100 px-2 py-0.5 text-sm text-red-700 font-medium dark:bg-red-900/30 dark:text-red-300"
+											>存在主义噪音</span
+										>
+									</p>
+								</div>
+								<div class="flex items-start space-x-3">
+									<span class="mt-1 text-yellow-500">⚠</span>
+									<p>
+										<strong>警告</strong>：阅读过程中可能触发<span
+											class="rounded bg-orange-100 px-2 py-0.5 text-sm text-orange-700 font-medium dark:bg-orange-900/30 dark:text-orange-300"
+											>认知迭代</span
+										>，导致对旧概念产生全新理解
+									</p>
+								</div>
+							</div>
 						</div>
 
-						<div class="mt-8">
+						<!-- 右侧：交互指南 -->
+						<div class="space-y-4">
 							<h2
-								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
+								class="mb-4 text-xl text-gray-800 font-semibold dark:text-gray-200"
 							>
-								🜲 交互式阅读咒语
+								🎮 交互式阅读咒语
 							</h2>
-							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
-								<li>点击 = 点燃文字火种</li>
-								<li>滚轮滑动 = 进入节奏共振</li>
-								<li>按下 Ctrl+S = 存档你的顿悟瞬间</li>
-							</ul>
-							<p class="mt-4 text-gray-800 dark:text-gray-300">
-								🪐 每个段落都是可能性的折叠点，它们可以是指引，也可以是岔路。
-							</p>
+							<div class="text-gray-700 space-y-3 dark:text-gray-300">
+								<div class="flex items-start space-x-3">
+									<span class="mt-1 text-gray-400">•</span>
+									<p>
+										<strong>点击</strong> = 点燃文字火种，激活潜在意义链
+									</p>
+								</div>
+								<div class="flex items-start space-x-3">
+									<span class="mt-1 text-gray-400">•</span>
+									<p><strong>滚轮滑动</strong> = 进入节奏共振，同步思维波长</p>
+								</div>
+								<div class="flex items-start space-x-3">
+									<span class="mt-1 text-gray-400">•</span>
+									<p>
+										<strong>Ctrl+S</strong> = 存档顿悟瞬间（<span
+											class="text-sm text-gray-500"
+											>副作用：可能引发深夜emo</span
+										>）
+									</p>
+								</div>
+								<div class="flex items-start space-x-3">
+									<span class="mt-1 text-gray-400">•</span>
+									<p>
+										<strong>长按任意文字</strong> = 尝试与作者的量子纠缠（<span
+											class="text-sm text-gray-500"
+											>成功率0.03%</span
+										>）
+									</p>
+								</div>
+							</div>
 						</div>
+					</div>
 
-						<div class="mt-8">
-							<h2
-								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
-							>
-								🜲 认知拓展彩蛋
-							</h2>
-							<p class="mt-4 text-gray-800 dark:text-gray-300">
-								当你的视线抵达页面底部，你将解锁：
-							</p>
-							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
-								<li>一份作者藏匿的"阅读副作用"清单</li>
-								<li>某段被删改七次的自我辩解</li>
-								<li>以及一个等待填充的 _______</li>
-							</ul>
-							<p class="mt-4 text-gray-800 dark:text-gray-300">
-								📌 阅读不是单向吸收，而是一次创造，
-								每个眼神的停留，都在重构这组字符的意义。
-							</p>
-						</div>
+					<!-- 认知拓展区域 -->
+					<div
+						class="border-y border-gray-200 py-6 text-center dark:border-gray-700"
+					>
+						<p class="text-lg text-gray-700 dark:text-gray-300">
+							📌 阅读不是单向吸收，而是一次<strong
+								class="text-xl text-purple-600 dark:text-purple-400"
+								>共同创造</strong
+							>，每个眼神的停留，都在重构字符的量子态。
+						</p>
+					</div>
 
-						<div class="mt-8">
-							<h2 class="text-2xl text-red-300 font-semibold dark:text-red-400">
-								🍫 阅读结算 · 可能性分布
-							</h2>
-							<p class="mt-4 text-gray-800 dark:text-gray-300">
-								「此刻，你可以选择：」
-							</p>
-							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
-								<li>🔹 [89%] 关闭页面，如合上一本异次元手册</li>
-								<li>🔹 [9.7%] 在留言区投递一颗未解的思维子弹</li>
-								<li>🔹 [1.3%] 在现实世界发现这段文字的回声</li>
-							</ul>
-						</div>
+					<!-- 可能性分布 -->
+					<div class="space-y-6">
+						<h2
+							class="text-center text-2xl text-gray-800 font-bold dark:text-gray-200"
+						>
+							🍫 阅读结算 · 可能性分布
+						</h2>
 
-						<div class="mt-8 text-center">
-							<p class="text-lg text-gray-800 font-semibold dark:text-gray-400">
-								🌀
-								无论选择哪条路径，愿这些字符在你的突触间生长出意料之外的神经连接。
-							</p>
+						<div class="space-y-6">
+							<div class="space-y-3">
+								<h3
+									class="text-lg text-gray-800 font-semibold dark:text-gray-200"
+								>
+									当你抵达页面底部时，将解锁：
+								</h3>
+								<p class="text-gray-700 leading-relaxed dark:text-gray-300">
+									一份作者藏匿的<strong>"阅读副作用"清单</strong>、某段被删改七次的自我辩解，以及一个等待你填充的
+									<strong>_______</strong>。
+								</p>
+							</div>
+
+							<div class="space-y-3">
+								<h3
+									class="text-lg text-gray-800 font-semibold dark:text-gray-200"
+								>
+									此刻，你的选择权重分布：
+								</h3>
+								<p
+									class="mb-3 text-gray-700 leading-relaxed dark:text-gray-300"
+								>
+									根据量子阅读学统计，当前状态下你的行为倾向为：
+								</p>
+								<ul
+									class="ml-4 list-disc list-inside text-gray-700 space-y-1 dark:text-gray-300"
+								>
+									<li>🔹 [89%] 关闭页面，如合上一本异次元手册</li>
+									<li>🔹 [9.7%] 在留言区投递一颗未解的思维子弹</li>
+									<li>🔹 [1.3%] 在现实世界发现这段文字的回声</li>
+								</ul>
+							</div>
 						</div>
+					</div>
+
+					<!-- 终极祝愿 -->
+					<div
+						class="rounded-lg bg-blue-50 p-6 text-center dark:bg-blue-950/20"
+					>
+						<h3
+							class="mb-3 text-lg text-blue-800 font-semibold dark:text-blue-300"
+						>
+							🌀 数字炼金术
+						</h3>
+						<p class="mb-4 text-gray-700 dark:text-gray-300">
+							无论选择哪条路径，愿这些字符在你的突触间生长出意料之外的神经连接。<br />
+							愿你在文字的迷宫中，既是探险者，也是
+							<span
+								class="rounded bg-yellow-100 px-2 py-0.5 text-yellow-700 font-medium dark:bg-yellow-900/30 dark:text-yellow-300"
+								>意义的创造者</span
+							>。
+						</p>
+						<p class="text-gray-600 dark:text-gray-400">
+							P.S. 如果在阅读过程中遇到逻辑死循环，请投喂
+							<strong>🍫 巧克力</strong> 或 <strong>😂 冷笑话</strong>
+						</p>
 					</div>
 
 					<Suspense>
