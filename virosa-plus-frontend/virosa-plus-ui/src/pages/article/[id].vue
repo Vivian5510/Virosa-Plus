@@ -190,41 +190,56 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="px-0 py-8 md:px-6 sm:px-4">
-
+	<div class="px-2 py-4 lg:px-8 md:px-6 md:py-8 sm:px-4 sm:py-6 xl:px-0">
 		<div class="relative flex justify-center">
-			<main class="max-w-full w-full sm:max-w-5xl">
-				<TracingBeam class="article-tracing-beam">
+			<main
+				class="max-w-full w-full lg:max-w-5xl md:max-w-4xl sm:max-w-3xl xl:max-w-6xl"
+			>
+				<TracingBeam class="article-tracing-beam xs:ml-2 md:ml-0 sm:ml-3">
 					<article
 						v-if="articleContentHtml"
-						class="relative overflow-hidden backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border border-white/20 dark:border-slate-700/30 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-700 ease-out"
+						class="hover:shadow-3xl relative overflow-hidden border border-white/20 rounded-3xl bg-white/70 shadow-2xl backdrop-blur-xl transition-all duration-700 ease-out dark:border-slate-700/30 dark:bg-slate-900/70"
 					>
 						<!-- 文章顶部装饰渐变 -->
-						<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-slate-400 via-gray-500 to-slate-600"></div>
-						
+						<div
+							class="absolute left-0 right-0 top-0 h-1 from-slate-400 via-gray-500 to-slate-600 bg-gradient-to-r"
+						></div>
+
 						<!-- 文章标题区域 -->
-						<header class="relative px-6 py-12 md:px-12 md:py-16 text-center">
+						<header
+							class="relative px-4 py-8 text-center lg:px-12 lg:py-16 md:px-8 md:py-12 sm:px-6 sm:py-10"
+						>
 							<!-- 标题背景装饰 -->
-							<div class="absolute inset-0 bg-gradient-to-br from-slate-500/3 via-gray-500/3 to-slate-600/3 rounded-t-3xl"></div>
-							
+							<div
+								class="absolute inset-0 rounded-t-3xl from-slate-500/3 via-gray-500/3 to-slate-600/3 bg-gradient-to-br"
+							></div>
+
 							<div class="relative">
 								<!-- 文章类型标签 -->
 								<div class="mb-6 flex justify-center">
-									<span class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-gray-500/10 to-slate-500/10 border border-gray-200/30 rounded-full text-sm font-medium text-gray-600 dark:text-gray-400 backdrop-blur-sm">
+									<span
+										class="inline-flex items-center border border-gray-200/30 rounded-full from-gray-500/10 to-slate-500/10 bg-gradient-to-r px-4 py-2 text-sm text-gray-600 font-medium backdrop-blur-sm dark:text-gray-400"
+									>
 										📝
 										<span class="ml-2">{{ articleData.type }}</span>
 									</span>
 								</div>
 
 								<!-- 文章标题 -->
-								<h1 class="mb-8 break-words text-3xl md:text-5xl lg:text-6xl font-black leading-tight">
-									<span class="bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
+								<h1
+									class="mb-6 break-words text-2xl font-black leading-tight sm:mb-8 lg:text-5xl md:text-4xl sm:text-3xl xl:text-6xl"
+								>
+									<span
+										class="from-slate-900 via-blue-900 to-purple-900 bg-gradient-to-r bg-clip-text text-transparent dark:from-white dark:via-blue-200 dark:to-purple-200"
+									>
 										{{ articleData.title || '时空扰动' }}
 									</span>
 								</h1>
 
 								<!-- 文章元信息 -->
-								<div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-slate-600 dark:text-slate-300">
+								<div
+									class="flex flex-col items-center justify-center text-slate-600 md:flex-row space-y-3 dark:text-slate-300 lg:space-x-8 md:space-x-6 md:space-y-0 sm:space-y-4"
+								>
 									<!-- 发布时间 -->
 									<div class="flex items-center space-x-3">
 										<span class="text-xl">📅</span>
@@ -246,68 +261,107 @@ onMounted(() => {
 									<!-- 阅读时间估算 -->
 									<div class="flex items-center space-x-3">
 										<span class="text-xl">⏱️</span>
-										<span class="font-medium">{{ Math.ceil(mdContent.length / 300) }} 分钟阅读</span>
+										<span class="font-medium"
+											>{{ Math.ceil(mdContent.length / 300) }} 分钟阅读</span
+										>
 									</div>
 								</div>
 							</div>
 						</header>
 
 						<!-- 分割线装饰 -->
-						<div class="relative mx-6 md:mx-12">
+						<div class="relative mx-4 lg:mx-12 md:mx-8 sm:mx-6">
 							<div class="absolute inset-0 flex items-center">
-								<div class="w-full border-t border-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-slate-600"></div>
+								<div
+									class="border-gradient-to-r w-full border-t from-transparent via-slate-300 to-transparent dark:via-slate-600"
+								></div>
 							</div>
 							<div class="relative flex justify-center">
-								<div class="bg-white dark:bg-slate-900 px-4">
-									<div class="w-3 h-3 bg-gradient-to-r from-slate-400 to-gray-500 rounded-full"></div>
+								<div class="bg-white px-4 dark:bg-slate-900">
+									<div
+										class="h-3 w-3 rounded-full from-slate-400 to-gray-500 bg-gradient-to-r"
+									></div>
 								</div>
 							</div>
 						</div>
 
 						<!-- 文章内容 -->
-						<main class="relative px-6 py-12 md:px-12 md:py-16">
+						<main
+							class="relative px-4 py-8 lg:px-12 lg:py-16 md:px-8 md:py-12 sm:px-6 sm:py-10"
+						>
 							<div
-								class="article-content font-lxgw prose prose-lg md:prose-xl max-w-none prose-slate dark:prose-invert prose-headings:scroll-mt-20 prose-headings:font-black prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:leading-relaxed prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50/50 dark:prose-blockquote:bg-blue-900/20 prose-blockquote:rounded-r-lg prose-blockquote:py-4 prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:rounded prose-code:px-2 prose-code:py-1"
+								class="article-content font-lxgw prose-headings:scroll-mt-20 prose-headings:font-black prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:leading-relaxed prose-p:text-slate-700 prose-a:text-blue-600 prose-a:no-underline prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50/50 prose-blockquote:rounded-r-lg prose-blockquote:py-4 prose-code:bg-slate-100 prose-code:rounded prose-code:px-2 prose-code:py-1 prose-lg md:prose-xl hover:prose-a:underline dark:prose-p:text-slate-300 dark:prose-a:text-blue-400 dark:prose-blockquote:bg-blue-900/20 dark:prose-code:bg-slate-800 max-w-none prose prose-slate dark:prose-invert"
 								v-html="articleContentHtml"
 							></div>
 						</main>
 
 						<!-- 文章底部信息 -->
-						<footer class="relative px-6 py-8 md:px-12 border-t border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-br from-slate-50/50 to-blue-50/30 dark:from-slate-800/50 dark:to-slate-700/30 rounded-b-3xl">
-							<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+						<footer
+							class="relative border-t border-slate-200/50 rounded-b-3xl from-slate-50/50 to-blue-50/30 bg-gradient-to-br px-4 py-6 dark:border-slate-700/50 dark:from-slate-800/50 dark:to-slate-700/30 lg:px-12 md:px-8 sm:px-6 sm:py-8"
+						>
+							<div
+								class="grid gap-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-6"
+							>
 								<!-- 文章类型 -->
-								<div class="flex items-center space-x-3 p-4 bg-white/60 dark:bg-slate-800/60 rounded-xl backdrop-blur-sm border border-white/20 dark:border-slate-700/30 hover:shadow-lg transition-all duration-300">
-									<div class="w-10 h-10 bg-gradient-to-br from-slate-500 to-gray-600 rounded-lg flex items-center justify-center text-xl">
+								<div
+									class="flex items-center border border-white/20 rounded-xl bg-white/60 p-4 backdrop-blur-sm transition-all duration-300 space-x-3 dark:border-slate-700/30 dark:bg-slate-800/60 hover:shadow-lg"
+								>
+									<div
+										class="h-10 w-10 flex items-center justify-center rounded-lg from-slate-500 to-gray-600 bg-gradient-to-br text-xl"
+									>
 										📂
 									</div>
 									<div>
-										<div class="text-sm text-slate-500 dark:text-slate-400">文章类型</div>
-										<div class="font-semibold text-slate-900 dark:text-slate-100">{{ articleData.type }}</div>
+										<div class="text-sm text-slate-500 dark:text-slate-400">
+											文章类型
+										</div>
+										<div
+											class="text-slate-900 font-semibold dark:text-slate-100"
+										>
+											{{ articleData.type }}
+										</div>
 									</div>
 								</div>
 
 								<!-- 附加信息 -->
-								<div class="flex items-center space-x-3 p-4 bg-white/60 dark:bg-slate-800/60 rounded-xl backdrop-blur-sm border border-white/20 dark:border-slate-700/30 hover:shadow-lg transition-all duration-300">
-									<div class="w-10 h-10 bg-gradient-to-br from-slate-500 to-gray-600 rounded-lg flex items-center justify-center text-xl">
+								<div
+									class="flex items-center border border-white/20 rounded-xl bg-white/60 p-4 backdrop-blur-sm transition-all duration-300 space-x-3 dark:border-slate-700/30 dark:bg-slate-800/60 hover:shadow-lg"
+								>
+									<div
+										class="h-10 w-10 flex items-center justify-center rounded-lg from-slate-500 to-gray-600 bg-gradient-to-br text-xl"
+									>
 										💡
 									</div>
 									<div>
-										<div class="text-sm text-slate-500 dark:text-slate-400">附加信息</div>
-										<div class="font-semibold text-slate-900 dark:text-slate-100">{{ articleData.extraInfo }}</div>
+										<div class="text-sm text-slate-500 dark:text-slate-400">
+											附加信息
+										</div>
+										<div
+											class="text-slate-900 font-semibold dark:text-slate-100"
+										>
+											{{ articleData.extraInfo }}
+										</div>
 									</div>
 								</div>
 
 								<!-- 外部链接 -->
-								<div v-if="articleData.externalLink" class="flex items-center space-x-3 p-4 bg-white/60 dark:bg-slate-800/60 rounded-xl backdrop-blur-sm border border-white/20 dark:border-slate-700/30 hover:shadow-lg transition-all duration-300">
-									<div class="w-10 h-10 bg-gradient-to-br from-slate-500 to-gray-600 rounded-lg flex items-center justify-center text-xl">
+								<div
+									v-if="articleData.externalLink"
+									class="flex items-center border border-white/20 rounded-xl bg-white/60 p-4 backdrop-blur-sm transition-all duration-300 space-x-3 dark:border-slate-700/30 dark:bg-slate-800/60 hover:shadow-lg"
+								>
+									<div
+										class="h-10 w-10 flex items-center justify-center rounded-lg from-slate-500 to-gray-600 bg-gradient-to-br text-xl"
+									>
 										🔗
 									</div>
-									<div class="flex-1 min-w-0">
-										<div class="text-sm text-slate-500 dark:text-slate-400">外部链接</div>
+									<div class="min-w-0 flex-1">
+										<div class="text-sm text-slate-500 dark:text-slate-400">
+											外部链接
+										</div>
 										<a
 											:href="articleData.externalLink"
 											target="_blank"
-											class="font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors duration-200 truncate block"
+											class="block truncate text-slate-600 font-semibold transition-colors duration-200 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300"
 										>
 											{{ articleData.externalLink }}
 										</a>
@@ -325,19 +379,35 @@ onMounted(() => {
 <style scoped>
 /* 自定义动画 */
 @keyframes float {
-	0%, 100% { transform: translateY(0px) rotate(0deg); }
-	33% { transform: translateY(-10px) rotate(-1deg); }
-	66% { transform: translateY(-5px) rotate(1deg); }
+	0%,
+	100% {
+		transform: translateY(0px) rotate(0deg);
+	}
+	33% {
+		transform: translateY(-10px) rotate(-1deg);
+	}
+	66% {
+		transform: translateY(-5px) rotate(1deg);
+	}
 }
 
 @keyframes gradient-shift {
-	0%, 100% { background-position: 0% 50%; }
-	50% { background-position: 100% 50%; }
+	0%,
+	100% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
 }
 
 @keyframes shimmer {
-	0% { transform: translateX(-100%); }
-	100% { transform: translateX(100%); }
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
 }
 
 /* 文章内容美化 */
@@ -364,7 +434,13 @@ onMounted(() => {
 	left: 0;
 	right: 0;
 	height: 3px;
-	background: linear-gradient(90deg, transparent, #718096, #a0aec0, transparent);
+	background: linear-gradient(
+		90deg,
+		transparent,
+		#718096,
+		#a0aec0,
+		transparent
+	);
 	border-radius: 2px;
 	opacity: 0.6;
 }
@@ -379,7 +455,7 @@ onMounted(() => {
 }
 
 /* 首字母装饰 - 暂时禁用以避免emoji显示问题 */
-/* 
+/*
 .article-content :deep(p:first-of-type::first-letter) {
 	float: left;
 	font-size: 2.2em;
@@ -409,7 +485,7 @@ onMounted(() => {
 }
 
 .article-content :deep(ul li::marker) {
-	content: "▶";
+	content: '▶';
 	color: #4a5568;
 	font-weight: bold;
 }
@@ -419,13 +495,15 @@ onMounted(() => {
 	position: relative;
 	margin: 2em 0;
 	padding: 2em 2.5em;
-	background: linear-gradient(135deg, 
-		rgba(74, 85, 104, 0.05) 0%, 
-		rgba(113, 128, 150, 0.08) 50%, 
-		rgba(160, 174, 192, 0.05) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(74, 85, 104, 0.05) 0%,
+		rgba(113, 128, 150, 0.08) 50%,
+		rgba(160, 174, 192, 0.05) 100%
+	);
 	border: none;
 	border-radius: 20px;
-	box-shadow: 
+	box-shadow:
 		0 10px 30px rgba(74, 85, 104, 0.1),
 		inset 0 1px 0 rgba(255, 255, 255, 0.6);
 	backdrop-filter: blur(10px);
@@ -434,7 +512,8 @@ onMounted(() => {
 }
 
 .article-content :deep(blockquote::before) {
-	content: """;
+	content: ''
+		';
 	position: absolute;
 	top: -10px;
 	left: 20px;
@@ -446,7 +525,8 @@ onMounted(() => {
 }
 
 .article-content :deep(blockquote::after) {
-	content: """;
+	content: '
+		'';
 	position: absolute;
 	bottom: -30px;
 	right: 20px;
@@ -465,7 +545,7 @@ onMounted(() => {
 	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
 	border-radius: 20px;
 	border: 1px solid rgba(255, 255, 255, 0.1);
-	box-shadow: 
+	box-shadow:
 		0 20px 40px rgba(0, 0, 0, 0.4),
 		inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	overflow-x: auto;
@@ -497,7 +577,11 @@ onMounted(() => {
 
 /* 内联代码美化 */
 .article-content :deep(code) {
-	background: linear-gradient(135deg, rgba(74, 85, 104, 0.1), rgba(113, 128, 150, 0.1));
+	background: linear-gradient(
+		135deg,
+		rgba(74, 85, 104, 0.1),
+		rgba(113, 128, 150, 0.1)
+	);
 	color: #4a5568;
 	padding: 0.2em 0.5em;
 	border-radius: 8px;
@@ -513,7 +597,12 @@ onMounted(() => {
 	color: #4a5568;
 	text-decoration: none;
 	font-weight: 600;
-	background: linear-gradient(120deg, transparent 0%, transparent 50%, #4a5568 50%);
+	background: linear-gradient(
+		120deg,
+		transparent 0%,
+		transparent 50%,
+		#4a5568 50%
+	);
 	background-size: 240% 100%;
 	background-position: 100% 0;
 	transition: all 0.3s ease;
@@ -536,7 +625,7 @@ onMounted(() => {
 	background: white;
 	border-radius: 20px;
 	overflow: hidden;
-	box-shadow: 
+	box-shadow:
 		0 20px 40px rgba(0, 0, 0, 0.1),
 		0 1px 3px rgba(0, 0, 0, 0.1);
 	width: 100%;
@@ -559,7 +648,12 @@ onMounted(() => {
 	left: 0;
 	right: 0;
 	height: 2px;
-	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+	background: linear-gradient(
+		90deg,
+		transparent,
+		rgba(255, 255, 255, 0.5),
+		transparent
+	);
 }
 
 .article-content :deep(table td) {
@@ -569,7 +663,11 @@ onMounted(() => {
 }
 
 .article-content :deep(table tbody tr:hover td) {
-	background: linear-gradient(135deg, rgba(74, 85, 104, 0.02), rgba(113, 128, 150, 0.02));
+	background: linear-gradient(
+		135deg,
+		rgba(74, 85, 104, 0.02),
+		rgba(113, 128, 150, 0.02)
+	);
 }
 
 .article-content :deep(table tbody tr:nth-child(even) td) {
@@ -596,7 +694,14 @@ onMounted(() => {
 .article-content :deep(hr) {
 	border: none;
 	height: 3px;
-	background: linear-gradient(90deg, transparent, #4a5568, #718096, #a0aec0, transparent);
+	background: linear-gradient(
+		90deg,
+		transparent,
+		#4a5568,
+		#718096,
+		#a0aec0,
+		transparent
+	);
 	margin: 3em 0;
 	border-radius: 2px;
 	position: relative;
@@ -615,7 +720,76 @@ onMounted(() => {
 }
 
 /* 响应式设计优化 */
-@media (max-width: 640px) {
+/* 极小屏幕 (320px - 480px) */
+@media (max-width: 480px) {
+	.article-content :deep(.prose) {
+		font-size: 0.9em;
+	}
+
+	.article-content :deep(h1),
+	.article-content :deep(h2),
+	.article-content :deep(h3) {
+		font-size: 1.3em;
+		margin-bottom: 0.8em;
+	}
+
+	.article-content :deep(p) {
+		margin: 1em 0;
+		line-height: 1.7;
+	}
+
+	.article-content :deep(pre) {
+		padding: 0.8em;
+		margin: 1em 0;
+		font-size: 0.75em;
+		overflow-x: auto;
+		border-radius: 12px;
+	}
+
+	.article-content :deep(blockquote) {
+		padding: 1.2em;
+		margin: 1.2em 0;
+		border-radius: 12px;
+	}
+
+	.article-content :deep(table) {
+		font-size: 0.8em;
+		display: block;
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+
+	.article-content :deep(table th),
+	.article-content :deep(table td) {
+		padding: 0.6em 0.4em;
+		min-width: 80px;
+	}
+
+	.article-tracing-beam {
+		margin-left: 8px;
+	}
+
+	/* 图片在极小屏幕的优化 */
+	.article-content :deep(img) {
+		border-radius: 8px;
+		margin: 1.5em auto;
+	}
+
+	/* 列表在极小屏幕的优化 */
+	.article-content :deep(ul),
+	.article-content :deep(ol) {
+		padding-left: 1.5em;
+		margin: 1.2em 0;
+	}
+
+	.article-content :deep(li) {
+		margin: 0.5em 0;
+		padding-left: 0.3em;
+	}
+}
+
+/* 小屏幕 (481px - 640px) */
+@media (min-width: 481px) and (max-width: 640px) {
 	.article-content :deep(.prose) {
 		font-size: 0.95em;
 	}
@@ -623,7 +797,7 @@ onMounted(() => {
 	.article-content :deep(h1),
 	.article-content :deep(h2),
 	.article-content :deep(h3) {
-		font-size: 1.5em;
+		font-size: 1.4em;
 	}
 
 	.article-content :deep(pre) {
@@ -648,32 +822,58 @@ onMounted(() => {
 	}
 
 	.article-tracing-beam {
-		margin-left: 14px;
+		margin-left: 12px;
 	}
 }
 
-/* 超小屏幕优化 */
-@media (max-width: 380px) {
+/* 中等屏幕 (641px - 768px) */
+@media (min-width: 641px) and (max-width: 768px) {
+	.article-content :deep(.prose) {
+		font-size: 1em;
+	}
+
+	.article-content :deep(h1),
+	.article-content :deep(h2),
+	.article-content :deep(h3) {
+		font-size: 1.6em;
+	}
+
 	.article-tracing-beam {
-		margin-left: 18px;
-		font-size: 0.9em;
+		margin-left: 0;
 	}
-
-	.article-content :deep(pre) {
-		font-size: 0.75em;
-		padding: 0.8em;
-	}
-
 }
 
-/* 宽屏优化 */
+/* 大屏幕优化 (1024px+) */
 @media (min-width: 1024px) {
 	.article-tracing-beam {
 		margin-left: 0;
 	}
 
+	.article-content :deep(.prose) {
+		font-size: 1.1em;
+	}
+
 	.article-content :deep(h1) {
-		font-size: 3.5em;
+		font-size: 2.8em;
+	}
+
+	.article-content :deep(h2) {
+		font-size: 2.2em;
+	}
+
+	.article-content :deep(h3) {
+		font-size: 1.8em;
+	}
+
+	.article-content :deep(p) {
+		line-height: 1.8;
+	}
+}
+
+/* 超大屏幕优化 (1280px+) */
+@media (min-width: 1280px) {
+	.article-content :deep(h1) {
+		font-size: 3.2em;
 	}
 
 	.article-content :deep(h2) {
@@ -707,7 +907,11 @@ onMounted(() => {
 
 /* 选中文本美化 */
 .article-content :deep(::selection) {
-	background: linear-gradient(135deg, rgba(74, 85, 104, 0.3), rgba(113, 128, 150, 0.3));
+	background: linear-gradient(
+		135deg,
+		rgba(74, 85, 104, 0.3),
+		rgba(113, 128, 150, 0.3)
+	);
 	color: #1a202c;
 }
 
