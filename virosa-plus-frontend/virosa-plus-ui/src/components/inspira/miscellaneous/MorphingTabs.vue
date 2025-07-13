@@ -43,11 +43,6 @@
 				<span v-if="!isCompact || !tab.icon">
 					{{ te(tab.name) ? t(tab.name) : tab.label || tab.name }}
 				</span>
-				<!-- 活动状态指示器 -->
-				<span
-					v-if="activeTab === tab.name"
-					class="absolute left-1/2 h-1 w-1 transform rounded-full bg-blue-500 transition-all duration-300 -bottom-1 -translate-x-1/2"
-				></span>
 			</button>
 		</div>
 

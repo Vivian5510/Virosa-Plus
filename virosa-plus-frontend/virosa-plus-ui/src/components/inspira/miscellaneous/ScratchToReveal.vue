@@ -17,7 +17,11 @@
 			ref="canvasRef"
 			:width="width"
 			:height="height"
-			class="absolute left-0 top-0"
+			class="absolute left-0 top-0 w-full h-full"
+			:style="{
+				width: containerWidth,
+				height: containerHeight,
+			}"
 			@mousedown="handleMouseDown"
 			@touchstart="handleTouchStart"
 		/>
@@ -71,20 +75,42 @@ const canvasWidth = computed(() => canvasRef.value?.width || props.width)
 const canvasHeight = computed(() => canvasRef.value?.height || props.height)
 
 function drawCanvas(canvasRef: Ref<HTMLCanvasElement>) {
-	context.value = canvasRef.value.getContext('2d')!
+	if (!canvasRef.value) return
+	
+	// 确保canvas尺寸正确设置
+	canvasRef.value.width = props.width
+	canvasRef.value.height = props.height
+	
+	context.value = canvasRef.value.getContext('2d')
+	if (!context.value) return
+	
+	// 重置状态
+	isComplete.value = false
+	isScratching.value = false
+	
+	// 清除之前的内容
+	context.value.clearRect(0, 0, props.width, props.height)
+	
+	// 重置合成操作
+	context.value.globalCompositeOperation = 'source-over'
+	
+	// 绘制背景
 	context.value.fillStyle = '#ccc'
-	context.value.fillRect(0, 0, canvasWidth.value, canvasHeight.value)
+	context.value.fillRect(0, 0, props.width, props.height)
+	
+	// 创建渐变
 	const gradient = context.value.createLinearGradient(
 		0,
 		0,
-		canvasWidth.value,
-		canvasHeight.value,
+		props.width,
+		props.height,
 	)
 	gradient.addColorStop(0, props.gradientColors[0])
 	gradient.addColorStop(0.5, props.gradientColors[1])
 	gradient.addColorStop(1, props.gradientColors[2])
+	
 	context.value.fillStyle = gradient
-	context.value.fillRect(0, 0, canvasWidth.value, canvasHeight.value)
+	context.value.fillRect(0, 0, props.width, props.height)
 }
 
 function scratch(clientX: number, clientY: number) {
@@ -121,9 +147,8 @@ function handleDocumentTouchEnd() {
 }
 
 function addEventListeners() {
-	document.addEventListener('mousedown', handleDocumentMouseMove)
+	// 只监听必要的事件，避免误触发
 	document.addEventListener('mousemove', handleDocumentMouseMove)
-	document.addEventListener('touchstart', handleDocumentTouchMove)
 	document.addEventListener('touchmove', handleDocumentTouchMove)
 	document.addEventListener('mouseup', handleDocumentMouseUp)
 	document.addEventListener('touchend', handleDocumentTouchEnd)
@@ -131,61 +156,82 @@ function addEventListeners() {
 }
 
 function checkCompletion() {
-	if (isComplete.value) return
+	if (isComplete.value || !isScratching.value) return
 
 	if (canvasRef.value && context.value) {
-		const imageData = context.value.getImageData(
-			0,
-			0,
-			canvasWidth.value,
-			canvasHeight.value,
-		)
-		const pixels = imageData.data
-		const totalPixels = pixels.length / 4
-		let clearPixels = 0
+		try {
+			const imageData = context.value.getImageData(
+				0,
+				0,
+				canvasWidth.value,
+				canvasHeight.value,
+			)
+			const pixels = imageData.data
+			const totalPixels = pixels.length / 4
+			let clearPixels = 0
 
-		for (let i = 3; i < pixels.length; i += 4) {
-			if (pixels[i] === 0) {
-				clearPixels++
+			for (let i = 3; i < pixels.length; i += 4) {
+				if (pixels[i] === 0) {
+					clearPixels++
+				}
 			}
-		}
 
-		const percentage = (clearPixels / totalPixels) * 100
+			const percentage = (clearPixels / totalPixels) * 100
 
-		if (percentage >= props.minScratchPercentage) {
-			isComplete.value = true
-			context.value.clearRect(0, 0, canvasWidth.value, canvasHeight.value)
+			// 调试信息
+			console.log(`刮除进度: ${percentage.toFixed(1)}%, 需要: ${props.minScratchPercentage}%`)
 
-			startAnimation()
-		} else {
-			isScratching.value = false
+			if (percentage >= props.minScratchPercentage) {
+				console.log('达到阈值，开始自动清除动画')
+				isComplete.value = true
+				// 完全清除画布
+				context.value.clearRect(0, 0, props.width, props.height)
+
+				startAnimation()
+			}
+		} catch (error) {
+			console.warn('Canvas检查失败:', error)
 		}
 	}
+	isScratching.value = false
 }
 
 const [containerRef, animate] = useAnimate()
 async function startAnimation() {
 	if (!containerRef.value) return
-	animate(containerRef.value, {
+	await animate(containerRef.value, {
 		scale: 1,
 		rotate: [0, 10, -10, 10, -10, 0],
+	}, {
+		duration: 0.5,
+		ease: 'easeInOut'
 	})
 
 	emit('complete')
 }
 
 onMounted(() => {
-	if (!canvasRef.value) return
+	nextTick(() => {
+		if (!canvasRef.value) return
 
-	drawCanvas(canvasRef as Ref<HTMLCanvasElement>)
+		drawCanvas(canvasRef as Ref<HTMLCanvasElement>)
+		addEventListeners()
+	})
+})
 
-	addEventListeners()
+// 监听尺寸变化并重新绘制canvas
+watch([() => props.width, () => props.height], () => {
+	nextTick(() => {
+		if (canvasRef.value) {
+			// 重置完成状态
+			isComplete.value = false
+			drawCanvas(canvasRef as Ref<HTMLCanvasElement>)
+		}
+	})
 })
 
 function removeEventListeners() {
-	document.removeEventListener('mousedown', handleDocumentMouseMove)
 	document.removeEventListener('mousemove', handleDocumentMouseMove)
-	document.removeEventListener('touchstart', handleDocumentTouchMove)
 	document.removeEventListener('touchmove', handleDocumentTouchMove)
 	document.removeEventListener('mouseup', handleDocumentMouseUp)
 	document.removeEventListener('touchend', handleDocumentTouchEnd)
