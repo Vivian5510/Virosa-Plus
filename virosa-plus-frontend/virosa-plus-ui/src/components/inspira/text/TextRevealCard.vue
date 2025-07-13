@@ -14,16 +14,20 @@
 		@touchmove="touchMoveHandler"
 	>
 		<slot name="header"></slot>
-		<div class="relative h-40 flex items-center overflow-hidden rounded-xl bg-gradient-to-r from-slate-900/20 via-transparent to-slate-900/20">
+		<div
+			class="relative h-40 flex items-center overflow-hidden rounded-xl from-slate-900/20 via-transparent to-slate-900/20 bg-gradient-to-r"
+		>
 			<div
 				:style="{
 					width: '100%',
 					height: '100%',
 					opacity: widthPercentage > 0 ? 1 : 0,
 					clipPath: `inset(0 ${100 - widthPercentage}% 0 0)`,
-					transition: isMouseOver ? 'none' : 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+					transition: isMouseOver
+						? 'none'
+						: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
 				}"
-				class="absolute inset-0 z-30 bg-gradient-to-br from-[#2a2a2d] via-[#1e1e21] to-[#2a2a2d] will-change-transform flex items-center backdrop-blur-sm"
+				class="absolute inset-0 z-30 flex items-center from-[#2a2a2d] via-[#1e1e21] to-[#2a2a2d] bg-gradient-to-br backdrop-blur-sm will-change-transform"
 			>
 				<slot name="text" />
 			</div>
@@ -33,32 +37,42 @@
 					left: `${widthPercentage}%`,
 					transform: `rotate(${rotateDeg}deg)`,
 					opacity: widthPercentage > 0 ? 1 : 0,
-					transition: isMouseOver ? 'none' : 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+					transition: isMouseOver
+						? 'none'
+						: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
 				}"
-				class="absolute z-50 h-40 w-[3px] from-transparent via-blue-400 to-transparent bg-gradient-to-b will-change-transform shadow-lg shadow-blue-400/50"
+				class="absolute z-50 h-40 w-[3px] from-transparent via-blue-400 to-transparent bg-gradient-to-b shadow-blue-400/50 shadow-lg will-change-transform"
 			>
 				<!-- 添加发光效果 -->
-				<div class="absolute inset-0 w-[1px] left-1/2 transform -translate-x-1/2 bg-white/90 shadow-lg shadow-white/50"></div>
+				<div
+					class="absolute inset-0 left-1/2 w-[1px] transform bg-white/90 shadow-lg shadow-white/50 -translate-x-1/2"
+				></div>
 			</div>
 
 			<div
-				class="absolute inset-0 z-10 [mask-image:linear-gradient(to_bottom,transparent,white,transparent)] overflow-hidden flex items-center"
+				class="[mask-image:linear-gradient(to_bottom,transparent,white,transparent)] absolute inset-0 z-10 flex items-center overflow-hidden"
 			>
 				<div class="relative w-full">
 					<slot name="revealText"></slot>
 					<!-- 添加光晕效果 -->
-					<div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-lg blur-xl"></div>
+					<div
+						class="absolute inset-0 rounded-lg from-blue-500/10 via-purple-500/10 to-pink-500/10 bg-gradient-to-r blur-xl"
+					></div>
 				</div>
 
 				<TextRevealStars :stars-count="starsCount" :class="starsClass" />
 			</div>
 		</div>
-		
+
 		<!-- 添加底部装饰线 -->
-		<div class="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-		
+		<div
+			class="absolute bottom-0 left-0 right-0 h-[1px] from-transparent via-white/20 to-transparent bg-gradient-to-r"
+		></div>
+
 		<!-- 添加角落装饰 -->
-		<div class="absolute top-2 right-2 w-2 h-2 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+		<div
+			class="absolute right-2 top-2 h-2 w-2 rounded-full from-blue-400 to-purple-400 bg-gradient-to-br opacity-60 transition-opacity duration-300 group-hover:opacity-100"
+		></div>
 	</div>
 </template>
 
@@ -70,6 +84,7 @@ interface Props {
 	starsCount?: number
 	starsClass?: string
 }
+
 const props = withDefaults(defineProps<Props>(), {
 	class: '',
 	starsCount: 130,
@@ -156,11 +171,14 @@ function touchMoveHandler(event: TouchEvent) {
 
 /* 添加细微的发光动画 */
 @keyframes glow-pulse {
-	0%, 100% {
+	0%,
+	100% {
 		box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
 	}
 	50% {
-		box-shadow: 0 0 40px rgba(59, 130, 246, 0.2), 0 0 60px rgba(139, 92, 246, 0.1);
+		box-shadow:
+			0 0 40px rgba(59, 130, 246, 0.2),
+			0 0 60px rgba(139, 92, 246, 0.1);
 	}
 }
 
@@ -173,7 +191,7 @@ function touchMoveHandler(event: TouchEvent) {
 	.group {
 		transform: none !important;
 	}
-	
+
 	.group:hover {
 		transform: none !important;
 		animation: none !important;

@@ -89,10 +89,7 @@ const books = reactive([
 					class="w-full flex transform justify-center transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2"
 				>
 					<a :href="book.url" class="max-w-xs w-full">
-						<Book
-							:color="book.color ?? 'rose'"
-							class="mx-auto"
-						>
+						<Book :color="book.color ?? 'rose'" class="mx-auto">
 							<BookHeader>
 								<FontAwesomeIcon :icon="['fas', 'book-open']" class="h-6 w-6" />
 							</BookHeader>

@@ -19,7 +19,7 @@
 			<span
 				v-for="ripple in buttonRipples"
 				:key="ripple.key"
-				class="bg-background ripple-animation absolute rounded-full opacity-30"
+				class="ripple-animation bg-background absolute rounded-full opacity-30"
 				:style="{
 					width: ripple.size + 'px',
 					height: ripple.size + 'px',

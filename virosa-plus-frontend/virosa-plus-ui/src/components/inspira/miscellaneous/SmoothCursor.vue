@@ -139,13 +139,13 @@ function throttledMouseMove(e: MouseEvent) {
 // 添加全局样式来强制隐藏所有光标
 function addGlobalCursorStyles() {
 	const styleId = 'smooth-cursor-global-styles'
-	
+
 	// 如果样式已存在，先移除
 	const existingStyle = document.getElementById(styleId)
 	if (existingStyle) {
 		existingStyle.remove()
 	}
-	
+
 	// 创建新的样式元素
 	const style = document.createElement('style')
 	style.id = styleId
@@ -166,7 +166,7 @@ function addGlobalCursorStyles() {
 			cursor: none !important;
 		}
 	`
-	
+
 	document.head.appendChild(style)
 }
 
@@ -177,7 +177,7 @@ function removeGlobalCursorStyles() {
 	if (existingStyle) {
 		existingStyle.remove()
 	}
-	
+
 	// 恢复默认光标
 	document.body.style.cursor = 'default'
 }

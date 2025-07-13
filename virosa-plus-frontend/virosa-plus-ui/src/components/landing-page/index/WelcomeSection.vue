@@ -89,8 +89,11 @@ function setHovering(value: boolean) {
 					]"
 				>
 					<!-- 响应式标题区 -->
-					<div 
-						:class="['text-center transition-all duration-300', isMobile ? 'mb-6' : 'mb-8']"
+					<div
+						:class="[
+							'text-center transition-all duration-300',
+							isMobile ? 'mb-6' : 'mb-8',
+						]"
 						:style="{ filter: hovering ? 'blur(2px)' : 'blur(0px)' }"
 					>
 						<h1
@@ -137,13 +140,15 @@ function setHovering(value: boolean) {
 							<Rays class="scale-75 opacity-60" />
 							<Beams class="scale-75 opacity-60" />
 						</div>
-						
+
 						<!-- 带Lens效果的图片 -->
-						<div class="relative z-10 size-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900">
+						<div
+							class="relative z-10 size-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900"
+						>
 							<Lens
 								:hovering="hovering"
-								@hover-update="setHovering"
 								class="!rounded-2xl"
+								@hover-update="setHovering"
 							>
 								<img
 									src="/picture/miscellaneous/photo-vision-pro.avif"

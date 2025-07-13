@@ -89,7 +89,9 @@ const responsiveConfig = computed(() => {
 					:style="responsiveConfig.shadowStyle"
 				>
 					<!-- 外层装饰光晕 -->
-					<div class="absolute -inset-2 bg-gradient-to-br from-slate-700/12 via-indigo-800/15 to-slate-600/10 rounded-2xl blur-sm dark:from-slate-400/35 dark:via-indigo-400/40 dark:to-slate-300/30"></div>
+					<div
+						class="absolute rounded-2xl from-slate-700/12 via-indigo-800/15 to-slate-600/10 bg-gradient-to-br blur-sm -inset-2 dark:from-slate-400/35 dark:via-indigo-400/40 dark:to-slate-300/30"
+					></div>
 
 					<!-- 田字网格 -->
 					<div
@@ -125,10 +127,12 @@ const responsiveConfig = computed(() => {
 							]"
 						>
 							<!-- 文字内容 - 直接显示在图片上 -->
-							<h2 class="text-xl font-bold text-white drop-shadow-lg tracking-wide">
+							<h2
+								class="text-xl text-white font-bold tracking-wide drop-shadow-lg"
+							>
 								{{ item.title }}
 							</h2>
-							<p class="mt-3 text-sm text-gray-100 leading-relaxed font-medium">
+							<p class="mt-3 text-sm text-gray-100 font-medium leading-relaxed">
 								{{ item.description }}
 							</p>
 
@@ -136,11 +140,11 @@ const responsiveConfig = computed(() => {
 							<a
 								v-if="item.buttonText"
 								:href="item.href"
-								class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-gray-900 transition-all duration-200 hover:bg-white mt-4"
+								class="mt-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm text-gray-900 font-semibold transition-all duration-200 hover:bg-white"
 							>
 								<span>{{ item.buttonText }}</span>
 								<svg
-									class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+									class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
 									fill="none"
 									stroke="currentColor"
 									viewBox="0 0 24 24"
@@ -162,7 +166,6 @@ const responsiveConfig = computed(() => {
 </template>
 
 <style scoped>
-
 /* 确保田字布局的精确边框对齐 */
 .grid > :deep(.group\/card) {
 	border-radius: 0;
@@ -213,6 +216,5 @@ const responsiveConfig = computed(() => {
 	.grid > :deep(.group\/card:nth-child(4)) {
 		border-radius: 0.75rem !important;
 	}
-
 }
 </style>

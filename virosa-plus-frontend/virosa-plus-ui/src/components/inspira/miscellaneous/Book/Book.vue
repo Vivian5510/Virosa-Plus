@@ -1,12 +1,5 @@
 <template>
-	<div
-		:class="
-			cn(
-				'z-10 group [perspective:800px] w-min',
-				$props.class,
-			)
-		"
-	>
+	<div :class="cn('z-10 group [perspective:800px] w-min', $props.class)">
 		<div
 			:style="{
 				width: sizeMap[size].width,
@@ -32,7 +25,8 @@
 				:style="{
 					transform: 'translateZ(25px)',
 					background: `linear-gradient(135deg, ${computedGradient.lightFrom} 0%, ${computedGradient.mainFrom} 30%, ${computedGradient.mainTo} 70%, ${computedGradient.darkTo} 100%)`,
-					boxShadow: 'inset 0 0 20px rgba(0,0,0,0.3), inset 0 -2px 10px rgba(0,0,0,0.2)',
+					boxShadow:
+						'inset 0 0 20px rgba(0,0,0,0.3), inset 0 -2px 10px rgba(0,0,0,0.2)',
 				}"
 			>
 				<!-- 书页纹理效果 -->
@@ -45,20 +39,20 @@
 						opacity: '0.3',
 					}"
 				></div>
-				
+
 				<!-- 顶部高光 -->
 				<div
-					class="absolute left-0 top-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent"
+					class="absolute left-0 top-0 h-[2px] w-full from-transparent via-white/20 to-transparent bg-gradient-to-r"
 				></div>
-				
+
 				<!-- 左侧高光 -->
 				<div
-					class="absolute left-0 top-0 w-[2px] h-full bg-gradient-to-b from-transparent via-white/15 to-transparent"
+					class="absolute left-0 top-0 h-full w-[2px] from-transparent via-white/15 to-transparent bg-gradient-to-b"
 				></div>
-				
+
 				<!-- hover状态光泽效果 -->
 				<div
-					class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 via-transparent to-transparent"
+					class="absolute inset-0 from-white/10 via-transparent to-transparent bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100"
 				></div>
 				<div class="pl-1">
 					<slot />
@@ -99,7 +93,8 @@
 				<div
 					class="absolute inset-0 opacity-20"
 					:style="{
-						background: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
+						background:
+							'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
 					}"
 				></div>
 			</div>

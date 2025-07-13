@@ -26,7 +26,7 @@
 							container-class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
 						></IInput>
 						<ShimmerButton
-							class="min-w-16 h-10 px-4 shadow-2xl sm:min-w-20 sm:h-12 sm:px-6"
+							class="h-10 min-w-16 px-4 shadow-2xl sm:h-12 sm:min-w-20 sm:px-6"
 							shimmer-size="2px"
 							@click="send"
 						>
@@ -157,7 +157,7 @@ const commentSteps = computed<Step[]>(() => [
 		duration: 800,
 		action: () => {
 			loaderStates.isValidating = true
-		}
+		},
 	},
 	{
 		text: '发送留言到服务器',
@@ -165,7 +165,7 @@ const commentSteps = computed<Step[]>(() => [
 		afterText: '留言发送成功',
 		action: () => {
 			loaderStates.isSending = true
-		}
+		},
 	},
 	{
 		text: '更新留言列表',
@@ -173,7 +173,7 @@ const commentSteps = computed<Step[]>(() => [
 		afterText: '列表更新完成',
 		action: () => {
 			loaderStates.isUpdating = true
-		}
+		},
 	},
 	{
 		text: '完成',
@@ -181,7 +181,7 @@ const commentSteps = computed<Step[]>(() => [
 		action: () => {
 			// 完成后的清理工作
 			handleLoadingComplete()
-		}
+		},
 	},
 ])
 
@@ -199,7 +199,7 @@ const send = async () => {
 
 	try {
 		// 模拟验证阶段的延迟
-		await new Promise(resolve => setTimeout(resolve, 800))
+		await new Promise((resolve) => setTimeout(resolve, 800))
 
 		// 发送留言
 		await messageApi.addMessage(comment.value)
@@ -209,13 +209,12 @@ const send = async () => {
 		const response = await http.post('/message/list/all')
 		reviews.value = response.data
 		loaderStates.isUpdating = false
-		
+
 		// 发送后清空输入框
 		comment.value.content = ''
-		
+
 		// 如果messageApi没有提示，在这里添加
 		// toast.success('收到你的留言啦！😊')
-		
 	} catch (error) {
 		console.error('发送留言失败:', error)
 		toast.error('发送失败，请重试')
