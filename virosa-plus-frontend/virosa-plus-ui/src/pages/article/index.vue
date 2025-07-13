@@ -1,23 +1,95 @@
 <script setup lang="ts">
 import { File, Folder, Tree } from '~/components/inspira/miscellaneous/FileTree'
 import { NodeService } from '~/composables/apiService'
+import { useResponsive } from '~/composables/useResponsive'
 
 definePage({
 	alias: ['/article'],
 })
 
 import { isDark } from 'vue-dark-switch'
+
+// 使用统一的响应式管理
+const { isMobile, isTablet, isDesktop } = useResponsive()
+
+// 响应式布局配置
+const layoutConfig = computed(() => {
+	if (isMobile.value) {
+		return {
+			showSidebar: false,
+			showRightPanel: false,
+			containerClass: 'flex flex-col w-full max-w-full overflow-x-hidden',
+			mainClass: 'w-full max-w-full p-2 sm:p-4',
+			bentoGridClass: 'grid auto-rows-[18rem] grid-cols-1 gap-3 w-full',
+			sidebarClass:
+				'w-full max-w-full p-2 sm:p-4 border-b border-gray-200 dark:border-gray-700',
+		}
+	} else if (isTablet.value) {
+		return {
+			showSidebar: true,
+			showRightPanel: false,
+			containerClass: 'flex w-full max-w-full overflow-x-hidden',
+			mainClass: 'flex-1 min-w-0 p-3 sm:p-4',
+			bentoGridClass:
+				'grid auto-rows-[20rem] grid-cols-1 md:grid-cols-2 gap-4 w-full',
+			sidebarClass:
+				'w-56 md:w-64 flex-shrink-0 p-3 sm:p-4 border-r border-gray-200 dark:border-gray-700',
+		}
+	} else {
+		return {
+			showSidebar: true,
+			showRightPanel: true,
+			containerClass: 'flex w-full max-w-full overflow-x-hidden',
+			mainClass: 'flex-1 min-w-0 p-4',
+			bentoGridClass:
+				'grid auto-rows-[22rem] grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:grid-rows-3 w-full',
+			sidebarClass: 'w-60 lg:w-70 flex-shrink-0 p-4',
+			rightPanelClass: 'w-80 xl:w-96 flex-shrink-0 p-3',
+		}
+	}
+})
+
+// 响应式卡片配置 - 使用shallowRef优化性能
+const cardConfig = computed(() => {
+	if (isMobile.value) {
+		return {
+			width: 'w-full max-w-full',
+			textClass: 'text-sm sm:text-base',
+			titleClass: 'text-xl sm:text-2xl',
+		}
+	} else if (isTablet.value) {
+		return {
+			width: 'w-full max-w-full',
+			textClass: 'text-base md:text-lg',
+			titleClass: 'text-2xl md:text-3xl',
+		}
+	} else {
+		return {
+			width: 'w-full max-w-sm lg:max-w-md',
+			textClass: 'text-lg xl:text-xl',
+			titleClass: 'text-2xl xl:text-3xl',
+		}
+	}
+})
+
+// 性能优化：避免不必要的组件重渲染
+const shouldRenderRightPanel = computed(() => layoutConfig.value.showRightPanel)
+const shouldRenderSidebar = computed(() => layoutConfig.value.showSidebar)
 import CardSpotlight from '~/components/inspira/card/CardSpotlight.vue'
 import BentoGrid from '~/components/inspira/miscellaneous/BentoGrid/BentoGrid.vue'
 import BentoGridCard from '~/components/inspira/miscellaneous/BentoGrid/BentoGridCard.vue'
-import CardItem from '~/components/inspira/card/3D-card/CardItem.vue'
-import CardContainer from '~/components/inspira/card/3D-card/CardContainer.vue'
 import BorderBeam from '~/components/inspira/special-effects/BorderBeam.vue'
-import CardBody from '~/components/inspira/card/3D-card/CardBody.vue'
-import Globe from '~/components/inspira/miscellaneous/Globe.vue'
-import TextRevealCard from '~/components/inspira/text/TextRevealCard.vue'
-import FlickeringGrid from '~/components/inspira/background/FlickeringGrid.vue'
-import { ref, onMounted, h, defineComponent } from 'vue'
+// 懒加载重组件以优化性能
+const Globe = defineAsyncComponent(
+	() => import('~/components/inspira/miscellaneous/Globe.vue'),
+)
+const TextRevealCard = defineAsyncComponent(
+	() => import('~/components/inspira/text/TextRevealCard.vue'),
+)
+const FlickeringGrid = defineAsyncComponent(
+	() => import('~/components/inspira/background/FlickeringGrid.vue'),
+)
+import { ref, onMounted, h, defineComponent, defineAsyncComponent } from 'vue'
 
 // 递归组件实现
 const CustomTreeNode = defineComponent({
@@ -230,15 +302,24 @@ async function fetchFileTree() {
 </script>
 
 <template>
-	<div>
-		<div class="flex">
-			<!-- 左侧边栏 - 文件树目录，所有屏幕都显示 -->
-			<aside class="h-screen w-70 p-4">
-				<div
-					class="relative size-fit flex flex-col items-center justify-center rounded-3xl"
-				>
+	<div class="max-w-full min-h-screen w-full overflow-x-hidden">
+		<div
+			:class="[
+				layoutConfig.containerClass,
+				'max-w-7xl xl:max-w-screen-2xl mx-auto',
+			]"
+		>
+			<!-- 移动端顶部文件树 -->
+			<aside
+				v-if="isMobile && !layoutConfig.showSidebar"
+				:class="layoutConfig.sidebarClass"
+			>
+				<div class="relative flex flex-col items-center justify-center">
 					<CardSpotlight
-						class="h-fit w-60 flex-col cursor-pointer whitespace-nowrap border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black"
+						:class="[
+							'h-fit flex-col cursor-pointer whitespace-nowrap border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black',
+							cardConfig.width,
+						]"
 						:gradient-color="isDark ? '#363636' : '#C9C9C9'"
 					>
 						<Tree
@@ -255,16 +336,43 @@ async function fetchFileTree() {
 				</div>
 			</aside>
 
-			<!-- 主内容区 - 在小屏幕上完全隐藏 -->
-			<main class="h-fit w-250 flex-col gap-2 p-4 !hidden md:!flex">
+			<!-- 左侧边栏 - 平板和桌面端 -->
+			<aside v-if="shouldRenderSidebar" :class="layoutConfig.sidebarClass">
+				<div class="relative flex flex-col items-center justify-center">
+					<CardSpotlight
+						:class="[
+							'h-fit flex-col cursor-pointer whitespace-nowrap border border-black/[0.1] rounded-xl bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black',
+							cardConfig.width,
+						]"
+						:gradient-color="isDark ? '#363636' : '#C9C9C9'"
+					>
+						<Tree
+							class="overflow-hidden rounded-md"
+							:initial-selected-id="'1'"
+							:initial-expanded-items="[]"
+							:elements="elements"
+						>
+							<template v-for="node in elements" :key="node.id">
+								<CustomTreeNode :node="node" />
+							</template>
+						</Tree>
+					</CardSpotlight>
+				</div>
+			</aside>
+
+			<!-- 主内容区 - 响应式显示 -->
+			<main :class="[layoutConfig.mainClass, 'flex flex-col gap-2']">
 				<BentoGrid
-					class="bento-grid grid auto-rows-[22rem] grid-cols-3 w-full gap-4 lg:grid-rows-3"
+					:class="['bento-grid w-full max-w-full', layoutConfig.bentoGridClass]"
 				>
 					<BentoGridCard
 						v-for="(feature, index) in features"
 						:key="index"
 						v-bind="feature"
-						:class="feature.class"
+						:class="[
+							// 桌面端使用预设的grid位置类，移动端和平板端忽略
+							isDesktop ? feature.class : '',
+						]"
 					>
 						<template v-if="feature.image" #background>
 							<div
@@ -275,17 +383,27 @@ async function fetchFileTree() {
 					</BentoGridCard>
 				</BentoGrid>
 
+				<!-- 桌面端和平板端显示长文字卡片 -->
 				<div
-					class="bg-background relative z-10 mt-15 h-fit w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black md:shadow-xl"
+					v-if="!isMobile"
+					class="bg-background relative z-10 mt-6 h-fit w-full flex flex-col items-center justify-center overflow-hidden border border-black/[0.1] rounded-lg bg-gray-50 px-4 py-6 dark:border-white/[0.2] dark:bg-black"
 				>
 					<div :class="isDark ? 'dark' : ''">
 						<div class="text-center">
 							<h1
-								class="text-3xl text-purple-400 font-bold dark:text-purple-300"
+								:class="[
+									'font-bold text-purple-400 dark:text-purple-300',
+									cardConfig.titleClass,
+								]"
 							>
 								阅读激励实验 · 交互站点
 							</h1>
-							<p class="mt-4 text-xl text-gray-800 dark:text-gray-300">
+							<p
+								:class="[
+									'mt-4 text-gray-800 dark:text-gray-300',
+									cardConfig.textClass,
+								]"
+							>
 								📖 你正接近一片未标记的文本领域 ——
 								此处的字句尚未被完全解读，它们仍在寻找宿主。
 							</p>
@@ -293,11 +411,19 @@ async function fetchFileTree() {
 
 						<div class="mt-8">
 							<h2
-								class="text-2xl text-blue-300 font-semibold dark:text-blue-400"
+								:class="[
+									'font-semibold text-blue-300 dark:text-blue-400',
+									isMobile ? 'text-lg' : isTablet ? 'text-xl' : 'text-2xl',
+								]"
 							>
 								🜲 阅读探险者协议
 							</h2>
-							<p class="mt-4 text-gray-800 dark:text-gray-300">
+							<p
+								:class="[
+									'mt-4 text-gray-800 dark:text-gray-300',
+									isMobile ? 'text-sm' : 'text-base',
+								]"
+							>
 								「欢迎加入这场文字远征，进入前请确认装备：」
 							</p>
 							<ul class="mt-4 list-disc pl-6 text-gray-800 dark:text-gray-300">
@@ -373,41 +499,42 @@ async function fetchFileTree() {
 						</div>
 					</div>
 
-					<FlickeringGrid
-						class="[mask-image:radial-gradient(450px_circle_at_center,white,transparent)] absolute inset-0 -z-10"
-						:square-size="4"
-						:grid-gap="6"
-						color="#60A5FA"
-						:max-opacity="0.5"
-						:flicker-chance="0.1"
-						:width="1000"
-						:height="800"
-					/>
+					<Suspense>
+						<FlickeringGrid
+							class="[mask-image:radial-gradient(450px_circle_at_center,white,transparent)] absolute inset-0 -z-10"
+							:square-size="4"
+							:grid-gap="6"
+							color="#60A5FA"
+							:max-opacity="0.5"
+							:flicker-chance="0.1"
+							:width="1000"
+							:height="800"
+						/>
+						<template #fallback>
+							<div
+								class="absolute inset-0 from-blue-50 to-blue-100 bg-gradient-to-br -z-10 dark:from-blue-950 dark:to-blue-900"
+							></div>
+						</template>
+					</Suspense>
 				</div>
-			</main>
 
-			<!-- 右侧边栏 - 在小屏幕上隐藏 -->
-			<aside class="hidden h-screen w-80 p-4 md:block">
-				<div
-					class="relative mt-4 size-fit flex flex-col items-center justify-center rounded-3xl"
-				>
-					<CardContainer>
-						<CardBody
-							class="border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black"
+				<!-- 移动端显示右侧卡片 -->
+				<div v-if="isMobile" class="mt-4 max-w-full w-full px-1 space-y-4">
+					<!-- TextRevealCard -->
+					<div class="relative max-w-full w-full">
+						<div
+							class="relative w-full border border-black/[0.1] rounded-xl bg-gray-50 p-4 dark:border-white/[0.2] dark:bg-black"
 						>
-							<CardItem
-								:translate-z="25"
-								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-6 py-6"
-							>
+							<Suspense>
 								<TextRevealCard class="mx-auto w-full">
 									<template #header>
-										<h2 class="mb-2 text-lg text-white font-semibold">
+										<h2 class="mb-2 text-base text-white font-semibold">
 											Rosy once said about 📖
 										</h2>
 									</template>
 									<template #text>
 										<p
-											class="bg-[#d5d0d0] bg-clip-text py-4 text-sm text-transparent font-bold md:py-10 sm:py-6 md:text-xl sm:text-xl"
+											class="bg-[#d5d0d0] bg-clip-text py-2 text-sm text-transparent font-bold"
 										>
 											"翻开书页，灵魂便可徜徉千重世界；然逃避文字者，唯能踽踽独行一途。"
 										</p>
@@ -417,7 +544,7 @@ async function fetchFileTree() {
 											:style="{
 												textShadow: '4px 4px 15px rgba(0,0,0,0.5)',
 											}"
-											class="from-white to-neutral-300 bg-gradient-to-b bg-clip-text py-4 text-sm text-white font-bold md:py-10 sm:py-6"
+											class="from-white to-neutral-300 bg-gradient-to-b bg-clip-text py-2 text-sm text-white font-bold"
 										>
 											"Through the pages of a book, a soul may wander a thousand
 											worlds; but he who shuns the written word walks but a
@@ -425,43 +552,171 @@ async function fetchFileTree() {
 										</p>
 									</template>
 								</TextRevealCard>
-							</CardItem>
-						</CardBody>
-					</CardContainer>
+								<template #fallback>
+									<div
+										class="mx-auto max-w-full w-full animate-pulse rounded-lg from-gray-100 to-gray-200 bg-gradient-to-br p-3 dark:from-gray-800 dark:to-gray-900"
+									>
+										<div
+											class="mb-2 h-3 rounded bg-gray-300 dark:bg-gray-600"
+										></div>
+										<div
+											class="mb-1 h-2 rounded bg-gray-200 dark:bg-gray-700"
+										></div>
+										<div
+											class="h-2 w-3/4 rounded bg-gray-200 dark:bg-gray-700"
+										></div>
+									</div>
+								</template>
+							</Suspense>
+						</div>
+						<BorderBeam :duration="7" :delay="12" :border-width="2" />
+					</div>
 
-					<BorderBeam :size="250" :duration="7" :delay="12" :border-width="4" />
-				</div>
-
-				<div
-					class="relative mt-6 size-fit flex flex-col items-center justify-center rounded-3xl"
-				>
-					<CardContainer>
-						<CardBody
-							class="overflow-hidden border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black"
+					<!-- Globe Card -->
+					<div class="relative max-w-full w-full">
+						<div
+							class="relative h-72 w-full overflow-hidden border border-black/[0.1] rounded-xl bg-gray-50 dark:border-white/[0.2] dark:bg-black"
 						>
-							<CardItem
-								:translate-z="25"
-								class="relative size-full flex flex-col items-center justify-center overflow-hidden px-40 pb-40 pt-8 md:pb-60"
+							<!-- Read 文字在正上方，离地球更近 -->
+							<div
+								class="absolute left-1/2 top-4 z-20 transform -translate-x-1/2"
 							>
 								<span
-									class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-8xl text-transparent font-semibold leading-none dark:from-white dark:to-slate-900/10 max-lg:-mt-12"
+									class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-7xl text-transparent font-bold leading-none dark:from-white dark:to-slate-900/10 md:text-9xl sm:text-8xl"
 								>
 									Read
 								</span>
-								<Globe class="top-40 overflow-hidden rounded-xl" />
-								<div
-									class="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]"
-								/>
-							</CardItem>
-						</CardBody>
-					</CardContainer>
+							</div>
 
-					<BorderBeam
-						:size="250"
-						:duration="12"
-						:delay="17"
-						:border-width="2"
-					/>
+							<!-- 地球容器 - 贴底部，一半在外面 -->
+							<div
+								class="absolute bottom-0 left-1/2 translate-y-1/2 transform -translate-x-1/2"
+							>
+								<Suspense>
+									<div
+										class="relative h-72 w-72 overflow-visible sm:h-80 sm:w-80"
+									>
+										<Globe
+											class="globe-container !relative !inset-auto !h-full !max-w-none !w-full"
+										/>
+									</div>
+									<template #fallback>
+										<div
+											class="h-72 w-72 animate-pulse rounded-full from-blue-200 to-purple-200 bg-gradient-to-br sm:h-80 sm:w-80 dark:from-blue-800 dark:to-purple-800"
+										></div>
+									</template>
+								</Suspense>
+							</div>
+
+							<!-- 背景渐变 -->
+							<div
+								class="pointer-events-none absolute inset-0 h-full rounded-xl bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]"
+							/>
+						</div>
+						<BorderBeam :duration="12" :delay="17" :border-width="2" />
+					</div>
+				</div>
+			</main>
+
+			<!-- 右侧边栏 - 仅桌面端显示 -->
+			<aside
+				v-if="shouldRenderRightPanel"
+				:class="layoutConfig.rightPanelClass"
+			>
+				<!-- TextRevealCard - 简化结构 -->
+				<div class="relative max-w-full w-full">
+					<div
+						class="relative w-full border border-black/[0.1] rounded-xl bg-gray-50 p-6 dark:border-white/[0.2] dark:bg-black"
+					>
+						<Suspense>
+							<TextRevealCard class="mx-auto w-full">
+								<template #header>
+									<h2 class="mb-3 text-lg text-white font-semibold xl:text-xl">
+										Rosy once said about 📖
+									</h2>
+								</template>
+								<template #text>
+									<p
+										class="bg-[#d5d0d0] bg-clip-text py-2 text-base text-transparent font-bold xl:text-lg"
+									>
+										"翻开书页，灵魂便可徜徉千重世界；然逃避文字者，唯能踽踽独行一途。"
+									</p>
+								</template>
+								<template #revealText>
+									<p
+										:style="{
+											textShadow: '4px 4px 15px rgba(0,0,0,0.5)',
+										}"
+										class="from-white to-neutral-300 bg-gradient-to-b bg-clip-text py-2 text-base text-white font-bold xl:text-lg"
+									>
+										"Through the pages of a book, a soul may wander a thousand
+										worlds; but he who shuns the written word walks but a single
+										path."
+									</p>
+								</template>
+							</TextRevealCard>
+							<template #fallback>
+								<div
+									class="mx-auto w-full animate-pulse rounded-lg from-gray-100 to-gray-200 bg-gradient-to-br p-4 dark:from-gray-800 dark:to-gray-900"
+								>
+									<div
+										class="mb-3 h-5 rounded bg-gray-300 dark:bg-gray-600"
+									></div>
+									<div
+										class="mb-2 h-4 rounded bg-gray-200 dark:bg-gray-700"
+									></div>
+									<div
+										class="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700"
+									></div>
+								</div>
+							</template>
+						</Suspense>
+					</div>
+					<BorderBeam :duration="7" :delay="12" :border-width="2" />
+				</div>
+
+				<!-- Globe Card - 简化结构 -->
+				<div class="relative mt-6 max-w-full w-full">
+					<div
+						class="relative h-80 w-full overflow-hidden border border-black/[0.1] rounded-xl bg-gray-50 xl:h-96 dark:border-white/[0.2] dark:bg-black"
+					>
+						<!-- Read 文字在上方，地球后面 -->
+						<div
+							class="absolute left-1/2 top-0 z-10 transform -translate-x-1/2"
+						>
+							<span
+								class="pointer-events-none whitespace-pre-wrap from-black to-gray-300/80 bg-gradient-to-b bg-clip-text text-center text-7xl text-transparent font-bold leading-none dark:from-white dark:to-slate-900/10 2xl:text-9xl xl:text-8xl"
+							>
+								Read
+							</span>
+						</div>
+
+						<!-- 地球容器 - 贴底部，一半在外面，更大尺寸 -->
+						<div
+							class="absolute bottom-0 left-1/2 z-20 translate-y-1/2 transform -translate-x-1/2"
+						>
+							<Suspense>
+								<div
+									class="relative h-72 w-72 overflow-visible 2xl:h-96 2xl:w-96 xl:h-80 xl:w-80"
+								>
+									<Globe
+										class="globe-container !relative !inset-auto !h-full !max-w-none !w-full"
+									/>
+								</div>
+								<template #fallback>
+									<div
+										class="h-72 w-72 animate-pulse rounded-full from-blue-200 to-purple-200 bg-gradient-to-br 2xl:h-96 2xl:w-96 xl:h-80 xl:w-80 dark:from-blue-800 dark:to-purple-800"
+									></div>
+								</template>
+							</Suspense>
+						</div>
+
+						<!-- 背景渐变 -->
+						<div
+							class="pointer-events-none absolute inset-0 z-0 h-full rounded-xl bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]"
+						/>
+					</div>
+					<BorderBeam :duration="12" :delay="17" :border-width="2" />
 				</div>
 			</aside>
 		</div>
@@ -469,11 +724,16 @@ async function fetchFileTree() {
 </template>
 
 <style scoped>
-/* 强制隐藏中间区域在窄屏上 */
-@media (max-width: 767px) {
-	main {
-		display: none !important;
-	}
+/* 防止页面溢出 */
+* {
+	box-sizing: border-box;
+}
+
+/* 整体页面控制 */
+.min-h-screen {
+	overflow-x: hidden;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 /* 确保卡片背景图片完全填充 */
@@ -481,7 +741,10 @@ async function fetchFileTree() {
 	position: relative;
 	height: 100%;
 	width: 100%;
+	max-width: 100%;
 	overflow: hidden;
+	/* 移除默认阴影 */
+	box-shadow: none !important;
 }
 
 :deep(.bento-grid-card [name='background'] > div) {
@@ -489,26 +752,123 @@ async function fetchFileTree() {
 	background-position: center !important;
 	height: 100% !important;
 	width: 100% !important;
+	max-width: 100% !important;
 	position: absolute;
 	inset: 0;
 }
 
-/* 优化网格布局 */
+/* 响应式网格布局 */
 :deep(.bento-grid) {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-auto-rows: 22rem;
 	gap: 1rem;
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
 }
 
 /* 确保卡片内容正确显示 */
 :deep(.bento-grid-card h3) {
 	position: relative;
 	z-index: 2;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 :deep(.bento-grid-card p) {
 	position: relative;
 	z-index: 2;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+/* 右侧边栏卡片优化 */
+aside:last-child .relative {
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
+/* Globe组件修复 */
+:deep(.globe-container) {
+	position: relative !important;
+	inset: auto !important;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: none !important;
+}
+
+:deep(.globe-container canvas) {
+	position: relative !important;
+	width: 100% !important;
+	height: 100% !important;
+}
+
+/* BorderBeam 圆角修复 */
+:deep(.border-beam) {
+	border-radius: 0.75rem !important; /* rounded-xl */
+}
+
+:deep(.border-beam::before) {
+	border-radius: 0.75rem !important;
+}
+
+:deep(.border-beam::after) {
+	border-radius: 0.75rem !important;
+}
+
+/* 移动端卡片优化 */
+@media (max-width: 640px) {
+	/* Globe 卡片响应式调整 */
+	.relative:has(.w-56) {
+		margin-bottom: 0.5rem;
+	}
+}
+
+/* 移动端优化 */
+@media (max-width: 640px) {
+	/* TextRevealCard 内部间距优化 */
+	:deep(.text-reveal-card) {
+		padding: 1rem !important;
+		max-width: 100% !important;
+	}
+
+	/* BentoGrid 优化 */
+	:deep(.bento-grid-card) {
+		/* 移动端移除固定的grid位置类的影响 */
+		grid-column: auto !important;
+		grid-row: auto !important;
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+
+	:deep(.bento-grid) {
+		gap: 0.75rem;
+	}
+}
+
+/* 平板端优化 */
+@media (min-width: 641px) and (max-width: 1024px) {
+	:deep(.bento-grid) {
+		gap: 1rem;
+	}
+
+	:deep(.bento-grid-card) {
+		min-width: 0;
+		overflow: hidden;
+	}
+}
+
+/* 超大屏幕优化 */
+@media (min-width: 1920px) {
+	:deep(.bento-grid) {
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+}
+
+/* 确保flex容器不溢出 */
+aside,
+main {
+	min-width: 0;
+	overflow: hidden;
 }
 </style>
