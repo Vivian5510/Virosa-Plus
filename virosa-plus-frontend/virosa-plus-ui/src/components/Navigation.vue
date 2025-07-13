@@ -347,10 +347,6 @@ onUnmounted(() => {
 								>
 									<span class="text-2xl">{{ routeItem.icon }}</span>
 									<span class="text-lg font-medium">{{ routeItem.label }}</span>
-									<span
-										v-if="activeTab === routeItem.name"
-										class="ml-auto h-2 w-2 rounded-full bg-blue-500"
-									></span>
 								</button>
 							</div>
 						</div>
