@@ -86,7 +86,7 @@ const books = reactive([
 				<div
 					v-for="(book, index) in books"
 					:key="index"
-					class="w-full flex transform justify-center transition-all duration-300 hover:scale-105"
+					class="w-full flex transform justify-center transition-all duration-500 ease-out hover:scale-105 hover:-translate-y-2"
 				>
 					<a :href="book.url" class="max-w-xs w-full">
 						<Book
