@@ -2,7 +2,7 @@
 	<div
 		:class="
 			cn(
-				'z-10 group [perspective:800px] w-min [--shadowColor:#bbb] dark:[--shadowColor:#111]',
+				'z-10 group [perspective:800px] w-min',
 				$props.class,
 			)
 		"
@@ -31,7 +31,6 @@
         `"
 				:style="{
 					transform: 'translateZ(25px)',
-					boxShadow: '5px 5px 20px var(--shadowColor)',
 				}"
 			>
 				<div
@@ -72,7 +71,6 @@
         `"
 				:style="{
 					transform: 'translateZ(-25px)',
-					boxShadow: shadowSizeMap[shadowSize],
 				}"
 			></div>
 		</div>

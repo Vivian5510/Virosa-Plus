@@ -78,9 +78,9 @@ const books = reactive([
 			<div
 				class="relative z-10 grid mt-4 w-full place-items-center p-4 md:mt-8 sm:mt-6 lg:p-8 md:p-6"
 				:class="{
-					'grid-cols-1 gap-8': true,
+					'grid-cols-1 gap-12': true,
 					'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4': true,
-					'sm:gap-6 md:gap-6 lg:gap-8': true,
+					'sm:gap-10 md:gap-10 lg:gap-12': true,
 				}"
 			>
 				<div
@@ -91,7 +91,7 @@ const books = reactive([
 					<a :href="book.url" class="max-w-xs w-full">
 						<Book
 							:color="book.color ?? 'rose'"
-							class="mx-auto shadow-lg transition-shadow duration-300 hover:shadow-2xl"
+							class="mx-auto"
 						>
 							<BookHeader>
 								<FontAwesomeIcon :icon="['fas', 'book-open']" class="h-6 w-6" />
