@@ -19,11 +19,11 @@
 					walked."
 				</div>
 				<div
-					class="dark:bg-background relative h-[300px] w-full overflow-hidden border border-black/[0.1] rounded-xl bg-gray-50 px-2 py-4 shadow-lg lg:h-[430px] md:h-[400px] sm:h-[350px] dark:border-white/[0.2] dark:bg-black sm:px-4 sm:py-6"
+					class="relative h-[300px] w-full overflow-hidden border border-black/[0.1] rounded-xl bg-gray-50 px-2 py-4 shadow-lg lg:h-[430px] md:h-[400px] sm:h-[350px] dark:border-white/[0.1] dark:bg-black sm:px-4 sm:py-6"
 				>
 					<!-- Logo -->
 					<div
-						class="absolute left-1/2 top-4 z-20 mt-2 border rounded-3xl bg-white/30 p-2 backdrop-blur-md sm:top-8 sm:mt-4 -translate-x-1/2 dark:border-zinc-800 sm:p-3"
+						class="absolute left-1/2 top-4 z-20 mt-2 border border-black/[0.1] rounded-3xl bg-white/30 p-2 backdrop-blur-md sm:top-8 sm:mt-4 -translate-x-1/2 dark:border-white/[0.1] dark:bg-black/30 sm:p-3"
 					>
 						<img
 							v-if="isDark"
@@ -52,7 +52,7 @@
 							START READING AND LEARN MORE ABOUT ME 😄
 						</h3>
 						<InteractiveHoverButton
-							class="mt-2 w-40 border-black/[0.1] bg-gray-50 sm:mt-4 md:w-56 sm:w-48 dark:border-white/[0.2] dark:bg-black"
+							class="mt-2 w-40 border-black/[0.1] bg-gray-50 sm:mt-4 md:w-56 sm:w-48 dark:border-white/[0.1] dark:bg-black"
 							text="Get Started"
 						/>
 					</div>
@@ -79,9 +79,9 @@
 						</Marquee>
 					</div>
 
-					<!-- Gradient overlay to fade to white at the bottom -->
+					<!-- Gradient overlay to fade at the bottom -->
 					<div
-						class="dark:from-background pointer-events-none absolute inset-0 from-white to-transparent bg-gradient-to-t"
+						class="pointer-events-none absolute inset-0 from-white to-transparent bg-gradient-to-t dark:from-black"
 					></div>
 					<BorderBeam :size="250" :duration="12" :delay="9" :border-width="2" />
 				</div>
