@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<!-- 窄屏招呼语 -->
-		<div class="block p-6 text-center lg:hidden">
+		<!-- 窄屏招呼语 - 强制隐藏在大屏幕 -->
+		<div class="mobile-greeting block p-6 text-center lg:hidden">
 			<h1
 				class="text-balance text-5xl font-extrabold leading-none tracking-tighter md:text-7xl sm:text-6xl"
 			>
@@ -13,11 +13,11 @@
 			</h1>
 		</div>
 
-		<div class="flex flex-col lg:flex-row">
+		<div class="main-container flex flex-col lg:flex-row">
 			<!-- 侧边栏 -->
-			<aside class="h-auto w-full p-4 lg:h-screen lg:w-80">
+			<aside class="sidebar h-auto w-full p-4 lg:h-screen lg:w-80">
 				<!-- 卡片容器 - 窄屏居中显示 -->
-				<div class="mx-auto w-80 lg:mx-0 lg:w-auto">
+				<div class="card-container mx-auto w-80 lg:mx-0 lg:w-auto">
 					<div
 						class="relative w-full flex flex-col items-center justify-center rounded-3xl"
 					>
@@ -209,8 +209,8 @@
 				<!-- 关闭卡片容器 -->
 			</aside>
 
-			<!-- 主内容区域 - 只在大屏幕显示 -->
-			<main class="hidden overflow-y-auto p-4 lg:block lg:flex-1">
+			<!-- 主内容区域 - 强制只在大屏幕显示 -->
+			<main class="main-content hidden overflow-y-auto p-4 lg:block lg:flex-1">
 				<!-- 大屏幕招呼语 -->
 				<div
 					class="h-56 w-full flex flex-col items-center justify-center gap-2"
@@ -695,4 +695,46 @@ function handleComplete() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+/* 强制确保响应式布局正确工作 */
+@media (min-width: 1024px) {
+  /* lg屏幕及以上 */
+  .main-container {
+    flex-direction: row !important;
+  }
+  
+  .mobile-greeting {
+    display: none !important;
+  }
+  
+  .main-content {
+    display: block !important;
+  }
+  
+  .sidebar {
+    height: 100vh !important;
+    width: 20rem !important;
+  }
+  
+  .card-container {
+    width: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  /* lg屏幕以下 */
+  .main-container {
+    flex-direction: column !important;
+  }
+  
+  .mobile-greeting {
+    display: block !important;
+  }
+  
+  .main-content {
+    display: none !important;
+  }
+}
+</style>
