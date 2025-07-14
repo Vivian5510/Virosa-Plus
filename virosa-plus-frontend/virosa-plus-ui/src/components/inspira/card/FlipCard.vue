@@ -3,7 +3,7 @@
 		<div
 			:class="
 				cn(
-					'relative h-full rounded-2xl transition-all duration-500 [transform-style:preserve-3d]',
+					'flip-card-inner relative h-full rounded-2xl [transform-style:preserve-3d]',
 					rotation[0],
 				)
 			"
@@ -142,3 +142,16 @@ const rotationClass = {
 
 const rotation = computed(() => rotationClass[props.rotate])
 </script>
+
+<style scoped>
+/* 强制确保动画样式优先级，避免被其他样式覆盖 */
+.flip-card-inner {
+  transition: transform 0.7s ease-in-out !important;
+  transform-style: preserve-3d !important;
+}
+
+/* 确保hover动画也有正确的持续时间 */
+.group:hover .flip-card-inner {
+  transition: transform 0.7s ease-in-out !important;
+}
+</style>

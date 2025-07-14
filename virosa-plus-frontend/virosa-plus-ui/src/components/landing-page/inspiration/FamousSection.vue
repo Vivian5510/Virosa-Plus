@@ -105,7 +105,7 @@ const responsiveConfig = computed(() => {
 							:key="index"
 							:image-url="item.imageUrl"
 							:class="[
-								'relative transition-all duration-300 ease-out',
+								'relative transition-all duration-300 ease-out aspect-square',
 								// 桌面端：精确控制每个卡片的边框，保持田字无缝拼接
 								!isMobile.value && index === 0
 									? 'border-r-[1px] border-b-[1px] border-gray-300/80 dark:border-gray-600/80'
