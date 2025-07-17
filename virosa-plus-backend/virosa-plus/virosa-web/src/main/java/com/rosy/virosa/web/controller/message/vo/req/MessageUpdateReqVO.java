@@ -19,14 +19,4 @@ public class MessageUpdateReqVO implements Serializable {
      * 消息内容
      */
     private String content;
-
-    /**
-     * 消息类型（0：公告通知；1：提醒；）
-     */
-    private Integer type;
-
-    /**
-     * 消息状态（0：未读；1：已读）
-     */
-    private Integer status;
 }

@@ -34,8 +34,6 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
         // 动态添加查询条件
         QueryWrapperUtil.addEqualCondition(queryWrapper, message.getId(), Message::getId);
         QueryWrapperUtil.addEqualCondition(queryWrapper, message.getContent(), Message::getContent);
-        QueryWrapperUtil.addEqualCondition(queryWrapper, message.getType(), Message::getType);
-        QueryWrapperUtil.addEqualCondition(queryWrapper, message.getStatus(), Message::getStatus);
         QueryWrapperUtil.addEqualCondition(queryWrapper, message.getCreateTime(), Message::getCreateTime);
         QueryWrapperUtil.addEqualCondition(queryWrapper, message.getUpdateTime(), Message::getUpdateTime);
 
