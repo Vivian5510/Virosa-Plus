@@ -4,7 +4,6 @@ import { Outlet } from 'react-router';
 import { lazy, Suspense } from 'react';
 
 import { MainLayout } from 'src/layouts/main';
-import { SimpleLayout } from 'src/layouts/simple';
 
 import { SplashScreen } from 'src/components/loading-screen';
 

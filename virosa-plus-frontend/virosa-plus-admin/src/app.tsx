@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 
 import { usePathname } from 'src/routes/hooks';
 
-import { CONFIG } from 'src/global-config';
 import { LocalizationProvider } from 'src/locales';
 import { themeConfig, ThemeProvider } from 'src/theme';
 import { I18nProvider } from 'src/locales/i18n-provider';
@@ -41,15 +40,15 @@ export default function App({ children }: AppProps) {
               modeStorageKey={themeConfig.modeStorageKey}
             >
               <MotionLazy>
-                  <SnackbarProvider
-                    maxSnack={3}
-                    autoHideDuration={3000}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                  >
-                    <ProgressBar />
-                    <SettingsDrawer defaultSettings={defaultSettings} />
-                    {children}
-                  </SnackbarProvider>
+                <SnackbarProvider
+                  maxSnack={3}
+                  autoHideDuration={3000}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <ProgressBar />
+                  <SettingsDrawer defaultSettings={defaultSettings} />
+                  {children}
+                </SnackbarProvider>
               </MotionLazy>
             </ThemeProvider>
           </LocalizationProvider>

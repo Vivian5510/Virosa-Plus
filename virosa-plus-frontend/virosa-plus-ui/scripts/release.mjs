@@ -9,7 +9,9 @@ import { dirname, join } from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const packageJson = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'))
+const packageJson = JSON.parse(
+	readFileSync(join(__dirname, '../package.json'), 'utf8'),
+)
 const { repository } = packageJson
 
 const logger = createConsola().withTag('release')
@@ -69,4 +71,4 @@ export default async function release(plop) {
 			},
 		})
 	}
-} 
+}

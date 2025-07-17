@@ -115,4 +115,4 @@ export default function safeInit(plop) {
 
 function logClean(path) {
 	console.log(`${green('√ clean')} ${gray(path)}`)
-} 
+}

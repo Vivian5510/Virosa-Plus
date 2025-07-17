@@ -32,4 +32,4 @@ export const showDir = (type) => {
 		return 'api'
 	}
 	return `${type}s`
-} 
+}

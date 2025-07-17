@@ -340,12 +340,6 @@ export interface MessageAddReqVO {
      * @memberof MessageAddReqVO
      */
     'content'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageAddReqVO
-     */
-    'type'?: number;
 }
 /**
  * 
@@ -371,18 +365,6 @@ export interface MessageQueryReqVO {
      * @memberof MessageQueryReqVO
      */
     'content'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageQueryReqVO
-     */
-    'type'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageQueryReqVO
-     */
-    'status'?: number;
 }
 /**
  * 
@@ -402,18 +384,6 @@ export interface MessageUpdateReqVO {
      * @memberof MessageUpdateReqVO
      */
     'content'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageUpdateReqVO
-     */
-    'type'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof MessageUpdateReqVO
-     */
-    'status'?: number;
 }
 /**
  * 

@@ -146,12 +146,12 @@ const rotation = computed(() => rotationClass[props.rotate])
 <style scoped>
 /* 强制确保动画样式优先级，避免被其他样式覆盖 */
 .flip-card-inner {
-  transition: transform 0.7s ease-in-out !important;
-  transform-style: preserve-3d !important;
+	transition: transform 0.7s ease-in-out !important;
+	transform-style: preserve-3d !important;
 }
 
 /* 确保hover动画也有正确的持续时间 */
 .group:hover .flip-card-inner {
-  transition: transform 0.7s ease-in-out !important;
+	transition: transform 0.7s ease-in-out !important;
 }
 </style>

@@ -698,43 +698,43 @@ function handleComplete() {
 <style scoped>
 /* 强制确保响应式布局正确工作 */
 @media (min-width: 1024px) {
-  /* lg屏幕及以上 */
-  .main-container {
-    flex-direction: row !important;
-  }
-  
-  .mobile-greeting {
-    display: none !important;
-  }
-  
-  .main-content {
-    display: block !important;
-  }
-  
-  .sidebar {
-    height: 100vh !important;
-    width: 20rem !important;
-  }
-  
-  .card-container {
-    width: auto !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
+	/* lg屏幕及以上 */
+	.main-container {
+		flex-direction: row !important;
+	}
+
+	.mobile-greeting {
+		display: none !important;
+	}
+
+	.main-content {
+		display: block !important;
+	}
+
+	.sidebar {
+		height: 100vh !important;
+		width: 20rem !important;
+	}
+
+	.card-container {
+		width: auto !important;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
 }
 
 @media (max-width: 1023px) {
-  /* lg屏幕以下 */
-  .main-container {
-    flex-direction: column !important;
-  }
-  
-  .mobile-greeting {
-    display: block !important;
-  }
-  
-  .main-content {
-    display: none !important;
-  }
+	/* lg屏幕以下 */
+	.main-container {
+		flex-direction: column !important;
+	}
+
+	.mobile-greeting {
+		display: block !important;
+	}
+
+	.main-content {
+		display: none !important;
+	}
 }
 </style>

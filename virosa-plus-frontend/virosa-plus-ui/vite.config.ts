@@ -22,6 +22,21 @@ export default defineConfig({
 				changeOrigin: true,
 				// 将/articles路径转发到后端的/api/articles
 			},
+			'/messages': {
+				target: 'http://localhost:9090/api',
+				changeOrigin: true,
+				// 将/messages路径转发到后端的/api/messages
+			},
+			'/auth': {
+				target: 'http://localhost:9090/api',
+				changeOrigin: true,
+				// 将/auth路径转发到后端的/api/auth
+			},
+			'/issues': {
+				target: 'http://localhost:9090/api',
+				changeOrigin: true,
+				// 将/issues路径转发到后端的/api/issues
+			},
 		},
 	},
 	assetsInclude: ['**/*.sh'],
